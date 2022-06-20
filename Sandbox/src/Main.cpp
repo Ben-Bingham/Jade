@@ -2,15 +2,19 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+#include "Jade.h"
+
 #include "VertexBufferObject.h"
 #include "ElementBufferObject.h"
 #include "VertexAttributeObject.h"
+
+Jade::Log LOGGER(Jade::INFO);
 
 int main() {
 	// GLFW and GLEW init
 
 	if (!glfwInit()) {
-		std::cout << "GLFW failed to initilize." << std::endl;
+		LOGGER.log("GLFW failed to initilize.", Jade::ERROR);
 	}
 
 	// Minimum required OpenGL version is 3.3
@@ -19,23 +23,20 @@ int main() {
 
 	GLFWwindow* window = glfwCreateWindow(640, 480, "Jade", NULL, NULL);
 	if (!window) {
-		std::cout << "GLFW window creation failed." << std::endl;
-		std::cout << "OpenGL context creation failed." << std::endl;
+		LOGGER.log("GLFW window creation failed.", Jade::ERROR);
+		LOGGER.log("OpenGL context creation failed.", Jade::ERROR);
 	}
 
 	glfwMakeContextCurrent(window);
 	glfwSwapInterval(1);
 
 	if (glewInit() != GLEW_OK) {
-		std::cout << "GLEW failed to initilize." << std::endl;
+		LOGGER.log("GLEW failed to initilize.", Jade::ERROR);
 	}
 
 	// Render init
 
 	// Vertex array object
-	/*unsigned int VAO;
-	glGenVertexArrays(1, &VAO);
-	glBindVertexArray(VAO);*/
 	VertexAttributeObject VAO;
 
 	// Vertex buffer object
@@ -77,7 +78,8 @@ int main() {
 	glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
 	if (!success) {
 		glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-		std::cout << "Vertex shader failed to compile\n" << infoLog << std::endl;
+		LOGGER.log("Vertex shader failed to compile", Jade::ERROR);
+		LOGGER.log(infoLog, Jade::ERROR);
 	}
 
 	// Fragment shader
@@ -96,7 +98,8 @@ int main() {
 	glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
 	if (!success) {
 		glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
-		std::cout << "Fragment shader failed to compile\n" << infoLog << std::endl;
+		LOGGER.log("Fragment shader failed to compile", Jade::ERROR);
+		LOGGER.log(infoLog, Jade::ERROR);
 	}
 
 	// Shader program
@@ -109,15 +112,19 @@ int main() {
 	glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
 	if (!success) {
 		glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
-		std::cout << "Shader program failed to link\n" << infoLog << std::endl;
+		LOGGER.log("Shader program failed to link", Jade::ERROR);
+		LOGGER.log(infoLog, Jade::ERROR);
 	}
 
 	glDeleteShader(vertexShader);
 	glDeleteShader(fragmentShader);
 
+	
+
 	// Render loop
 
 	while (!glfwWindowShouldClose(window)) {
+		
 		glfwPollEvents();
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);

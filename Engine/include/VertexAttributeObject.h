@@ -3,13 +3,15 @@
 #include <vector>
 #include <iostream>
 
+#include "Jade.h"
+
 struct VertexArrtibutePointer {
 	VertexArrtibutePointer(unsigned int Size, GLenum Type)
 		: size(Size), type(Type) {
 		switch (type) {
 		default:
 			stride = sizeof(float) * size;
-			std::cout << "[ERROR] unreckognized type for Vertex attribute pointer." << std::endl;
+			LOGGER.log("Unreckognized type for Vertex attribute pointer.", Jade::WARNING);
 			break;
 		case GL_FLOAT:
 			stride = sizeof(float) * size;
@@ -32,7 +34,7 @@ class VertexAttributeObject {
 public:
 	VertexAttributeObject() {
 		glGenVertexArrays(1, &m_VAO);
-
+		
 		bind();
 	}
 
