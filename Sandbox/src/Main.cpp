@@ -4,6 +4,7 @@
 
 #include "VertexBufferObject.h"
 #include "ElementBufferObject.h"
+#include "VertexAttributeObject.h"
 
 int main() {
 	// GLFW and GLEW init
@@ -32,9 +33,10 @@ int main() {
 	// Render init
 
 	// Vertex array object
-	unsigned int VAO;
+	/*unsigned int VAO;
 	glGenVertexArrays(1, &VAO);
-	glBindVertexArray(VAO);
+	glBindVertexArray(VAO);*/
+	VertexAttributeObject VAO;
 
 	// Vertex buffer object
 	float vertices[] = {
@@ -55,8 +57,7 @@ int main() {
 	ElementBufferObject EBO(indices, sizeof(indices));
 
 	// Vertex attribute pointers
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
+	VAO.addAttributePointer(VertexArrtibutePointer(3, GL_FLOAT));
 
 	// Vertex shader
 	const char* vertexShaderSource = 
@@ -122,7 +123,7 @@ int main() {
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		glUseProgram(shaderProgram);
-		glBindVertexArray(VAO);
+		VAO.bind();
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 		glfwSwapBuffers(window);
