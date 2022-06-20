@@ -38,8 +38,6 @@ int main() {
 		-0.5,  0.5,  0.0, // Top left
 		 0.5,  0.5,  0.0, // Top right
 		 0.5, -0.5,  0.0, // Bottom right
-		-0.5,  0.5,  0.0, // Top left
-		 0.5, -0.5,  0.0, // Bottom right
 		-0.5, -0.5,  0.0  // Bottom left
 	};
 
@@ -48,6 +46,18 @@ int main() {
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(verticies), verticies, GL_STATIC_DRAW);
+
+	// Element buffer object
+	unsigned int indices[] = {
+		0, 1, 2,
+		0, 2, 3
+	};
+
+	unsigned int EBO;
+	glGenBuffers(1, &EBO);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
 	// Vertex attribute pointers
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
@@ -118,7 +128,7 @@ int main() {
 
 		glUseProgram(shaderProgram);
 		glBindVertexArray(VAO);
-		glDrawArrays(GL_TRIANGLES, 0, 6);
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 		glfwSwapBuffers(window);
 	}
