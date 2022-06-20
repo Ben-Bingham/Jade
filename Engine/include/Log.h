@@ -20,7 +20,18 @@ namespace Jade {
 
 		void log(std::string message, LogLevel messageLevel) {
 			if (messageLevel >= m_LogLevel) {
-				std::cout << message << std::endl;
+				switch (messageLevel) {
+				default:
+				case INFO:
+					std::cout << "[INFO] " << message << std::endl;
+					break;
+				case WARNING:
+					std::cout << "\x1B[93m" << "[WARNING] " << message << "\033[0m\t\t" << std::endl;
+					break;
+				case ERROR:
+					std::cout << "\x1B[91m" << "[ERROR] " << message << "\033[0m\t\t" << std::endl;
+					break;
+				}
 			}
 		}
 
