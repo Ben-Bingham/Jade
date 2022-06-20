@@ -1,6 +1,6 @@
 #include <GL/glew.h>
 #include <vector>
-#include "VertexAttributeObject.h"
+#include "OpenGL/VertexAttributeObject.h"
 
 void VertexAttributeObject::addAttributePointer(VertexArrtibutePointer attributePointer) {
 	unsigned int offset = 0;

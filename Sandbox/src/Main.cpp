@@ -4,9 +4,9 @@
 
 #include "Jade.h"
 
-#include "VertexBufferObject.h"
-#include "ElementBufferObject.h"
-#include "VertexAttributeObject.h"
+#include "OpenGL/VertexBufferObject.h"
+#include "OpenGL/ElementBufferObject.h"
+#include "OpenGL/VertexAttributeObject.h"
 
 Jade::Log LOGGER(Jade::INFO);
 
