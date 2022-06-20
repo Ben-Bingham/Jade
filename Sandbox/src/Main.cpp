@@ -3,6 +3,7 @@
 #include <GLFW/glfw3.h>
 
 #include "VertexBufferObject.h"
+#include "ElementBufferObject.h"
 
 int main() {
 	// GLFW and GLEW init
@@ -51,11 +52,7 @@ int main() {
 		0, 2, 3
 	};
 
-	unsigned int EBO;
-	glGenBuffers(1, &EBO);
-
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+	ElementBufferObject EBO(indices, sizeof(indices));
 
 	// Vertex attribute pointers
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
