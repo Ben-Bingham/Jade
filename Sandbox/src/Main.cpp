@@ -2,6 +2,8 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+#include "VertexBufferObject.h"
+
 int main() {
 	// GLFW and GLEW init
 
@@ -34,18 +36,14 @@ int main() {
 	glBindVertexArray(VAO);
 
 	// Vertex buffer object
-	float verticies[] = {
+	float vertices[] = {
 		-0.5,  0.5,  0.0, // Top left
 		 0.5,  0.5,  0.0, // Top right
 		 0.5, -0.5,  0.0, // Bottom right
 		-0.5, -0.5,  0.0  // Bottom left
 	};
 
-	unsigned int VBO;
-	glGenBuffers(1, &VBO);
-
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(verticies), verticies, GL_STATIC_DRAW);
+	VertexBufferObject VBO(vertices, sizeof(vertices));
 
 	// Element buffer object
 	unsigned int indices[] = {
