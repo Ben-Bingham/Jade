@@ -72,7 +72,7 @@ workspace "Jade"
 		language "C++"
 		location "UnitTests"
 
-		files {"UnitTests/**.cpp", "UnitTests/**.h"}
+		files {"UnitTests/**.cpp", "UnitTests/**.h", "UnitTests/assets/**.txt"}
 
 
 		includedirs { 
