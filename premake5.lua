@@ -4,20 +4,9 @@ workspace "Jade"
 
 	startproject "Sandbox"
 
-	files {"**.cpp", "**.h"}
-
-	libdirs {
-		"Dependencies/GLFW/lib-vc2022",
-		"Dependencies/glew-2.1.0/lib/Release/Win32"
-	}
-
 	includedirs {
-			"Dependencies/GLFW/include",
-			"Dependencies/glew-2.1.0/include",
-			"Engine/include"
+		"Engine/include"
 	}
-
-	links {"glfw3", "glew32s", "opengl32"}
 
 	filter "platforms:x32"
 		architecture "x32"
@@ -37,11 +26,20 @@ workspace "Jade"
 		language "C++"
 		location "Sandbox"
 
+		files {"Sandbox/**.cpp", "Sandbox/**.h"}
+
 		includedirs {
+			"Dependencies/GLFW/include",
+			"Dependencies/glew-2.1.0/include",
 			"Sandbox/include"
 		}
 
-		links {"Engine"}
+		libdirs {
+			"Dependencies/GLFW/lib-vc2022",
+			"Dependencies/glew-2.1.0/lib/Release/Win32"
+		}
+
+		links {"glfw3", "glew32s", "opengl32", "Engine"}
 
 		targetdir ("Sandbox/build/bin")
 		objdir ("Sandbox/build/bin-int")
@@ -51,5 +49,37 @@ workspace "Jade"
 		language "C++"
 		location "Engine"
 
+		files {"Engine/**.cpp", "Engine/**.h"}
+
+
+		includedirs {
+			"Dependencies/GLFW/include",
+			"Dependencies/glew-2.1.0/include",
+		}
+
+		libdirs {
+			"Dependencies/GLFW/lib-vc2022",
+			"Dependencies/glew-2.1.0/lib/Release/Win32"
+		}	
+
+		links {"glfw3", "glew32s", "opengl32"}
+
 		targetdir ("Engine/build/bin")
 		objdir ("Engine/build/bin-int")
+
+	project "UnitTests"
+		kind "ConsoleApp"
+		language "C++"
+		location "UnitTests"
+
+		files {"UnitTests/**.cpp", "UnitTests/**.h"}
+
+
+		includedirs { 
+			"UnitTests/include"
+		}
+
+		links { "Engine" }
+
+		targetdir ("UnitTests/build/bin")
+		objdir ("UnitTests/build/bin-int")
