@@ -8,8 +8,6 @@
 #include "OpenGL/ElementBufferObject.h"
 #include "OpenGL/VertexAttributeObject.h"
 
-Jade::Log LOGGER(Jade::INFO);
-
 int main() {
 	// GLFW and GLEW init
 
