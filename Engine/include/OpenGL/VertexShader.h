@@ -8,8 +8,8 @@
 class VertexShader {
 public:
 	VertexShader(Jade::Resources::TextFile& shaderSourceFile) 
-		: m_Shader(glCreateShader(GL_VERTEX_SHADER)), m_ShaderSourceFile(shaderSourceFile) 
-	{
+		: m_Shader(glCreateShader(GL_VERTEX_SHADER)), m_ShaderSourceFile(shaderSourceFile) {
+
 		std::string shaderSource = m_ShaderSourceFile.getContent();
 		const char* charShaderSource = shaderSource.c_str();
 
