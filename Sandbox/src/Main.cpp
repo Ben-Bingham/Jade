@@ -8,6 +8,7 @@
 #include "OpenGL/ElementBufferObject.h"
 #include "OpenGL/VertexAttributeObject.h"
 #include "OpenGL/VertexShader.h"
+#include "OpenGL/FragmentShader.h"
 
 int main() {
 	// GLFW and GLEW init
@@ -60,55 +61,19 @@ int main() {
 	VAO.addAttributePointer(VertexArrtibutePointer(3, GL_FLOAT));
 
 	// Vertex shader
-	VertexShader vertexShader(Jade::Resources::TextFile(std::string("assets\\shaders\\default.vert")));
-	/*const char* vertexShaderSource = 
-		"#version 330 core\n"
-		"layout (location = 0) in vec3 inputPositon;\n"
-		"void main()\n"
-		"{\n"
-		"   gl_Position = vec4(inputPositon.xyz, 1.0);\n"
-		"}\0";
-
-	unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-	glCompileShader(vertexShader);
-
-	
-	glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
-	if (!success) {
-		glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-		LOGGER.log("Vertex shader failed to compile", Jade::ERROR);
-		LOGGER.log(infoLog, Jade::ERROR);
-	}*/
+	VertexShader vertexShader(Jade::Resources::TextFile("assets\\shaders\\default.vert"));
 
 	int success;
 	char infoLog[512];
 
 	// Fragment shader
-	const char* fragmentShaderSource =
-		"#version 330 core\n"
-		"out vec4 FragColor;\n"
-		"void main()\n"
-		"{\n"
-		"	FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
-		"}\0";
-
-	unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
-	glCompileShader(fragmentShader);
-
-	glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
-	if (!success) {
-		glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
-		LOGGER.log("Fragment shader failed to compile", Jade::ERROR);
-		LOGGER.log(infoLog, Jade::ERROR);
-	}
+	FragmentShader fragmentShader(Jade::Resources::TextFile("assets\\shaders\\default.frag"));
 
 	// Shader program
 	unsigned int shaderProgram = glCreateProgram();
 
 	glAttachShader(shaderProgram, vertexShader.getShader());
-	glAttachShader(shaderProgram, fragmentShader);
+	glAttachShader(shaderProgram, fragmentShader.getShader());
 	glLinkProgram(shaderProgram);
 
 	glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
@@ -119,8 +84,7 @@ int main() {
 	}
 
 	vertexShader.dispose();
-	glDeleteShader(fragmentShader);
-
+	fragmentShader.dispose();
 	
 
 	// Render loop
