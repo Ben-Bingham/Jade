@@ -4,11 +4,7 @@
 
 #include "Jade.h"
 
-#include "OpenGL/VertexBufferObject.h"
-#include "OpenGL/ElementBufferObject.h"
-#include "OpenGL/VertexAttributeObject.h"
-#include "OpenGL/VertexShader.h"
-#include "OpenGL/FragmentShader.h"
+#include "OpenGL/OpenGL.h"
 
 int main() {
 	// GLFW and GLEW init
@@ -63,13 +59,13 @@ int main() {
 	// Vertex shader
 	VertexShader vertexShader(Jade::Resources::TextFile("assets\\shaders\\default.vert"));
 
-	int success;
-	char infoLog[512];
-
 	// Fragment shader
 	FragmentShader fragmentShader(Jade::Resources::TextFile("assets\\shaders\\default.frag"));
 
 	// Shader program
+	int success;
+	char infoLog[512];
+
 	unsigned int shaderProgram = glCreateProgram();
 
 	glAttachShader(shaderProgram, vertexShader.getShader());
@@ -85,7 +81,6 @@ int main() {
 
 	vertexShader.dispose();
 	fragmentShader.dispose();
-	
 
 	// Render loop
 
