@@ -7,6 +7,7 @@
 #include "OpenGL/VertexBufferObject.h"
 #include "OpenGL/ElementBufferObject.h"
 #include "OpenGL/VertexAttributeObject.h"
+#include "OpenGL/VertexShader.h"
 
 int main() {
 	// GLFW and GLEW init
@@ -59,7 +60,8 @@ int main() {
 	VAO.addAttributePointer(VertexArrtibutePointer(3, GL_FLOAT));
 
 	// Vertex shader
-	const char* vertexShaderSource = 
+	VertexShader vertexShader(Jade::Resources::TextFile(std::string("assets\\shaders\\default.vert")));
+	/*const char* vertexShaderSource = 
 		"#version 330 core\n"
 		"layout (location = 0) in vec3 inputPositon;\n"
 		"void main()\n"
@@ -71,14 +73,16 @@ int main() {
 	glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
 	glCompileShader(vertexShader);
 
-	int success;
-	char infoLog[512];
+	
 	glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
 	if (!success) {
 		glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
 		LOGGER.log("Vertex shader failed to compile", Jade::ERROR);
 		LOGGER.log(infoLog, Jade::ERROR);
-	}
+	}*/
+
+	int success;
+	char infoLog[512];
 
 	// Fragment shader
 	const char* fragmentShaderSource =
@@ -103,7 +107,7 @@ int main() {
 	// Shader program
 	unsigned int shaderProgram = glCreateProgram();
 
-	glAttachShader(shaderProgram, vertexShader);
+	glAttachShader(shaderProgram, vertexShader.getShader());
 	glAttachShader(shaderProgram, fragmentShader);
 	glLinkProgram(shaderProgram);
 
@@ -114,7 +118,7 @@ int main() {
 		LOGGER.log(infoLog, Jade::ERROR);
 	}
 
-	glDeleteShader(vertexShader);
+	vertexShader.dispose();
 	glDeleteShader(fragmentShader);
 
 	

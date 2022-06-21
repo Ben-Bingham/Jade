@@ -26,12 +26,18 @@ workspace "Jade"
 		language "C++"
 		location "Sandbox"
 
-		files {"Sandbox/**.cpp", "Sandbox/**.h"}
+		files {
+			"Sandbox/**.cpp",
+			"Sandbox/**.h",
+			"Sandbox/assets/shaders/**.frag",
+			"Sandbox/assets/shaders/**.vert"
+		}
 
 		includedirs {
 			"Dependencies/GLFW/include",
 			"Dependencies/glew-2.1.0/include",
-			"Sandbox/include"
+			"Sandbox/include",
+			"Sandbox/assets/shaders"
 		}
 
 		libdirs {
