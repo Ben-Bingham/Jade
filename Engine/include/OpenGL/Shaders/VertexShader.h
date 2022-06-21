@@ -8,7 +8,7 @@
 namespace Jade {
 	namespace OpenGL {
 		namespace Shaders {
-			class VertexShader {
+			class VertexShader : public Shader {
 			public:
 				VertexShader(Jade::Resources::TextFile& shaderSourceFile)
 					: m_Shader(glCreateShader(GL_VERTEX_SHADER)), m_ShaderSourceFile(shaderSourceFile) {
@@ -33,11 +33,11 @@ namespace Jade {
 					dispose();
 				}
 
-				void dispose() {
+				void dispose() override{
 					glDeleteShader(m_Shader);
 				}
 
-				unsigned int getShader() { return m_Shader; }
+				unsigned int getShader() override{ return m_Shader; }
 
 			private:
 				unsigned int m_Shader;

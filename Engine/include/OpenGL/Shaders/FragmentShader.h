@@ -4,12 +4,14 @@
 #include "Jade.h"
 
 #include "Resource Pipeline/TextFile.h"
+#include "Shader.h"
 
 namespace Jade {
 	namespace OpenGL {
 		namespace Shaders {
-			class FragmentShader {
+			class FragmentShader : public Shader {
 			public:
+
 				FragmentShader(Jade::Resources::TextFile& shaderSourceFile)
 					: m_Shader(glCreateShader(GL_FRAGMENT_SHADER)), m_ShaderSourceFile(shaderSourceFile) {
 
@@ -33,11 +35,9 @@ namespace Jade {
 					dispose();
 				}
 
-				void dispose() {
-					glDeleteShader(m_Shader);
-				}
+				void dispose() override { glDeleteShader(m_Shader); }
 
-				unsigned int getShader() { return m_Shader; }
+				unsigned int getShader() override { return m_Shader; }
 
 			private:
 				unsigned int m_Shader;
