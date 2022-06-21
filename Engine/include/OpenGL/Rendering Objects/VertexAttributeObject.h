@@ -9,24 +9,7 @@ namespace Jade {
 	namespace OpenGL {
 		namespace RenderingObjects {
 			struct VertexArrtibutePointer {
-				VertexArrtibutePointer(unsigned int Size, GLenum Type)
-					: size(Size), type(Type) {
-					switch (type) {
-					default:
-						stride = sizeof(float) * size;
-						LOGGER.log("Unreckognized type for Vertex attribute pointer.", Jade::WARNING);
-						break;
-					case GL_FLOAT:
-						stride = sizeof(float) * size;
-						break;
-					case GL_INT:
-						stride = sizeof(int) * size;
-						break;
-					case GL_UNSIGNED_INT:
-						stride = sizeof(unsigned int) * size;
-						break;
-					}
-				}
+				VertexArrtibutePointer(unsigned int Size, GLenum Type);
 
 				unsigned int size;
 				GLenum type;
