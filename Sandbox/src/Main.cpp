@@ -44,7 +44,7 @@ int main() {
 	VAO.addAttributePointer(VertexArrtibutePointer(3, GL_FLOAT));
 
 	// Vertex shader
-	VertexShader vertexShader(Jade::Resources::TextFile("assets\\shaders\\default.vert"));
+	VertexShader vertexShader("assets\\shaders\\default.vert");
 
 	// Fragment shader
 	FragmentShader fragmentShader("assets\\shaders\\default.frag");
