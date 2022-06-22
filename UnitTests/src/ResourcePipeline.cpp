@@ -50,7 +50,7 @@ TEST_CASE("Image class can read Max alpha png images", "[Image]") {
 		REQUIRE(image.getContent()[i] == requiredData[i]);
 	}
 
-	image.dispose();
+	image.free();
 }
 
 TEST_CASE("Image class can read transparent png images", "[Image]") {
@@ -72,7 +72,7 @@ TEST_CASE("Image class can read transparent png images", "[Image]") {
 		REQUIRE(image.getContent()[i] == requiredData[i]);
 	}
 
-	image.dispose();
+	image.free();
 }
 
 TEST_CASE("Image class can read number of channels, width and height from png images", "[Image]") {
@@ -81,7 +81,7 @@ TEST_CASE("Image class can read number of channels, width and height from png im
 	REQUIRE(image.getHeight() == 3);
 	REQUIRE(image.getWidth() == 3);
 
-	image.dispose();
+	image.free();
 }
 
 TEST_CASE("Image class can read data from jpg images", "[Image]") {
@@ -103,7 +103,7 @@ TEST_CASE("Image class can read data from jpg images", "[Image]") {
 		REQUIRE(image.getContent()[i] == requiredData[i]);
 	}
 
-	image.dispose();
+	image.free();
 }
 
 TEST_CASE("Image class can read number of channels, width and height from jpg images", "[Image]") {
@@ -112,5 +112,5 @@ TEST_CASE("Image class can read number of channels, width and height from jpg im
 	REQUIRE(image.getHeight() == 3);
 	REQUIRE(image.getWidth() == 3);
 
-	image.dispose();
+	image.free();
 }
