@@ -5,9 +5,8 @@
 
 #include "Low Level Rendering/GLFW/GLFW.h"
 #include "Low Level Rendering/OpenGL/OpenGL.h"
-#include "Core Systems/Resource Pipeline/TextFile.h"
 #include "Core Systems/Logging/OpenGLErrors.h"
-#include "Core Systems/Resource Pipeline/Image.h"
+#include "Core Systems/Resource Pipeline/Resources.h"
 
 int main() {
 	// GLFW and GLEW init
@@ -24,10 +23,11 @@ int main() {
 
 	// Vertex buffer object
 	float vertices[] = {
-		-0.5,  0.5,  0.0, // Top left
-		 0.5,  0.5,  0.0, // Top right
-		 0.5, -0.5,  0.0, // Bottom right
-		-0.5, -0.5,  0.0  // Bottom left
+	 // Vertex Positions     Texture cords
+		-0.5,  0.5,  0.0,	  0.0f, 1.0f,	// Top left
+		 0.5,  0.5,  0.0,	  1.0f, 1.0f,	// Top right
+		 0.5, -0.5,  0.0,	  1.0f, 0.0f,	// Bottom right
+		-0.5, -0.5,  0.0,	  0.0f, 0.0f	// Bottom left
 	};
 
 	VertexBufferObject VBO(vertices, sizeof(vertices));
@@ -41,7 +41,15 @@ int main() {
 	ElementBufferObject EBO(indices, sizeof(indices));
 
 	// Vertex attribute pointers
-	VAO.addAttributePointer(VertexAttributePointer(3, GL_FLOAT));
+	VertexAttributePointer positionData(3, GL_FLOAT);
+	VertexAttributePointer texCordData(2, GL_FLOAT);
+
+	std::vector<VertexAttributePointer> attributePointers = {
+		positionData,
+		texCordData
+	};
+
+	VAO.addAttributePointers(attributePointers);
 
 	// Vertex shader
 	VertexShader vertexShader("assets\\shaders\\default.vert");
@@ -52,6 +60,23 @@ int main() {
 	// Shader program
 	ShaderProgram shaderProgram(fragmentShader, vertexShader);
 
+	// Texture setup
+	unsigned int texture;
+	glGenTextures(1, &texture);
+
+	glBindTexture(GL_TEXTURE_2D, texture);
+
+	Image imageTexture("assets\\textures\\container.jpg");
+
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, imageTexture.getWidth(), imageTexture.getHeight(), 0, GL_RGB, GL_UNSIGNED_BYTE, imageTexture.getContent());
+	imageTexture.free();
+
+	glGenerateMipmap(GL_TEXTURE_2D);
+
+	// Uncomment for wireframe rendering
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+	// Check for errors
 	glCheckError();
 
 	// Render loop
@@ -63,6 +88,7 @@ int main() {
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		shaderProgram.use();
+		glBindTexture(GL_TEXTURE_2D, texture);
 		VAO.bind();
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
