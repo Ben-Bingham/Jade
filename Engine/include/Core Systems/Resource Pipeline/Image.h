@@ -19,9 +19,8 @@ namespace Jade {
 
 				if (!m_Content) {
 					LOGGER.log("Image: " + newPath + "Failed to load.", Jade::ERROR);
+					this->free();
 				}
-
-				this->dispose();
 			}
 
 			void setPath(std::string&& newPath) {
@@ -30,16 +29,15 @@ namespace Jade {
 
 				if (!m_Content) {
 					LOGGER.log("Image: " + newPath + "Failed to load.", Jade::ERROR);
+					this->free();
 				}
-
-				this->dispose();
 			}
 
 			unsigned char* getContent() const { return m_Content; }
 			int getWidth() const { return m_Width; }
 			int getHeight() const { return m_Height; }
 			int getChannels() const { return m_Channels; }
-			void dispose() { stbi_image_free(m_Content); }
+			void free() { stbi_image_free(m_Content); }
 
 		private:
 			unsigned char* m_Content;
