@@ -18,7 +18,7 @@ namespace Jade {
 	public:
 		Log(LogLevel logLevel = INFO) : m_LogLevel(logLevel) {}
 
-		void log(std::string message, LogLevel messageLevel) {
+		void log(std::string& message, LogLevel messageLevel) {
 			if (messageLevel >= m_LogLevel) {
 				switch (messageLevel) {
 				default:
