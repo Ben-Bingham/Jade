@@ -16,11 +16,23 @@ namespace Jade {
 			void setPath(std::string& newPath) {
 				m_Path = newPath;
 				m_Content = stbi_load(m_Path.c_str(), &m_Width, &m_Height, &m_Channels, 0);
+
+				if (!m_Content) {
+					LOGGER.log("Image: " + newPath + "Failed to load.", Jade::ERROR);
+				}
+
+				this->dispose();
 			}
 
 			void setPath(std::string&& newPath) {
 				m_Path = newPath;
 				m_Content = stbi_load(m_Path.c_str(), &m_Width, &m_Height, &m_Channels, 0);
+
+				if (!m_Content) {
+					LOGGER.log("Image: " + newPath + "Failed to load.", Jade::ERROR);
+				}
+
+				this->dispose();
 			}
 
 			unsigned char* getContent() const { return m_Content; }
