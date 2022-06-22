@@ -7,10 +7,10 @@
 #include "Low Level Rendering/OpenGL/OpenGL.h"
 #include "Core Systems/Resource Pipeline/TextFile.h"
 #include "Core Systems/Logging/OpenGLErrors.h"
+#include "Core Systems/Resource Pipeline/Image.h"
 
 int main() {
 	// GLFW and GLEW init
-
 	Window window(640, 480, "Sandbox");
 
 	if (glewInit() != GLEW_OK) {
@@ -47,7 +47,7 @@ int main() {
 	VertexShader vertexShader(Jade::Resources::TextFile("assets\\shaders\\default.vert"));
 
 	// Fragment shader
-	FragmentShader fragmentShader(Jade::Resources::TextFile("assets\\shaders\\default.frag"));
+	FragmentShader fragmentShader("assets\\shaders\\default.frag");
 
 	// Shader program
 	ShaderProgram shaderProgram(fragmentShader, vertexShader);
