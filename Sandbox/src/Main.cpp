@@ -61,17 +61,7 @@ int main() {
 	ShaderProgram shaderProgram(fragmentShader, vertexShader);
 
 	// Texture setup
-	unsigned int texture;
-	glGenTextures(1, &texture);
-
-	glBindTexture(GL_TEXTURE_2D, texture);
-
-	Image imageTexture("assets\\textures\\container.jpg");
-
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, imageTexture.getWidth(), imageTexture.getHeight(), 0, GL_RGB, GL_UNSIGNED_BYTE, imageTexture.getContent());
-	imageTexture.free();
-
-	glGenerateMipmap(GL_TEXTURE_2D);
+	Texture texture("assets\\textures\\container.jpg");
 
 	// Uncomment for wireframe rendering
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -88,7 +78,7 @@ int main() {
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		shaderProgram.use();
-		glBindTexture(GL_TEXTURE_2D, texture);
+		texture.bind();
 		VAO.bind();
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
