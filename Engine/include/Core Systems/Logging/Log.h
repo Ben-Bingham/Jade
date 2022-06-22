@@ -3,11 +3,6 @@
 #include <iostream>
 
 namespace Jade {
-	template<class Type>
-	void print(Type value) {
-		std::cout << value << std::endl;
-	}
-
 	enum LogLevel {
 		INFO,
 		WARNING,
