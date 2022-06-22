@@ -30,14 +30,16 @@ workspace "Jade"
 			"Sandbox/**.cpp",
 			"Sandbox/**.h",
 			"Sandbox/assets/shaders/**.frag",
-			"Sandbox/assets/shaders/**.vert"
+			"Sandbox/assets/shaders/**.vert",
+			"Dependencies/stb image/**.h"
 		}
 
 		includedirs {
 			"Dependencies/GLFW/include",
 			"Dependencies/glew-2.1.0/include",
 			"Sandbox/include",
-			"Sandbox/assets/shaders"
+			"Sandbox/assets/shaders",
+			"Dependencies/stb image"
 		}
 
 		libdirs {
@@ -55,12 +57,12 @@ workspace "Jade"
 		language "C++"
 		location "Engine"
 
-		files {"Engine/**.cpp", "Engine/**.h"}
-
+		files {"Engine/**.cpp", "Engine/**.h", "Dependencies/stb image/**.h"}
 
 		includedirs {
 			"Dependencies/GLFW/include",
 			"Dependencies/glew-2.1.0/include",
+			"Dependencies/stb image"
 		}
 
 		libdirs {
@@ -78,11 +80,20 @@ workspace "Jade"
 		language "C++"
 		location "UnitTests"
 
-		files {"UnitTests/**.cpp", "UnitTests/**.h", "UnitTests/assets/**.txt"}
+		files {
+			"UnitTests/**.cpp",
+			"UnitTests/**.h",
+			"UnitTests/assets/**.txt",
+			"UnitTests/assets/**.jpg",
+			"UnitTests/assets/**.jpeg",
+			"UnitTests/assets/**.png",
+			"Dependencies/stb image/**.h"
+		}
 
 
 		includedirs { 
-			"UnitTests/include"
+			"UnitTests/include",
+			"Dependencies/stb image"
 		}
 
 		links { "Engine" }
