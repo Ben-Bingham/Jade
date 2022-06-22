@@ -12,6 +12,8 @@ namespace Jade {
 			class FragmentShader : public Shader {
 			public:
 				FragmentShader(Jade::Resources::TextFile& shaderSourceFile);
+				FragmentShader(std::string& path);
+				FragmentShader(std::string&& path);
 
 				~FragmentShader() {
 					dispose();
