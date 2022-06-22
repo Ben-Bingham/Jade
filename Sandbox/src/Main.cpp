@@ -6,6 +6,7 @@
 #include "Low Level Rendering/GLFW/GLFW.h"
 #include "Low Level Rendering/OpenGL/OpenGL.h"
 #include "Core Systems/Resource Pipeline/TextFile.h"
+#include "Core Systems/Logging/OpenGLErrors.h"
 
 int main() {
 	// GLFW and GLEW init
@@ -51,6 +52,8 @@ int main() {
 	// Shader program
 	ShaderProgram shaderProgram(fragmentShader, vertexShader);
 
+	glCheckError();
+
 	// Render loop
 
 	while (!window.getWindowShouldClose()) {
@@ -64,6 +67,7 @@ int main() {
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 		window.swapBuffers();
+		glCheckError();
 	}
 
 	// Cleanup
