@@ -1,11 +1,11 @@
-#include <iostream>
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
 #include "Jade.h"
 
-#include "GLFW/GLFW.h"
-#include "OpenGL/OpenGL.h"
+#include "Low Level Rendering/GLFW/GLFW.h"
+#include "Low Level Rendering/OpenGL/OpenGL.h"
+#include "Core Systems/Resource Pipeline/TextFile.h"
 
 int main() {
 	// GLFW and GLEW init

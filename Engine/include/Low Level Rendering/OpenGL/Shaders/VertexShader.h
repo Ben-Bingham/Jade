@@ -3,7 +3,7 @@
 
 #include "Jade.h"
 
-#include "Resource Pipeline/TextFile.h"
+#include "Core Systems/Resource Pipeline/TextFile.h"
 #include "Shader.h"
 
 namespace Jade {

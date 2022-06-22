@@ -1,6 +1,6 @@
 #include "Log.h"
 #include "UnitTests.h"
-#include "Resource Pipeline/TextFile.h"
+#include "Core Systems/Resource Pipeline/TextFile.h"
 
 TEST_CASE("TextFile class can read text files", "[TextFile]") {
 

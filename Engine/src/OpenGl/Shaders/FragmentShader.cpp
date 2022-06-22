@@ -2,9 +2,9 @@
 
 #include "Jade.h"
 
-#include "OpenGL/Shaders/FragmentShader.h"
+#include "Low Level Rendering/OpenGL/Shaders/FragmentShader.h"
 
-#include "Resource Pipeline/TextFile.h"
+#include "Core Systems/Resource Pipeline/TextFile.h"
 
 namespace Jade {
 	namespace OpenGL {

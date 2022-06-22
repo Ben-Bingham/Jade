@@ -2,7 +2,7 @@
 
 #include "Jade.h"
 
-#include "GLFW/Window.h"
+#include "Low Level Rendering/GLFW/Window.h"
 
 namespace Jade {
 	namespace GLFW {

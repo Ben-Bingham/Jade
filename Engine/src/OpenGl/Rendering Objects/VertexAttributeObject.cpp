@@ -1,6 +1,7 @@
 #include <GL/glew.h>
 #include <vector>
-#include "OpenGL/Rendering Objects/VertexAttributeObject.h"
+
+#include "Low Level Rendering/OpenGL/Rendering Objects/VertexAttributeObject.h"
 
 namespace Jade {
 	namespace OpenGL {

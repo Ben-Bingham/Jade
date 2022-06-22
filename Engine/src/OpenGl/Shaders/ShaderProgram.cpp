@@ -1,8 +1,8 @@
 #include "Jade.h"
 
-#include "OpenGL/Shaders/VertexShader.h"
-#include "OpenGL/Shaders/FragmentShader.h"
-#include "OpenGL/Shaders/ShaderProgram.h"
+#include "Low Level Rendering/OpenGL/Shaders/VertexShader.h"
+#include "Low Level Rendering/OpenGL/Shaders/FragmentShader.h"
+#include "Low Level Rendering/OpenGL/Shaders/ShaderProgram.h"
 
 namespace Jade {
 	namespace OpenGL {

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Resource Pipeline/TextFile.h"
+#include "Core Systems/Resource Pipeline/TextFile.h"
 
 namespace Jade {
 	namespace OpenGL {
