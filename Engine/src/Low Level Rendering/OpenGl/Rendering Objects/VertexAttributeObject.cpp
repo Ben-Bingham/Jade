@@ -6,7 +6,7 @@
 namespace Jade {
 	namespace OpenGL {
 		namespace RenderingObjects {
-			void VertexAttributeObject::addAttributePointer(VertexArrtibutePointer attributePointer) {
+			void VertexAttributeObject::addAttributePointer(VertexAttributePointer attributePointer) {
 				unsigned int offset = 0;
 				for (int i = 0; i < m_VertexArrtibutePointers.size(); i++) {
 					offset += m_VertexArrtibutePointers.at(i).stride;
@@ -26,7 +26,7 @@ namespace Jade {
 				m_VertexArrtibutePointers.push_back(attributePointer);
 			}
 
-			VertexArrtibutePointer::VertexArrtibutePointer(unsigned int Size, GLenum Type) 
+			VertexAttributePointer::VertexAttributePointer(unsigned int Size, GLenum Type) 
 				: size(Size), type(Type) {
 				switch (type) {
 				default:

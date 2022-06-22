@@ -8,8 +8,8 @@
 namespace Jade {
 	namespace OpenGL {
 		namespace RenderingObjects {
-			struct VertexArrtibutePointer {
-				VertexArrtibutePointer(unsigned int Size, GLenum Type);
+			struct VertexAttributePointer {
+				VertexAttributePointer(unsigned int Size, GLenum Type);
 
 				unsigned int size;
 				GLenum type;
@@ -38,11 +38,11 @@ namespace Jade {
 
 				unsigned int getVAO() const { return m_VAO; }
 
-				void addAttributePointer(VertexArrtibutePointer attributePointer);
+				void addAttributePointer(VertexAttributePointer attributePointer);
 
 			private:
 				unsigned int m_VAO;
-				std::vector<VertexArrtibutePointer> m_VertexArrtibutePointers;
+				std::vector<VertexAttributePointer> m_VertexArrtibutePointers;
 			};
 		}
 	}

@@ -41,7 +41,7 @@ int main() {
 	ElementBufferObject EBO(indices, sizeof(indices));
 
 	// Vertex attribute pointers
-	VAO.addAttributePointer(VertexArrtibutePointer(3, GL_FLOAT));
+	VAO.addAttributePointer(VertexAttributePointer(3, GL_FLOAT));
 
 	// Vertex shader
 	VertexShader vertexShader("assets\\shaders\\default.vert");
