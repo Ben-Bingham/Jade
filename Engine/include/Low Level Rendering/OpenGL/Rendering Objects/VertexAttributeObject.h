@@ -13,7 +13,7 @@ namespace Jade {
 
 				unsigned int size;
 				GLenum type;
-				unsigned int stride;
+				unsigned int sizeOfType;
 			};
 
 			class VertexAttributeObject {
@@ -25,6 +25,7 @@ namespace Jade {
 				}
 
 				~VertexAttributeObject() {
+					bind();
 					glDeleteVertexArrays(1, &m_VAO);
 				}
 
@@ -39,10 +40,11 @@ namespace Jade {
 				unsigned int getVAO() const { return m_VAO; }
 
 				void addAttributePointer(VertexAttributePointer attributePointer);
+				void addAttributePointers(std::vector<VertexAttributePointer> attributePointers);
 
 			private:
 				unsigned int m_VAO;
-				std::vector<VertexAttributePointer> m_VertexArrtibutePointers;
+				std::vector<VertexAttributePointer> m_VertexAttributePointers;
 			};
 		}
 	}
