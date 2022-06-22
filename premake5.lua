@@ -31,7 +31,11 @@ workspace "Jade"
 			"Sandbox/**.h",
 			"Sandbox/assets/shaders/**.frag",
 			"Sandbox/assets/shaders/**.vert",
-			"Dependencies/stb image/**.h"
+			"Dependencies/stb image/**.h",
+			"Sandbox/assets/textures/**.jpg",
+			"Sandbox/assets/textures/**.jpeg",
+			"Sandbox/assets/textures/**.png"
+
 		}
 
 		includedirs {
