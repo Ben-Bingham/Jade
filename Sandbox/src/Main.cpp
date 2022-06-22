@@ -63,24 +63,7 @@ int main() {
 	FragmentShader fragmentShader(Jade::Resources::TextFile("assets\\shaders\\default.frag"));
 
 	// Shader program
-	int success;
-	char infoLog[512];
-
-	unsigned int shaderProgram = glCreateProgram();
-
-	glAttachShader(shaderProgram, vertexShader.getShader());
-	glAttachShader(shaderProgram, fragmentShader.getShader());
-	glLinkProgram(shaderProgram);
-
-	glGetProgramiv(shaderProgram, GL_LINK_STATUS, &success);
-	if (!success) {
-		glGetProgramInfoLog(shaderProgram, 512, NULL, infoLog);
-		LOGGER.log("Shader program failed to link", Jade::ERROR);
-		LOGGER.log(infoLog, Jade::ERROR);
-	}
-
-	vertexShader.dispose();
-	fragmentShader.dispose();
+	ShaderProgram shaderProgram(fragmentShader, vertexShader);
 
 	// Render loop
 
@@ -90,7 +73,7 @@ int main() {
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		glUseProgram(shaderProgram);
+		shaderProgram.use();
 		VAO.bind();
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
