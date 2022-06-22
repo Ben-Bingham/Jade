@@ -4,27 +4,13 @@
 
 #include "Jade.h"
 
+#include "GLFW/GLFW.h"
 #include "OpenGL/OpenGL.h"
 
 int main() {
 	// GLFW and GLEW init
 
-	if (!glfwInit()) {
-		LOGGER.log("GLFW failed to initilize.", Jade::ERROR);
-	}
-
-	// Minimum required OpenGL version is 3.3
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-
-	GLFWwindow* window = glfwCreateWindow(640, 480, "Jade", NULL, NULL);
-	if (!window) {
-		LOGGER.log("GLFW window creation failed.", Jade::ERROR);
-		LOGGER.log("OpenGL context creation failed.", Jade::ERROR);
-	}
-
-	glfwMakeContextCurrent(window);
-	glfwSwapInterval(1);
+	Window window(640, 480, "Sandbox");
 
 	if (glewInit() != GLEW_OK) {
 		LOGGER.log("GLEW failed to initilize.", Jade::ERROR);
@@ -67,7 +53,7 @@ int main() {
 
 	// Render loop
 
-	while (!glfwWindowShouldClose(window)) {
+	while (!glfwWindowShouldClose(window.getWindow())) {
 		
 		glfwPollEvents();
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -77,12 +63,12 @@ int main() {
 		VAO.bind();
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
-		glfwSwapBuffers(window);
+		glfwSwapBuffers(window.getWindow());
 	}
 
 	// Cleanup
 
-	glfwDestroyWindow(window);
+	glfwDestroyWindow(window.getWindow());
 	glfwTerminate();
 
 	return 0;
