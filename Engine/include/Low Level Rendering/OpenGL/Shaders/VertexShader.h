@@ -12,6 +12,8 @@ namespace Jade {
 			class VertexShader : public Shader {
 			public:
 				VertexShader(Jade::Resources::TextFile& shaderSourceFile);
+				VertexShader(std::string& path);
+				VertexShader(std::string&& path);
 
 				~VertexShader() {
 					dispose();
