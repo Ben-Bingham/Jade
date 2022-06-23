@@ -11,11 +11,11 @@ namespace Jade {
 		namespace RenderingObjects {
 			class Texture {
 			public:
-				Texture(Jade::Resources::Image image);
-				Texture(std::string& path);
-				Texture(std::string&& path);
+				Texture(const Jade::Resources::Image& image);
+				Texture(const std::string& path);
 
 				void bind() { glBindTexture(GL_TEXTURE_2D, m_Texture); }
+				static void activateUnit(int unit) { glActiveTexture(GL_TEXTURE0 + unit); }
 
 			private:
 				unsigned int m_Texture;
