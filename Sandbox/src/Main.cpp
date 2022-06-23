@@ -63,6 +63,9 @@ int main() {
 	// Texture setup
 	Texture texture("assets\\textures\\container.jpg");
 
+	shaderProgram.use();
+	shaderProgram.setInt("texture1", 0);
+
 	// Uncomment for wireframe rendering
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
@@ -78,6 +81,7 @@ int main() {
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		shaderProgram.use();
+		Texture::activateUnit(0);
 		texture.bind();
 		VAO.bind();
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
