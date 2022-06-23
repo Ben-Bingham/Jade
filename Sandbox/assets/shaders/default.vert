@@ -2,9 +2,9 @@
 layout (location = 0) in vec3 inputPositon;
 layout (location = 1) in vec2 inputTextureCords;
 
-out vec2 outputTextureCords;
+out vec2 outTextureCords;
 
 void main() {
 	gl_Position = vec4(inputPositon.xyz, 1.0);
-	outputTextureCords = inputTextureCords;
+	outTextureCords = inputTextureCords;
 }

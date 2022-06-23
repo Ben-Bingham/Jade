@@ -61,10 +61,13 @@ int main() {
 	ShaderProgram shaderProgram(fragmentShader, vertexShader);
 
 	// Texture setup
-	Texture texture("assets\\textures\\container.jpg");
+	Texture texture1("assets\\textures\\container.jpg");
+	Texture texture2("assets\\textures\\awesomeface.png");
 
 	shaderProgram.use();
 	shaderProgram.setInt("texture1", 0);
+
+	shaderProgram.setInt("texture2", 1);
 
 	// Uncomment for wireframe rendering
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -82,7 +85,10 @@ int main() {
 
 		shaderProgram.use();
 		Texture::activateUnit(0);
-		texture.bind();
+		texture1.bind();
+		Texture::activateUnit(1);
+		texture2.bind();
+
 		VAO.bind();
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
