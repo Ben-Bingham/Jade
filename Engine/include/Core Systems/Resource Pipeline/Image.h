@@ -9,7 +9,6 @@ namespace Jade {
 	namespace Resources {
 		class Image {
 		public:
-			Image() {}
 			Image(const std::string path) { setPath(path); }
 
 			void setPath(const std::string& newPath) {
