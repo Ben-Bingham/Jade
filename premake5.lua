@@ -5,7 +5,8 @@ workspace "Jade"
 	startproject "Sandbox"
 
 	includedirs {
-		"Engine/include"
+		"Engine/include",
+		"Malachite/include"
 	}
 
 	filter "platforms:x32"
@@ -35,7 +36,6 @@ workspace "Jade"
 			"Sandbox/assets/textures/**.jpg",
 			"Sandbox/assets/textures/**.jpeg",
 			"Sandbox/assets/textures/**.png"
-
 		}
 
 		includedirs {
@@ -51,7 +51,7 @@ workspace "Jade"
 			"Dependencies/glew-2.1.0/lib/Release/Win32"
 		}
 
-		links {"glfw3", "glew32s", "opengl32", "Engine"}
+		links {"glfw3", "glew32s", "opengl32", "Engine", "Malachite"}
 
 		targetdir ("Sandbox/build/bin")
 		objdir ("Sandbox/build/bin-int")
@@ -74,10 +74,20 @@ workspace "Jade"
 			"Dependencies/glew-2.1.0/lib/Release/Win32"
 		}	
 
-		links {"glfw3", "glew32s", "opengl32"}
+		links {"glfw3", "glew32s", "opengl32", "Malachite"}
 
 		targetdir ("Engine/build/bin")
 		objdir ("Engine/build/bin-int")
+
+	project "Malachite"
+		kind "StaticLib"
+		language "C++"
+		location "Malachite"
+
+		files {"Malachite/**.cpp", "Malachite/**.h"}
+
+		targetdir ("Malachite/build/bin")
+		objdir ("Malachite/build/bin-int")
 
 	project "UnitTests"
 		kind "ConsoleApp"
@@ -100,7 +110,7 @@ workspace "Jade"
 			"Dependencies/stb image"
 		}
 
-		links { "Engine" }
+		links { "Engine", "Malachite" }
 
 		targetdir ("UnitTests/build/bin")
 		objdir ("UnitTests/build/bin-int")
