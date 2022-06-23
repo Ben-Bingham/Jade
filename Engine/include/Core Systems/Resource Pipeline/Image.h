@@ -10,21 +10,11 @@ namespace Jade {
 		class Image {
 		public:
 			Image() {}
-			Image(std::string& path) { setPath(path); }
-			Image(std::string&& path) { setPath(std::move(path)); }
+			Image(const std::string path) { setPath(path); }
 
-			void setPath(std::string& newPath) {
+			void setPath(const std::string& newPath) {
 				m_Path = newPath;
-				m_Content = stbi_load(m_Path.c_str(), &m_Width, &m_Height, &m_Channels, 0);
 
-				if (!m_Content) {
-					LOGGER.log("Image: " + newPath + "Failed to load.", Jade::ERROR);
-					this->free();
-				}
-			}
-
-			void setPath(std::string&& newPath) {
-				m_Path = newPath;
 				m_Content = stbi_load(m_Path.c_str(), &m_Width, &m_Height, &m_Channels, 0);
 
 				if (!m_Content) {
