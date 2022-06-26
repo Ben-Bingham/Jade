@@ -10,9 +10,9 @@ namespace Malachite {
 		float z;
 
 		Vector3f() : x(0), y(0), z(0) {}
-		Vector3f(float value) : x(value), y(value), z(value) {}		
-		Vector3f (float X, float Y, float Z) : x(X), y(Y), z(Z) {}
-		
+		Vector3f(float value) : x(value), y(value), z(value) {}
+		Vector3f(float X, float Y, float Z) : x(X), y(Y), z(Z) {}
+
 		Vector3f operator-() const { return Vector3f(-x, -y, -z); }
 
 		Vector3f& operator+=(const Vector3f& other) {
@@ -52,6 +52,10 @@ namespace Malachite {
 
 		float length() const {
 			return std::sqrt(lengthSquared());
+		}
+
+		void normalize() {
+			*this /= this->length();
 		}
 	};
 
