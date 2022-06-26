@@ -9,10 +9,12 @@ namespace Jade {
 	namespace Resources {
 		class Image {
 		public:
-			Image(const std::string path) { setPath(path); }
+			Image(const std::string path, bool flipVertically = true) { setPath(path, flipVertically); }
 
-			void setPath(const std::string& newPath) {
+			void setPath(const std::string& newPath, bool flipVertically) {
 				m_Path = newPath;
+
+				stbi_set_flip_vertically_on_load(flipVertically);
 
 				m_Content = stbi_load(m_Path.c_str(), &m_Width, &m_Height, &m_Channels, 0);
 

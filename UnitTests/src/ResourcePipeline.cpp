@@ -44,7 +44,7 @@ TEST_CASE("Image class can read Max alpha png images", "[Image]") {
 		0  , 0  , 255, 255
 	};
 
-	Jade::Resources::Image image("assets\\pngTest.png");
+	Jade::Resources::Image image("assets\\pngTest.png", false);
 
 	for (int i = 0; i < 36; i++) {
 		REQUIRE(image.getContent()[i] == requiredData[i]);
@@ -66,7 +66,7 @@ TEST_CASE("Image class can read transparent png images", "[Image]") {
 		156, 204, 101, 255
 	};
 
-	Jade::Resources::Image image("assets\\pngTransparentTest.png");
+	Jade::Resources::Image image("assets\\pngTransparentTest.png", false);
 
 	for (int i = 0; i < 36; i++) {
 		REQUIRE(image.getContent()[i] == requiredData[i]);
@@ -97,7 +97,7 @@ TEST_CASE("Image class can read data from jpg images", "[Image]") {
 		1  , 18 , 160
 	};
 
-	Jade::Resources::Image image("assets\\jpgTest.jpg");
+	Jade::Resources::Image image("assets\\jpgTest.jpg", false);
 
 	for (int i = 0; i < 27; i++) {
 		REQUIRE(image.getContent()[i] == requiredData[i]);
@@ -107,7 +107,7 @@ TEST_CASE("Image class can read data from jpg images", "[Image]") {
 }
 
 TEST_CASE("Image class can read number of channels, width and height from jpg images", "[Image]") {
-	Jade::Resources::Image image("assets\\jpgTest.jpg");
+	Jade::Resources::Image image("assets\\jpgTest.jpg", false);
 	REQUIRE(image.getChannels() == 3);
 	REQUIRE(image.getHeight() == 3);
 	REQUIRE(image.getWidth() == 3);
