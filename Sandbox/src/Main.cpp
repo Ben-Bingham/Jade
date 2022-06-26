@@ -12,17 +12,26 @@
 #include "Core Systems/Logging/OpenGLErrors.h"
 #include "Core Systems/Resource Pipeline/Resources.h"
 
+// Global variables
 unsigned int screenWidth = 640;
 unsigned int screenHeight = 480;
 
 glm::mat4 projection;
 
+// Function callbacks
 void framebufferSizeCallback(GLFWwindow* window, int width, int height) {
 	glViewport(0, 0, width, height);
 	screenWidth = width;
 	screenHeight = height;
 
 	glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)screenWidth / (float)screenHeight, 0.1f, 100.0f);
+}
+
+// Helper functions
+void porcessInput(GLFWwindow* window) {
+	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+		glfwSetWindowShouldClose(window, true);
+	}
 }
 
 int main() {
@@ -160,6 +169,8 @@ int main() {
 
 	while (!window.getWindowShouldClose()) {
 		
+		porcessInput(window.getWindow());
+
 		window.pollEvents();
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
