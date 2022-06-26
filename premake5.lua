@@ -6,7 +6,7 @@ workspace "Jade"
 
 	includedirs {
 		"Engine/include",
-		"Dependencies/glm"
+		"Dependencies/GLM"
 	}
 
 	filter "platforms:x32"
@@ -36,7 +36,7 @@ workspace "Jade"
 			"Sandbox/assets/textures/**.jpg",
 			"Sandbox/assets/textures/**.jpeg",
 			"Sandbox/assets/textures/**.png",
-			"Dependencies/glm/**.hpp"
+			"Dependencies/GLM/*.hpp"
 		}
 
 		includedirs {
@@ -65,7 +65,7 @@ workspace "Jade"
 		files {
 			"Engine/**.cpp", "Engine/**.h",
 			"Dependencies/stb image/**.h",
-			"Dependencies/glm/**.hpp"
+			"Dependencies/GLM/*.hpp"
 		}
 
 		includedirs {
