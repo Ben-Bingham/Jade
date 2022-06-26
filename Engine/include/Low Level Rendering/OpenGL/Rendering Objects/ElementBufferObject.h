@@ -26,8 +26,6 @@ namespace Jade {
 					glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 				}
 
-				unsigned int getEBO() const { return m_EBO; }
-
 			private:
 				unsigned int m_EBO;
 			};
