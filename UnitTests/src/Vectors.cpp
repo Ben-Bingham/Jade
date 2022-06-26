@@ -42,4 +42,28 @@ TEST_CASE("Cross product can be succesfully calculated", "[Vector3f]") {
 	REQUIRE(compareFloats(cross(vector1, vector3).y, -9.938511f));
 	REQUIRE(compareFloats(cross(vector1, vector3).z, 3.30167f));
 }
+
+// QUATERNIONS
+
+TEST_CASE("Quaternion can be created using angle and axis", "[Quaternion]") {
+	Quaternion quaternion(90, Vector3f(0, 1, 0));
+
+	REQUIRE(compareFloats(quaternion.i, 0));
+	REQUIRE(compareFloats(quaternion.j, 0.8509f));
+	REQUIRE(compareFloats(quaternion.k, 0));
+	REQUIRE(compareFloats(quaternion.s, 0.5253f));
+
+	Quaternion quaternion2(90, Vector3f(0, 1, 1));
+
+	REQUIRE(compareFloats(quaternion2.i, 0));
+	REQUIRE(compareFloats(quaternion2.j, 0.6016797f));
+	REQUIRE(compareFloats(quaternion2.k, 0.6016797f));
+	REQUIRE(compareFloats(quaternion2.s, 0.525322f));
+
+	Quaternion quaternion3(134.13556f, Vector3f(12.548f, 0.1234515f, 5.154156f));
+
+	REQUIRE(compareFloats(quaternion3.i, -0.8219481f));
+	REQUIRE(compareFloats(quaternion3.j, -0.0080866f));
+	REQUIRE(compareFloats(quaternion3.k, -0.3376195f));
+	REQUIRE(compareFloats(quaternion3.s, -0.4586382f));
 }
