@@ -14,4 +14,6 @@ namespace Malachite {
 		Vector4f(float X, float Y, float Z, float W) : x(X), y(Y), z(Z), w(W) {}
 		Vector4f(const Vector3f& vector3, float W) : x(vector3.x), y(vector3.y), z(vector3.z), w(W) {}
 	};
+
+	using Quaternion = Vector4f;
 }
