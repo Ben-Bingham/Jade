@@ -18,21 +18,21 @@ unsigned int screenHeight = 480;
 
 glm::mat4 projection;
 
-// Function callbacks
-void framebufferSizeCallback(GLFWwindow* window, int width, int height) {
-	glViewport(0, 0, width, height);
-	screenWidth = width;
-	screenHeight = height;
+float deltaTime;
+float lastFrame;
 
-	glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)screenWidth / (float)screenHeight, 0.1f, 100.0f);
-}
+// Function callbacks
+void framebufferSizeCallback(GLFWwindow* window, int width, int height);
 
 // Helper functions
-void porcessInput(GLFWwindow* window) {
-	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
-		glfwSetWindowShouldClose(window, true);
-	}
-}
+void porcessInput(GLFWwindow* window);
+
+// Camera setup
+const float cameraSpeed = 2.5f;
+
+glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
+glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
 int main() {
 	// GLFW and GLEW init
@@ -100,23 +100,8 @@ int main() {
 	-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
 	-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 	};
-	//float vertices[] = {
-	// // Vertex Positions     Texture cords
-	//	-0.5,  0.5,  0.0,	  0.0f, 1.0f,	// Top left
-	//	 0.5,  0.5,  0.0,	  1.0f, 1.0f,	// Top right
-	//	 0.5, -0.5,  0.0,	  1.0f, 0.0f,	// Bottom right
-	//	-0.5, -0.5,  0.0,	  0.0f, 0.0f	// Bottom left
-	//};
 
 	VertexBufferObject VBO(vertices, sizeof(vertices));
-
-	// Element buffer object
-	/*unsigned int indices[] = {
-		0, 1, 2,
-		0, 2, 3
-	};
-
-	ElementBufferObject EBO(indices, sizeof(indices));*/
 
 	// Vertex attribute pointers
 	VertexAttributePointer positionData(3, GL_FLOAT);
@@ -151,13 +136,6 @@ int main() {
 	Texture::activateUnit(1);
 	texture2.bind();
 
-	// Camera setup
-	glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
-	glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-	glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
-
-	glm::mat4 view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
-
 	// Check for errors
 	glCheckError();
 
@@ -168,7 +146,10 @@ int main() {
 	// Render loop
 
 	while (!window.getWindowShouldClose()) {
-		
+		float currentFrame = glfwGetTime();
+		deltaTime = currentFrame - lastFrame;
+		lastFrame = currentFrame;
+
 		porcessInput(window.getWindow());
 
 		window.pollEvents();
@@ -177,6 +158,9 @@ int main() {
 
 		glm::mat4 model = glm::mat4(1.0f);
 		model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
+
+		glm::mat4 view;
+		view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 
 		shaderProgram.use();
 
@@ -196,4 +180,30 @@ int main() {
 	window.dispose();
 
 	return 0;
+}
+
+void porcessInput(GLFWwindow* window) {
+	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+		glfwSetWindowShouldClose(window, true);
+	}
+	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+		cameraPos += cameraSpeed * cameraFront * deltaTime;
+	}
+	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
+		cameraPos -= cameraSpeed * cameraFront * deltaTime;
+	}
+	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
+		cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed * deltaTime;
+	}
+	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
+		cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed * deltaTime;
+	}
+}
+
+void framebufferSizeCallback(GLFWwindow* window, int width, int height) {
+	glViewport(0, 0, width, height);
+	screenWidth = width;
+	screenHeight = height;
+
+	glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)screenWidth / (float)screenHeight, 0.1f, 100.0f);
 }
