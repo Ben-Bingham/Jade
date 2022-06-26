@@ -70,8 +70,13 @@ int main() {
 
 	shaderProgram.use();
 	shaderProgram.setInt("texture1", 0);
-
 	shaderProgram.setInt("texture2", 1);
+
+	glm::mat4 matrix(1.0);
+	matrix = glm::rotate(matrix, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
+	matrix = glm::scale(matrix, glm::vec3(0.5, 0.5, 0.5));
+
+	shaderProgram.setMatrix4f("transform", matrix);
 
 	// Uncomment for wireframe rendering
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
