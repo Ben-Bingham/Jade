@@ -12,9 +12,24 @@
 #include "Core Systems/Logging/OpenGLErrors.h"
 #include "Core Systems/Resource Pipeline/Resources.h"
 
+unsigned int screenWidth = 640;
+unsigned int screenHeight = 480;
+
+glm::mat4 projection;
+
+void framebufferSizeCallback(GLFWwindow* window, int width, int height) {
+	glViewport(0, 0, width, height);
+	screenWidth = width;
+	screenHeight = height;
+
+	glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)screenWidth / (float)screenHeight, 0.1f, 100.0f);
+}
+
 int main() {
 	// GLFW and GLEW init
-	Window window(640, 480, "Sandbox");
+	Window window(screenWidth, screenHeight, "Sandbox");
+
+	glfwSetFramebufferSizeCallback(window.getWindow(), framebufferSizeCallback);
 
 	if (glewInit() != GLEW_OK) {
 		LOGGER.log("GLEW failed to initilize.", Jade::ERROR);
@@ -72,11 +87,10 @@ int main() {
 	shaderProgram.setInt("texture1", 0);
 	shaderProgram.setInt("texture2", 1);
 
-	glm::mat4 matrix(1.0);
-	matrix = glm::rotate(matrix, glm::radians(90.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-	matrix = glm::scale(matrix, glm::vec3(0.5, 0.5, 0.5));
-
-	shaderProgram.setMatrix4f("transform", matrix);
+	Texture::activateUnit(0);
+	texture1.bind();
+	Texture::activateUnit(1);
+	texture2.bind();
 
 	// Uncomment for wireframe rendering
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -84,6 +98,10 @@ int main() {
 	// Check for errors
 	glCheckError();
 
+	// Matrix setup
+
+	glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)screenWidth / (float)screenHeight, 0.1f, 100.0f);
+	
 	// Render loop
 
 	while (!window.getWindowShouldClose()) {
@@ -92,11 +110,17 @@ int main() {
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
+		glm::mat4 model = glm::mat4(1.0f);
+		model = glm::rotate(model, glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+
+		glm::mat4 view = glm::mat4(1.0f);
+		view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+
 		shaderProgram.use();
-		Texture::activateUnit(0);
-		texture1.bind();
-		Texture::activateUnit(1);
-		texture2.bind();
+
+		shaderProgram.setMatrix4f("model", model);
+		shaderProgram.setMatrix4f("view", view);
+		shaderProgram.setMatrix4f("projection", projection);
 
 		VAO.bind();
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
