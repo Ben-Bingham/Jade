@@ -44,10 +44,10 @@ int main() {
 	// GLFW and GLEW init
 	Jade::Window window(screenWidth, screenHeight, "Sandbox");
 
-	glfwSetFramebufferSizeCallback(window.getWindow(), framebufferSizeCallback);
-	glfwSetInputMode(window.getWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-	glfwSetCursorPosCallback(window.getWindow(), mouseCallback);
-	glfwSetScrollCallback(window.getWindow(), scrollCallback);
+	window.addFrameBufferSizeCallback(framebufferSizeCallback);
+	window.addMousePositionCallback(mouseCallback);
+	window.addScrollWheelCallback(scrollCallback);
+	window.disableCursor();
 
 	if (glewInit() != GLEW_OK) {
 		LOGGER.log("GLEW failed to initilize.", Jade::ERROR);
@@ -214,7 +214,7 @@ void framebufferSizeCallback(GLFWwindow* window, int width, int height) {
 	screenWidth = width;
 	screenHeight = height;
 
-	glm::mat4 projection = glm::perspective(glm::radians(camera.getFOV()), (float)screenWidth / (float)screenHeight, 0.1f, 100.0f);
+	projection = glm::perspective(glm::radians(camera.getFOV()), (float)screenWidth / (float)screenHeight, 0.1f, 100.0f); //TODO objects seem to stretch when window is resized
 }
 
 void mouseCallback(GLFWwindow* window, double xPos, double yPos) {
