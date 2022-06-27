@@ -36,7 +36,8 @@ workspace "Jade"
 			"Sandbox/assets/textures/**.jpg",
 			"Sandbox/assets/textures/**.jpeg",
 			"Sandbox/assets/textures/**.png",
-			"Dependencies/GLM/*.hpp"
+			"Dependencies/GLM/*.hpp",
+			"Engine/include/*.h"
 		}
 
 		includedirs {
@@ -64,8 +65,7 @@ workspace "Jade"
 
 		files {
 			"Engine/**.cpp", "Engine/**.h",
-			"Dependencies/stb image/**.h",
-			"Dependencies/GLM/*.hpp"
+			"Dependencies/stb image/**.h"
 		}
 
 		includedirs {
