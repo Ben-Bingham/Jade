@@ -6,7 +6,7 @@
 // Text files -------------------------------------------------------------------------------------
 TEST_CASE("TextFile class can read text files", "[TextFile]") {
 
-	Jade::Resources::TextFile file("assets\\Test Text Document.txt");
+	Jade::TextFile file("assets\\Test Text Document.txt");
 
 	std::string string = "This is a test document.\n\nIt has multiple lines.\n\nIt is quite short.\0";
 
@@ -15,7 +15,7 @@ TEST_CASE("TextFile class can read text files", "[TextFile]") {
 
 TEST_CASE("TextFile class can read empty text files", "[TextFile]") {
 
-	Jade::Resources::TextFile file("assets\\Test Text Document2.txt");
+	Jade::TextFile file("assets\\Test Text Document2.txt");
 
 	std::string string = "\0";
 
@@ -24,7 +24,7 @@ TEST_CASE("TextFile class can read empty text files", "[TextFile]") {
 
 TEST_CASE("TextFile class can save path of file", "[TextFile]") {
 	std::string path = "assets\\Test Text Document2.txt";
-	Jade::Resources::TextFile file(path);
+	Jade::TextFile file(path);
 
 	REQUIRE(file.getPath() == path);
 }
@@ -44,7 +44,7 @@ TEST_CASE("Image class can read Max alpha png images", "[Image]") {
 		0  , 0  , 255, 255
 	};
 
-	Jade::Resources::Image image("assets\\pngTest.png", false);
+	Jade::Image image("assets\\pngTest.png", false);
 
 	for (int i = 0; i < 36; i++) {
 		REQUIRE(image.getContent()[i] == requiredData[i]);
@@ -66,7 +66,7 @@ TEST_CASE("Image class can read transparent png images", "[Image]") {
 		156, 204, 101, 255
 	};
 
-	Jade::Resources::Image image("assets\\pngTransparentTest.png", false);
+	Jade::Image image("assets\\pngTransparentTest.png", false);
 
 	for (int i = 0; i < 36; i++) {
 		REQUIRE(image.getContent()[i] == requiredData[i]);
@@ -76,7 +76,7 @@ TEST_CASE("Image class can read transparent png images", "[Image]") {
 }
 
 TEST_CASE("Image class can read number of channels, width and height from png images", "[Image]") {
-	Jade::Resources::Image image("assets\\pngTest.png");
+	Jade::Image image("assets\\pngTest.png");
 	REQUIRE(image.getChannels() == 4);
 	REQUIRE(image.getHeight() == 3);
 	REQUIRE(image.getWidth() == 3);
@@ -97,7 +97,7 @@ TEST_CASE("Image class can read data from jpg images", "[Image]") {
 		1  , 18 , 160
 	};
 
-	Jade::Resources::Image image("assets\\jpgTest.jpg", false);
+	Jade::Image image("assets\\jpgTest.jpg", false);
 
 	for (int i = 0; i < 27; i++) {
 		REQUIRE(image.getContent()[i] == requiredData[i]);
@@ -107,7 +107,7 @@ TEST_CASE("Image class can read data from jpg images", "[Image]") {
 }
 
 TEST_CASE("Image class can read number of channels, width and height from jpg images", "[Image]") {
-	Jade::Resources::Image image("assets\\jpgTest.jpg", false);
+	Jade::Image image("assets\\jpgTest.jpg", false);
 	REQUIRE(image.getChannels() == 3);
 	REQUIRE(image.getHeight() == 3);
 	REQUIRE(image.getWidth() == 3);

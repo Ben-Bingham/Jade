@@ -2,6 +2,7 @@
 #include <GL/glew.h>
 #include <iostream>
 #include <string>
+
 #include "Core Systems/Logging/Log.h"
 extern Jade::Log LOGGER;
 
