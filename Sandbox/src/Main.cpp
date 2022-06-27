@@ -12,6 +12,7 @@
 #include "Low Level Rendering/Shaders/ShaderHeader.h"
 #include "Core Systems/Logging/OpenGLErrors.h"
 #include "Core Systems/Resource Pipeline/Resources.h"
+#include "Low Level Rendering/Rendering Objects/Camera.h"
 
 // Global variables
 unsigned int screenWidth = 640;
@@ -23,28 +24,21 @@ float deltaTime;
 float lastFrame;
 
 // Camera Globals
-float yaw = -90.0f;
-float pitch = 0.0f;
 
 float lastX = screenWidth / 2.0f;
 float lastY = screenHeight / 2.0f;
-const float mouseSensitivity = 0.1f;
+
+Jade::Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 
 bool firstMouse = true;
 
 // Function callbacks
 void framebufferSizeCallback(GLFWwindow* window, int width, int height);
 void mouseCallback(GLFWwindow* window, double xpos, double ypos);
+void scrollCallback(GLFWwindow* window, double xOffset, double yOffset);
 
 // Helper functions
 void porcessInput(GLFWwindow* window);
-
-// Camera setup
-const float cameraSpeed = 2.5f;
-
-glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
-glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
 int main() {
 	// GLFW and GLEW init
@@ -53,6 +47,7 @@ int main() {
 	glfwSetFramebufferSizeCallback(window.getWindow(), framebufferSizeCallback);
 	glfwSetInputMode(window.getWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	glfwSetCursorPosCallback(window.getWindow(), mouseCallback);
+	glfwSetScrollCallback(window.getWindow(), scrollCallback);
 
 	if (glewInit() != GLEW_OK) {
 		LOGGER.log("GLEW failed to initilize.", Jade::ERROR);
@@ -155,7 +150,7 @@ int main() {
 
 	// Matrix setup
 
-	glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)screenWidth / (float)screenHeight, 0.1f, 100.0f);
+	glm::mat4 projection = glm::perspective(glm::radians(camera.getFOV()), (float)screenWidth / (float)screenHeight, 0.1f, 100.0f);
 	
 	// Render loop
 
@@ -174,7 +169,7 @@ int main() {
 		model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
 
 		glm::mat4 view;
-		view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+		view = camera.getViewMatrix();
 
 		shaderProgram.use();
 
@@ -201,16 +196,16 @@ void porcessInput(GLFWwindow* window) {
 		glfwSetWindowShouldClose(window, true);
 	}
 	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-		cameraPos += cameraSpeed * cameraFront * deltaTime;
+		camera.processMovement(Jade::FORWARD, deltaTime);
 	}
 	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-		cameraPos -= cameraSpeed * cameraFront * deltaTime;
+		camera.processMovement(Jade::BACKWARD, deltaTime);
 	}
 	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-		cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed * deltaTime;
+		camera.processMovement(Jade::LEFT, deltaTime);
 	}
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-		cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed * deltaTime;
+		camera.processMovement(Jade::RIGHT, deltaTime);
 	}
 }
 
@@ -219,7 +214,7 @@ void framebufferSizeCallback(GLFWwindow* window, int width, int height) {
 	screenWidth = width;
 	screenHeight = height;
 
-	glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)screenWidth / (float)screenHeight, 0.1f, 100.0f);
+	glm::mat4 projection = glm::perspective(glm::radians(camera.getFOV()), (float)screenWidth / (float)screenHeight, 0.1f, 100.0f);
 }
 
 void mouseCallback(GLFWwindow* window, double xPos, double yPos) {
@@ -234,22 +229,9 @@ void mouseCallback(GLFWwindow* window, double xPos, double yPos) {
 	lastX = xPos;
 	lastY = yPos;
 
-	xOffset *= mouseSensitivity;
-	yOffset *= mouseSensitivity;
+	camera.processMouseMovement(xOffset, yOffset);
+}
 
-	yaw += xOffset;
-	pitch += yOffset;
-
-	if (pitch > 89.0f) {
-		pitch = 89.0f;
-	}
-	if (pitch < -89.0f) {
-		pitch = -89.0f;
-	}
-
-	glm::vec3 direction;
-	direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-	direction.y = sin(glm::radians(pitch));
-	direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-	cameraFront = glm::normalize(direction);
+void scrollCallback(GLFWwindow* window, double xOffset, double yOffset) {
+	camera.processScollWheel(yOffset);
 }
