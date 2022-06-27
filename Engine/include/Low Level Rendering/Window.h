@@ -25,6 +25,22 @@ namespace Jade {
 			return glfwWindowShouldClose(m_Window);
 		}
 
+		void addFrameBufferSizeCallback(void (*callback)(GLFWwindow* window, int width, int height)) {
+			glfwSetFramebufferSizeCallback(m_Window, callback);
+		}
+
+		void addMousePositionCallback(void (*callback)(GLFWwindow* window, double xpos, double ypos)) {
+			glfwSetCursorPosCallback(m_Window, callback);
+		}
+
+		void addScrollWheelCallback(void (*callback)(GLFWwindow* window, double xOffset, double yOffset)) {
+			glfwSetScrollCallback(m_Window, callback);
+		}
+
+		void disableCursor() {
+			glfwSetInputMode(m_Window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+		}
+
 	private:
 		GLFWwindow* m_Window;
 		int m_Width;
