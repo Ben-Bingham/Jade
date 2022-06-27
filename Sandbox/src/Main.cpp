@@ -7,8 +7,9 @@
 
 #include "Jade.h"
 
-#include "Low Level Rendering/GLFW/GLFW.h"
-#include "Low Level Rendering/OpenGL/OpenGL.h"
+#include "Low Level Rendering/Window.h"
+#include "Low Level Rendering/Rendering Objects/RenderingObjectsHeader.h"
+#include "Low Level Rendering/Shaders/ShaderHeader.h"
 #include "Core Systems/Logging/OpenGLErrors.h"
 #include "Core Systems/Resource Pipeline/Resources.h"
 
@@ -21,8 +22,19 @@ glm::mat4 projection;
 float deltaTime;
 float lastFrame;
 
+// Camera Globals
+float yaw = -90.0f;
+float pitch = 0.0f;
+
+float lastX = screenWidth / 2.0f;
+float lastY = screenHeight / 2.0f;
+const float mouseSensitivity = 0.1f;
+
+bool firstMouse = true;
+
 // Function callbacks
 void framebufferSizeCallback(GLFWwindow* window, int width, int height);
+void mouseCallback(GLFWwindow* window, double xpos, double ypos);
 
 // Helper functions
 void porcessInput(GLFWwindow* window);
@@ -36,9 +48,11 @@ glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
 int main() {
 	// GLFW and GLEW init
-	Window window(screenWidth, screenHeight, "Sandbox");
+	Jade::Window window(screenWidth, screenHeight, "Sandbox");
 
 	glfwSetFramebufferSizeCallback(window.getWindow(), framebufferSizeCallback);
+	glfwSetInputMode(window.getWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	glfwSetCursorPosCallback(window.getWindow(), mouseCallback);
 
 	if (glewInit() != GLEW_OK) {
 		LOGGER.log("GLEW failed to initilize.", Jade::ERROR);
@@ -53,7 +67,7 @@ int main() {
 	// Render init
 
 	// Vertex array object
-	VertexAttributeObject VAO;
+	Jade::VertexAttributeObject VAO;
 
 	// Vertex buffer object
 
@@ -101,13 +115,13 @@ int main() {
 	-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 	};
 
-	VertexBufferObject VBO(vertices, sizeof(vertices));
+	Jade::VertexBufferObject VBO(vertices, sizeof(vertices));
 
 	// Vertex attribute pointers
-	VertexAttributePointer positionData(3, GL_FLOAT);
-	VertexAttributePointer texCordData(2, GL_FLOAT);
+	Jade::VertexAttributePointer positionData(3, GL_FLOAT);
+	Jade::VertexAttributePointer texCordData(2, GL_FLOAT);
 
-	std::vector<VertexAttributePointer> attributePointers = {
+	std::vector<Jade::VertexAttributePointer> attributePointers = {
 		positionData,
 		texCordData
 	};
@@ -115,25 +129,25 @@ int main() {
 	VAO.addAttributePointers(attributePointers);
 
 	// Vertex shader
-	VertexShader vertexShader("assets\\shaders\\default.vert");
+	Jade::VertexShader vertexShader("assets\\shaders\\default.vert");
 
 	// Fragment shader
-	FragmentShader fragmentShader("assets\\shaders\\default.frag");
+	Jade::FragmentShader fragmentShader("assets\\shaders\\default.frag");
 
 	// Shader program
-	ShaderProgram shaderProgram(fragmentShader, vertexShader);
+	Jade::ShaderProgram shaderProgram(fragmentShader, vertexShader);
 
 	// Texture setup
-	Texture texture1("assets\\textures\\container.jpg");
-	Texture texture2("assets\\textures\\awesomeface.png");
+	Jade::Texture texture1("assets\\textures\\container.jpg");
+	Jade::Texture texture2("assets\\textures\\awesomeface.png");
 
 	shaderProgram.use();
 	shaderProgram.setInt("texture1", 0);
 	shaderProgram.setInt("texture2", 1);
 
-	Texture::activateUnit(0);
+	Jade::Texture::activateUnit(0);
 	texture1.bind();
-	Texture::activateUnit(1);
+	Jade::Texture::activateUnit(1);
 	texture2.bind();
 
 	// Check for errors
@@ -206,4 +220,36 @@ void framebufferSizeCallback(GLFWwindow* window, int width, int height) {
 	screenHeight = height;
 
 	glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)screenWidth / (float)screenHeight, 0.1f, 100.0f);
+}
+
+void mouseCallback(GLFWwindow* window, double xPos, double yPos) {
+	if (firstMouse) {
+		lastX = xPos;
+		lastY = yPos;
+		firstMouse = false;
+	}
+
+	float xOffset = xPos - lastX;
+	float yOffset = lastY - yPos; // reversed since y-coordinates range from bottom to top
+	lastX = xPos;
+	lastY = yPos;
+
+	xOffset *= mouseSensitivity;
+	yOffset *= mouseSensitivity;
+
+	yaw += xOffset;
+	pitch += yOffset;
+
+	if (pitch > 89.0f) {
+		pitch = 89.0f;
+	}
+	if (pitch < -89.0f) {
+		pitch = -89.0f;
+	}
+
+	glm::vec3 direction;
+	direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+	direction.y = sin(glm::radians(pitch));
+	direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+	cameraFront = glm::normalize(direction);
 }
