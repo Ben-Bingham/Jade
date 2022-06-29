@@ -3,7 +3,7 @@
 
 namespace Jade {
 
-	class ElementBufferObject {
+	class ElementBufferObject { // Add constructor for a vector of ints
 	public:
 		ElementBufferObject(unsigned int indices[], int length) {
 			glGenBuffers(1, &m_EBO);
