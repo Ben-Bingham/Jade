@@ -7,33 +7,40 @@
 
 namespace Jade {
 	class Component;
+	class Transform;
+	class ShaderProgram;
+	class Renderer;
 
 	class GameObject {
 	public:
 		GameObject();
-
-		void setRenderFunction(void (*renderFunction)(GameObject& gameoObject)) {
-			m_RenderFunction = renderFunction;
+		GameObject(const GameObject&) = default;
+		GameObject(GameObject&&) = default;
+		GameObject& operator=(const GameObject&) = default;
+		GameObject& operator=(GameObject&&) = default;
+		~GameObject() {
+			delete renderer;
+			delete transform;
 		}
 
-		void render() {
-			m_RenderFunction(*this);
-		}
-		
-		void addComponent(std::shared_ptr<Component> component) { m_Components.push_back(component); }
+
+		Renderer* renderer;
+		Transform* transform;
+		void (*renderFunction)(GameObject& gameObject);
+
+		void render(const ShaderProgram& shaderProgram);
+
+		void setRenderFunction(void (*newRenderFunction)(GameObject& gameObject)) { renderFunction = newRenderFunction; }
+
+		unsigned int getID() { return m_ID; }
 
 	private:
-		std::vector<std::shared_ptr<Component>> m_Components;
 		unsigned int m_ID;
-		void (*m_RenderFunction)(GameObject& gameoObject);
 
 		static unsigned int nextID;
-
 		static unsigned int getNextID() {
 			nextID++;
 			return nextID;
 		}
 	};
-
-	
 }
