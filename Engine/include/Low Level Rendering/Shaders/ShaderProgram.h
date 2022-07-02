@@ -19,11 +19,11 @@ namespace Jade {
 		void use() { glUseProgram(m_Program); }
 		void dispose() { glDeleteProgram(m_Program); }
 
-		void setInt(const std::string& variableName, const int value) {
+		void setInt(const std::string& variableName, const int value) const {
 			glUniform1i(glGetUniformLocation(m_Program, variableName.c_str()), value);
 		}
 
-		void setMatrix4f(const std::string& variableName, const glm::mat4& matrix) {
+		void setMatrix4f(const std::string& variableName, const glm::mat4& matrix) const {
 			glUniformMatrix4fv(glGetUniformLocation(m_Program, variableName.c_str()), 1, GL_FALSE, glm::value_ptr(matrix));
 		}
 
