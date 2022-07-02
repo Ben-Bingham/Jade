@@ -3,17 +3,16 @@
 #include <memory>
 
 namespace Jade {
-	class Component {
-	protected:
-		Component(GameObject gameobject) {
-			setGameObject(std::make_shared<GameObject>(std::move(gameobject)));
-		}
+	class GameObject;
 
-	public:
-		std::shared_ptr<GameObject> getGameObject() { return m_GameObject; }
-		void setGameObject(std::shared_ptr<GameObject> gameobject) { m_GameObject = gameobject; }
+	//class Component {
+	//public:
+	//	Component(GameObject& gameobject) : m_GameObject(gameobject) {}
 
-	private:
-		std::shared_ptr<GameObject> m_GameObject;
-	};
+	//	GameObject& getGameObject() const { return m_GameObject; }
+	//	void setGameObject(GameObject& gameobject) { m_GameObject = gameobject; } //TODO
+
+	//private:
+	//	GameObject& m_GameObject;
+	//};
 }
