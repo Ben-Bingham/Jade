@@ -150,7 +150,8 @@ int main() {
 	 
 	// ======================== Cube ========================
 	// Transform
-	Jade::Transform cubeTransfrom;
+	Jade::Transform cubeTransform;
+	cubeTransform.translate(glm::vec3(0.0f, 4.0f, 4.0f));
 
 	// Vertex array object
 	Jade::VertexAttributeObject VAO;
@@ -193,7 +194,7 @@ int main() {
 
 	// ======================== Light =======================
 	Jade::Transform lightTransform;
-	lightTransform.translate(glm::vec3(0.0f, 4.0f, 0.0f));
+	lightTransform.translate(glm::vec3(0.0f, 5.0f, 5.0f));
 
 	Jade::VertexAttributeObject lightVAO;
 	Jade::VertexBufferObject lightVBO(lightVerticies, sizeof(lightVerticies));
@@ -217,26 +218,26 @@ int main() {
 	// Render loop
 
 	while (!window.getWindowShouldClose()) {
-		float currentFrame = glfwGetTime();
+		float currentFrame = (float)glfwGetTime();
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
 
 		porcessInput(window.getWindow());
 
 		window.pollEvents();
-		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		glm::mat4 view;
 		view = camera.getViewMatrix();
 
 		// ======================== Cube ========================
-		cubeTransfrom.clearMatrix();
-		cubeTransfrom.rotate(Jade::Rotation{ glm::vec3(0.5f, 1.0f, 0.0f), (float)glfwGetTime() * glm::radians(50.0f) });
+		//cubeTransform.clearMatrix();
+		//cubeTransform.rotate(Jade::Rotation{ glm::vec3(0.5f, 1.0f, 0.0f), (float)glfwGetTime() * glm::radians(50.0f) });
 
 		shaderProgram.use();
 
-		shaderProgram.setMatrix4f("model", cubeTransfrom.getMatrix());
+		shaderProgram.setMatrix4f("model", cubeTransform.getMatrix());
 		shaderProgram.setMatrix4f("view", view);
 		shaderProgram.setMatrix4f("projection", projection);
 
@@ -244,6 +245,16 @@ int main() {
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
 		// ======================== Light =======================
+		lightShaderProgram.use();
+
+		lightShaderProgram.setMatrix4f("model", lightTransform.getMatrix());
+		lightShaderProgram.setMatrix4f("view", view);
+		lightShaderProgram.setMatrix4f("projection", projection);
+
+		lightVAO.bind();
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
+		// Render cleanup
 
 		window.swapBuffers();
 		glCheckError();
@@ -284,15 +295,15 @@ void framebufferSizeCallback(GLFWwindow* window, int width, int height) {
 
 void mouseCallback(GLFWwindow* window, double xPos, double yPos) {
 	if (firstMouse) {
-		lastX = xPos;
-		lastY = yPos;
+		lastX = (float)xPos;
+		lastY = (float)yPos;
 		firstMouse = false;
 	}
 
-	float xOffset = xPos - lastX;
-	float yOffset = lastY - yPos; // reversed since y-coordinates range from bottom to top
-	lastX = xPos;
-	lastY = yPos;
+	float xOffset = (float)xPos - lastX;
+	float yOffset = lastY - (float)yPos; // reversed since y-coordinates range from bottom to top
+	lastX = (float)xPos;
+	lastY = (float)yPos;
 
 	camera.processMouseMovement(xOffset, yOffset);
 }
