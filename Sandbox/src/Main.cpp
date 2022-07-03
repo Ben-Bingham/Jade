@@ -201,7 +201,8 @@ int main() {
 
 	// ======================== Light =======================
 	Jade::Transform lightTransform;
-	lightTransform.translate(glm::vec3(0.0f, 3.0f, 3.0f));
+	lightTransform.translate(lightPositon);
+	lightTransform.scale(0.2f);
 
 	Jade::VertexAttributeObject lightVAO;
 	Jade::VertexBufferObject lightVBO(lightVerticies, sizeof(lightVerticies));
@@ -240,7 +241,7 @@ int main() {
 
 		// ======================== Cube ========================
 		cubeTransform.clearMatrix();
-		cubeTransform.rotate(Jade::Rotation{ glm::vec3(0.5f, 1.0f, 0.0f), (float)glfwGetTime() * glm::radians(50.0f) });
+		cubeTransform.rotate(Jade::Rotation{ glm::vec3(0.5f, 1.0f, 0.0f), (float)glfwGetTime() * 50.0f });
 
 		shaderProgram.use();
 
