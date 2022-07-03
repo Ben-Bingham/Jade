@@ -17,8 +17,8 @@
 #include "High Level Rendering/Transform.h"
 
 // Global variables
-unsigned int screenWidth = 640;
-unsigned int screenHeight = 480;
+unsigned int screenWidth = 1920;
+unsigned int screenHeight = 1080;
 
 glm::mat4 projection;
 
@@ -44,7 +44,7 @@ void porcessInput(GLFWwindow* window);
 
 int main() {
 	// GLFW and GLEW init
-	Jade::Window window(screenWidth, screenHeight, "Sandbox");
+	Jade::Window window(screenWidth, screenHeight, "Sandbox", true);
 
 	window.addFrameBufferSizeCallback(framebufferSizeCallback);
 	window.addMousePositionCallback(mouseCallback);
@@ -193,7 +193,7 @@ int main() {
 
 	// ======================== Light =======================
 	Jade::Transform lightTransform;
-	lightTransform.translate(glm::vec3(0.0f, 5.0f, 5.0f));
+	lightTransform.translate(glm::vec3(0.0f, 3.0f, 3.0f));
 
 	Jade::VertexAttributeObject lightVAO;
 	Jade::VertexBufferObject lightVBO(lightVerticies, sizeof(lightVerticies));
@@ -289,7 +289,9 @@ void framebufferSizeCallback(GLFWwindow* window, int width, int height) {
 	screenWidth = width;
 	screenHeight = height;
 
-	projection = glm::perspective(glm::radians(camera.getFOV()), (float)screenWidth / (float)screenHeight, 0.1f, 100.0f); //TODO objects seem to stretch when window is resized
+	projection = glm::mat4(1.0f);
+	float aspectRatio = (float)width / (float)height;
+	projection = glm::perspective(glm::radians(camera.getFOV()), aspectRatio, 0.1f, 100.0f); //TODO objects seem to stretch when window is resized
 }
 
 void mouseCallback(GLFWwindow* window, double xPos, double yPos) {
