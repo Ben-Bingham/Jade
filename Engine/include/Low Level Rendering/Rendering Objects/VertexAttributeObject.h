@@ -41,7 +41,7 @@ namespace Jade {
 			glBindVertexArray(0);
 		}
 
-		void addAttributePointer(VertexAttributePointer attributePointer);
+		void setAttributePointer(VertexAttributePointer attributePointer);
 		void addAttributePointers(std::vector<VertexAttributePointer> attributePointers);
 
 	private:
