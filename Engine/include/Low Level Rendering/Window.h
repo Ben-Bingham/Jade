@@ -6,7 +6,7 @@
 namespace Jade {
 	class Window {
 	public:
-		Window(int width, int height, std::string name);
+		Window(int width, int height, std::string name, bool fullscreen);
 
 		~Window() { dispose(); }
 
