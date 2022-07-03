@@ -27,6 +27,10 @@ namespace Jade {
 			glUniformMatrix4fv(glGetUniformLocation(m_Program, variableName.c_str()), 1, GL_FALSE, glm::value_ptr(matrix));
 		}
 
+		void setVector3f(const std::string& variableName, const glm::vec3& vector) const {
+			glUniform3fv(glGetUniformLocation(m_Program, variableName.c_str()), 1, &vector[0]);
+		}
+
 	private:
 		unsigned int m_Program;
 		std::vector<Shader*> m_Shaders;
