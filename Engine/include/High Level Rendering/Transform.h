@@ -20,16 +20,16 @@ namespace Jade {
 			m_Model = glm::scale(m_Model, m_Scale);
 		}
 
-		void rotate(Rotation rotation) {
+		void rotate(Rotation& rotation) {
 			m_Model = glm::rotate(m_Model, glm::radians(rotation.angle), rotation.vector);
 		}
 
-		void translate(glm::vec3 vector) {
+		void translate(glm::vec3& vector) {
 			m_Position += vector;
 			m_Model = glm::translate(m_Model, m_Position);
 		}
 
-		void scale(glm::vec3 vector) {
+		void scale(glm::vec3& vector) {
 			m_Scale += vector;
 			m_Model = glm::scale(m_Model, m_Scale);
 		}
