@@ -12,7 +12,7 @@
 #include "Low Level Rendering/Shaders/ShaderHeader.h"
 #include "Core Systems/Logging/OpenGLErrors.h"
 #include "Core Systems/Resource Pipeline/Resources.h"
-#include "Low Level Rendering/Rendering Objects/Camera.h"
+#include "High Level Rendering/Camera.h"
 #include "Low Level Rendering/GLEW.h"
 #include "High Level Rendering/Transform.h"
 
@@ -250,6 +250,7 @@ int main() {
 		shaderProgram.setMatrix4f("model", cubeTransform.getMatrix());
 		shaderProgram.setMatrix4f("view", view);
 		shaderProgram.setMatrix4f("projection", projection);
+		shaderProgram.setVector3f("cameraPosition", camera.getPosition());
 
 		VAO.bind();
 		glDrawArrays(GL_TRIANGLES, 0, 36);

@@ -8,6 +8,7 @@ in vec3 fragmentPosition;
 uniform vec3 objectColour;
 uniform vec3 lightColour;
 uniform vec3 lightPosition;
+uniform vec3 cameraPosition;
 
 void main()
 {
