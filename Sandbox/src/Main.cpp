@@ -14,6 +14,7 @@
 #include "Core Systems/Resource Pipeline/Resources.h"
 #include "Low Level Rendering/Rendering Objects/Camera.h"
 #include "Low Level Rendering/GLEW.h"
+#include "High Level Rendering/Transform.h"
 
 // Global variables
 unsigned int screenWidth = 640;
@@ -49,10 +50,6 @@ int main() {
 	window.addMousePositionCallback(mouseCallback);
 	window.addScrollWheelCallback(scrollCallback);
 	window.disableCursor();
-
-	/*if (glewInit() != GLEW_OK) {
-		LOGGER.log("GLEW failed to initilize.", Jade::ERROR);
-	}*/
 
 	Jade::GLEW glew;
 
@@ -152,6 +149,9 @@ int main() {
 	};
 	 
 	// ======================== Cube ========================
+	// Transform
+	Jade::Transform cubeTransfrom;
+
 	// Vertex array object
 	Jade::VertexAttributeObject VAO;
 
@@ -221,15 +221,15 @@ int main() {
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		glm::mat4 model = glm::mat4(1.0f);
-		model = glm::rotate(model, (float)glfwGetTime() * glm::radians(50.0f), glm::vec3(0.5f, 1.0f, 0.0f));
+		cubeTransfrom.clearMatrix();
+		cubeTransfrom.rotate(Jade::Rotation{ glm::vec3(0.5f, 1.0f, 0.0f), (float)glfwGetTime() * glm::radians(50.0f) });
 
 		glm::mat4 view;
 		view = camera.getViewMatrix();
 
 		shaderProgram.use();
 
-		shaderProgram.setMatrix4f("model", model);
+		shaderProgram.setMatrix4f("model", cubeTransfrom.getMatrix());
 		shaderProgram.setMatrix4f("view", view);
 		shaderProgram.setMatrix4f("projection", projection);
 
