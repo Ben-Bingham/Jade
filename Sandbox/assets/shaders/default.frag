@@ -22,7 +22,17 @@ void main()
 	float differenceInVectors = max(dot(normalizedNormal, lightDirection), 0.0);
 	vec3 diffuse = differenceInVectors * lightColour;
 
+	// ======================== Specular ========================
+	float specularStrength = 0.5;
+	float shininess = 32;
+
+	vec3 viewDirection = normalize(cameraPosition - fragmentPosition);
+	vec3 reflectionDirection = reflect(-lightDirection, normalizedNormal);
+
+	float specularValue = pow(max(dot(viewDirection, reflectionDirection), 0.0), shininess);
+	vec3 specular = specularStrength * specularValue * lightColour;
+
 	// ======================== Combination ========================
-	vec3 result = (ambient + diffuse) * objectColour;
+	vec3 result = (ambient + diffuse + specular) * objectColour;
 	FragColor = vec4(result, 1.0);
 }
