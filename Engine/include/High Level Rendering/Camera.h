@@ -79,6 +79,8 @@ namespace Jade {
 
 		float getFOV() { return m_FOV; }
 
+		glm::vec3 getPosition() { return m_Position; }
+
 		static constexpr float defaultSpeed = 2.5f;
 		static constexpr float defaultYaw = -90.0f;
 		static constexpr float defaultPitch = 0.0f;
