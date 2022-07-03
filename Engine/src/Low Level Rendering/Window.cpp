@@ -5,7 +5,7 @@
 #include "Low Level Rendering/Window.h"
 
 namespace Jade {
-	Window::Window(int width, int height, std::string name) 
+	Window::Window(int width, int height, std::string name, bool fullscreen)
 		: m_Width(width), m_Height(height), m_Name(name) {
 
 		if (!glfwInit()) {
@@ -15,8 +15,14 @@ namespace Jade {
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 
-		m_Window = glfwCreateWindow(width, height, name.c_str(), NULL, NULL);
+		const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
 
+		if (fullscreen) {
+			m_Window = glfwCreateWindow(mode->width, mode->height, name.c_str(), glfwGetPrimaryMonitor(), NULL);
+		}
+		else {
+			m_Window = glfwCreateWindow(width, height, name.c_str(), NULL, NULL);
+		}
 		if (!m_Window) {
 			LOGGER.log("GLFW window creation failed.", Jade::ERROR);
 			LOGGER.log("OpenGL context creation failed.", Jade::ERROR);
