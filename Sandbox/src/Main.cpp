@@ -192,14 +192,19 @@ int main() {
 	texture2.bind();
 
 	// ======================== Light =======================
-	//Jade::VertexAttributeObject lightVAO;
-	//Jade::VertexBufferObject lightVBO(lightVerticies, sizeof(lightVerticies));
+	Jade::Transform lightTransform;
 
-	//Jade::VertexAttributePointer lightPositonData(3, GL_FLOAT);
+	Jade::VertexAttributeObject lightVAO;
+	Jade::VertexBufferObject lightVBO(lightVerticies, sizeof(lightVerticies));
 
-	//VAO.addAttributePointer(lightPositonData);
+	Jade::VertexAttributePointer lightPositonData(3, GL_FLOAT);
 
+	VAO.addAttributePointer(lightPositonData);
 
+	Jade::VertexShader lightVertexShader(Jade::TextFile("assets\\shaders\\light.vert"));
+	Jade::FragmentShader lightFragmentShader(Jade::TextFile("assets\\shaders\\light.frag"));
+
+	Jade::ShaderProgram lightShaderProgram(lightFragmentShader, lightVertexShader);
 
 	// Check for errors
 	glCheckError();
