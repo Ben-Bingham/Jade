@@ -29,8 +29,26 @@ namespace Jade {
 			m_Model = glm::translate(m_Model, m_Position);
 		}
 
+		void translate(float x, float y, float z) {
+			glm::vec3 vector(x, y, z);
+			m_Position += vector;
+			m_Model = glm::translate(m_Model, m_Position);
+		}
+
 		void scale(glm::vec3& vector) {
-			m_Scale += vector;
+			m_Scale *= vector;
+			m_Model = glm::scale(m_Model, m_Scale);
+		}
+
+		void scale(float x, float y, float z) {
+			glm::vec3 vector(x, y, z);
+			m_Scale *= vector;
+			m_Model = glm::scale(m_Model, m_Scale);
+		}
+
+		void scale(float value) {
+			glm::vec3 vector(value, value, value);
+			m_Scale *= vector;
 			m_Model = glm::scale(m_Model, m_Scale);
 		}
 
