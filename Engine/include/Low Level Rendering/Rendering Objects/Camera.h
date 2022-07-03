@@ -8,7 +8,9 @@ namespace Jade {
 		FORWARD,
 		BACKWARD,
 		LEFT,
-		RIGHT
+		RIGHT,
+		UP,
+		DOWN
 	};
 
 	class Camera {
@@ -33,6 +35,12 @@ namespace Jade {
 			}
 			if (direction == RIGHT) {
 				m_Position += m_Right * velocity;
+			}
+			if (direction == UP) {
+				m_Position += m_WorldUp * velocity;
+			}
+			if (direction == DOWN) {
+				m_Position -= m_WorldUp * velocity;
 			}
 		}
 

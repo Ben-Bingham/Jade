@@ -282,6 +282,12 @@ void porcessInput(GLFWwindow* window) {
 	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
 		camera.processMovement(Jade::RIGHT, deltaTime);
 	}
+	if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
+		camera.processMovement(Jade::UP, deltaTime);
+	}
+	if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) {
+		camera.processMovement(Jade::DOWN, deltaTime);
+	}
 }
 
 void framebufferSizeCallback(GLFWwindow* window, int width, int height) {
