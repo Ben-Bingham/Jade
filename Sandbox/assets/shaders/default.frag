@@ -1,10 +1,12 @@
 #version 330 core
 
 out vec4 FragColor;
-in vec2 textureCords;
+
+in vec3 normal;
 
 uniform vec3 objectColour;
 uniform vec3 lightColour;
+uniform vec3 lightPosition;
 
 void main()
 {

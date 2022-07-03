@@ -186,6 +186,7 @@ int main() {
 	shaderProgram.use();
 	shaderProgram.setVector3f("objectColour", glm::vec3(1.0f, 0.5f, 0.31f));
 	shaderProgram.setVector3f("lightColour", glm::vec3(1.0f, 1.0f, 1.0f));
+	shaderProgram.setVector3f("lightPosition", lightPositon);
 
 	// Texture setup
 	//Jade::Texture texture1("assets\\textures\\container.jpg");
@@ -215,7 +216,7 @@ int main() {
 	Jade::VertexShader lightVertexShader(Jade::TextFile("assets\\shaders\\light.vert"));
 	Jade::FragmentShader lightFragmentShader(Jade::TextFile("assets\\shaders\\light.frag"));
 
-	Jade::ShaderProgram lightShaderProgram(lightFragmentShader, lightVertexShader);
+	Jade::ShaderProgram lightShaderProgram(lightFragmentShader, lightVertexShader);	
 
 	// Check for errors
 	glCheckError();
