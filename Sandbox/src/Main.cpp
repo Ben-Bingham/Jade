@@ -34,6 +34,10 @@ Jade::Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
 
 bool firstMouse = true;
 
+// Light Globals
+
+glm::vec3 lightPositon(1.2f, 1.0f, 2.0f);
+
 // Function callbacks
 void framebufferSizeCallback(GLFWwindow* window, int width, int height);
 void mouseCallback(GLFWwindow* window, double xpos, double ypos);
@@ -61,47 +65,47 @@ int main() {
 	
 	// Render init
 	float cubeVerticies[] = {
-		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-		 0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+		-0.5f, -0.5f, -0.5f,
+		 0.5f, -0.5f, -0.5f,
+		 0.5f,  0.5f, -0.5f,
+		 0.5f,  0.5f, -0.5f,
+		-0.5f,  0.5f, -0.5f,
+		-0.5f, -0.5f, -0.5f,
 
-		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-		 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-		 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-		 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-		-0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
-		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+		-0.5f, -0.5f,  0.5f,
+		 0.5f, -0.5f,  0.5f,
+		 0.5f,  0.5f,  0.5f,
+		 0.5f,  0.5f,  0.5f,
+		-0.5f,  0.5f,  0.5f,
+		-0.5f, -0.5f,  0.5f,
 
-		-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-		-0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-		-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+		-0.5f,  0.5f,  0.5f,
+		-0.5f,  0.5f, -0.5f,
+		-0.5f, -0.5f, -0.5f,
+		-0.5f, -0.5f, -0.5f,
+		-0.5f, -0.5f,  0.5f,
+		-0.5f,  0.5f,  0.5f,
 
-		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-		 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-		 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-		 0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+		 0.5f,  0.5f,  0.5f,
+		 0.5f,  0.5f, -0.5f,
+		 0.5f, -0.5f, -0.5f,
+		 0.5f, -0.5f, -0.5f,
+		 0.5f, -0.5f,  0.5f,
+		 0.5f,  0.5f,  0.5f,
 
-		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-		 0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
-		 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-		 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-		-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-		-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+		-0.5f, -0.5f, -0.5f,
+		 0.5f, -0.5f, -0.5f,
+		 0.5f, -0.5f,  0.5f,
+		 0.5f, -0.5f,  0.5f,
+		-0.5f, -0.5f,  0.5f,
+		-0.5f, -0.5f, -0.5f,
 
-		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-		 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-		-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
-		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
+		-0.5f,  0.5f, -0.5f,
+		 0.5f,  0.5f, -0.5f,
+		 0.5f,  0.5f,  0.5f,
+		 0.5f,  0.5f,  0.5f,
+		-0.5f,  0.5f,  0.5f,
+		-0.5f,  0.5f, -0.5f
 	};
 
 	float lightVerticies[] = {
@@ -160,14 +164,14 @@ int main() {
 
 	// Vertex attribute pointers
 	Jade::VertexAttributePointer positionData(3, GL_FLOAT);
-	Jade::VertexAttributePointer texCordData(2, GL_FLOAT);
+	//Jade::VertexAttributePointer texCordData(2, GL_FLOAT);
 
-	std::vector<Jade::VertexAttributePointer> attributePointers = {
+	/*std::vector<Jade::VertexAttributePointer> attributePointers = {
 		positionData,
 		texCordData
-	};
+	};*/
 
-	VAO.addAttributePointers(attributePointers);
+	VAO.setAttributePointer(positionData);
 
 	// Vertex shader
 	Jade::VertexShader vertexShader(Jade::TextFile("assets\\shaders\\default.vert"));
