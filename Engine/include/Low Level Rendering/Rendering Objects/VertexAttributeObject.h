@@ -22,12 +22,18 @@ namespace Jade {
 			bind();
 		}
 
+		VertexAttributeObject(const VertexAttributeObject&) = default;
+		VertexAttributeObject(VertexAttributeObject&&) = default;
+		VertexAttributeObject& operator=(const VertexAttributeObject&) = default;
+		VertexAttributeObject& operator=(VertexAttributeObject&&) = default;
+
 		~VertexAttributeObject() {
 			bind();
+
 			glDeleteVertexArrays(1, &m_VAO);
 		}
 
-		void bind() const {
+		void bind() {
 			glBindVertexArray(m_VAO);
 		}
 

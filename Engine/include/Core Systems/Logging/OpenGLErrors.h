@@ -1,4 +1,5 @@
 #pragma once
+
 #include <GL/glew.h>
 #include <iostream>
 #include <string>
@@ -7,7 +8,7 @@
 extern Jade::Log LOGGER;
 
 
-GLenum glCheckError_(const char* file, int line) {
+inline GLenum glCheckError_(const char* file, int line) {
 	GLenum errorCode;
 	while ((errorCode = glGetError()) != GL_NO_ERROR) {
 		std::string error;
