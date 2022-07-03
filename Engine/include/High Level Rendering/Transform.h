@@ -11,7 +11,7 @@ namespace Jade {
 
 	class Transform {
 	public:
-		Transform() : m_Position(0.0f), m_Scale(1.0f), m_Rotation{ glm::vec3(0.0f), 0.0f }, m_Model(1.0f) {}
+		Transform() : m_Position(0.0f, 0.0f, 0.0f), m_Scale(1.0f, 1.0f, 1.0f), m_Rotation{ glm::vec3(0.0f, 0.0f, 0.0f), 0.0f }, m_Model(1.0f) {}
 
 		void calculateModelMatrix() {
 			m_Model = glm::mat4(1.0);
@@ -38,9 +38,9 @@ namespace Jade {
 
 		void reset() {
 			clearMatrix();
-			m_Position = glm::vec3(0.0f);
-			m_Scale = glm::vec3(1.0f);
-			m_Rotation = { glm::vec3(0.0f), 0.0f };
+			m_Position = glm::vec3(0.0f, 0.0f, 0.0f);
+			m_Scale = glm::vec3(1.0f, 1.0f, 1.0f);
+			m_Rotation = { glm::vec3(0.0f, 0.0f, 0.0f), 0.0f };
 		}
 
 		glm::mat4 getMatrix() { return m_Model; }
