@@ -10,11 +10,11 @@ namespace Jade {
 		ShaderCreator(std::vector<RenderingRule>& renderingRules) {}
 
 		VertexShader getVertexShader() {
-			return VertexShader(TextFile("f"));
+			return VertexShader(TextFile("NULL"));
 		}
 
 		FragmentShader getFragmentShader() {
-			return FragmentShader(TextFile("f"));
+			return FragmentShader(TextFile("NULL"));
 
 		}
 
