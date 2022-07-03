@@ -151,7 +151,6 @@ int main() {
 	// ======================== Cube ========================
 	// Transform
 	Jade::Transform cubeTransform;
-	cubeTransform.translate(glm::vec3(0.0f, 4.0f, 4.0f));
 
 	// Vertex array object
 	Jade::VertexAttributeObject VAO;
@@ -201,7 +200,7 @@ int main() {
 
 	Jade::VertexAttributePointer lightPositonData(3, GL_FLOAT);
 
-	VAO.addAttributePointer(lightPositonData);
+	lightVAO.setAttributePointer(lightPositonData);
 
 	Jade::VertexShader lightVertexShader(Jade::TextFile("assets\\shaders\\light.vert"));
 	Jade::FragmentShader lightFragmentShader(Jade::TextFile("assets\\shaders\\light.frag"));
@@ -232,8 +231,8 @@ int main() {
 		view = camera.getViewMatrix();
 
 		// ======================== Cube ========================
-		//cubeTransform.clearMatrix();
-		//cubeTransform.rotate(Jade::Rotation{ glm::vec3(0.5f, 1.0f, 0.0f), (float)glfwGetTime() * glm::radians(50.0f) });
+		cubeTransform.clearMatrix();
+		cubeTransform.rotate(Jade::Rotation{ glm::vec3(0.5f, 1.0f, 0.0f), (float)glfwGetTime() * glm::radians(50.0f) });
 
 		shaderProgram.use();
 
