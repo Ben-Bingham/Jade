@@ -5,7 +5,7 @@
 
 namespace Jade {
 	// Only use if there is a single attribute pointer. For multiple pointers use addAttributePointers(). (UNTESTED)
-	void VertexAttributeObject::addAttributePointer(VertexAttributePointer attributePointer) {
+	void VertexAttributeObject::setAttributePointer(VertexAttributePointer attributePointer) {
 		bind();
 
 		glVertexAttribPointer(
