@@ -178,18 +178,22 @@ int main() {
 	// Shader program
 	Jade::ShaderProgram shaderProgram(fragmentShader, vertexShader);
 
-	// Texture setup
-	Jade::Texture texture1("assets\\textures\\container.jpg");
-	Jade::Texture texture2("assets\\textures\\awesomeface.png");
-
 	shaderProgram.use();
-	shaderProgram.setInt("texture1", 0);
-	shaderProgram.setInt("texture2", 1);
+	shaderProgram.setVector3f("objectColour", glm::vec3(1.0f, 0.5f, 0.31f));
+	shaderProgram.setVector3f("lightColour", glm::vec3(1.0f, 1.0f, 1.0f));
 
-	Jade::Texture::activateUnit(0);
-	texture1.bind();
-	Jade::Texture::activateUnit(1);
-	texture2.bind();
+	// Texture setup
+	//Jade::Texture texture1("assets\\textures\\container.jpg");
+	//Jade::Texture texture2("assets\\textures\\awesomeface.png");
+
+	//shaderProgram.use();
+	//shaderProgram.setInt("texture1", 0);
+	//shaderProgram.setInt("texture2", 1);
+
+	//Jade::Texture::activateUnit(0);
+	//texture1.bind();
+	//Jade::Texture::activateUnit(1);
+	//texture2.bind();
 
 	// ======================== Light =======================
 	Jade::Transform lightTransform;
