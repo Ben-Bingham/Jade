@@ -36,6 +36,13 @@ namespace Jade {
 
 		void clearMatrix() { m_Model = glm::mat4(1.0f); }
 
+		void reset() {
+			clearMatrix();
+			m_Position = glm::vec3(0.0f);
+			m_Scale = glm::vec3(1.0f);
+			m_Rotation = { glm::vec3(0.0f), 0.0f };
+		}
+
 		glm::mat4 getMatrix() { return m_Model; }
 
 	private:
