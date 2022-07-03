@@ -3,7 +3,7 @@
 #include "Core Systems/Resource Pipeline/TextFile.h"
 
 namespace Jade {
-	class Shader { //TODO could be a lot better, duel defines of m_Shader and source file
+	class Shader {
 	public:
 		virtual void dispose() = 0;
 
