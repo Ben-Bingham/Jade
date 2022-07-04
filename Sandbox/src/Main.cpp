@@ -15,6 +15,8 @@
 #include "High Level Rendering/Camera.h"
 #include "Low Level Rendering/GLEW.h"
 #include "High Level Rendering/Transform.h"
+#include "High Level Rendering/RenderingRuleSet.h"
+#include "High Level Rendering/ShaderCreator.h"
 
 // Global variables
 unsigned int screenWidth = 1920;
@@ -49,6 +51,7 @@ void porcessInput(GLFWwindow* window);
 int main() {
 	// GLFW and GLEW init
 	Jade::Window window(screenWidth, screenHeight, "Sandbox", true);
+	Jade::Window window(screenWidth, screenHeight, "Sandbox", false);
 
 	window.addFrameBufferSizeCallback(framebufferSizeCallback);
 	window.addMousePositionCallback(mouseCallback);
@@ -151,7 +154,11 @@ int main() {
 		-0.5f,  0.5f,  0.5f,
 		-0.5f,  0.5f, -0.5f
 	};
-	 
+	// ======================== Shader Creator Testing ========================
+	Jade::RenderingRuleSet ruleSet;
+
+	Jade::ShaderCreator shaderCreator(ruleSet);
+
 	// ======================== Cube ========================
 	// Transform
 	Jade::Transform cubeTransform;
