@@ -19,8 +19,8 @@
 #include "High Level Rendering/ShaderCreator.h"
 
 // Global variables
-unsigned int screenWidth = 1920;
-unsigned int screenHeight = 1080;
+unsigned int screenWidth = 640;
+unsigned int screenHeight = 480;
 
 glm::mat4 projection;
 
@@ -50,7 +50,6 @@ void porcessInput(GLFWwindow* window);
 
 int main() {
 	// GLFW and GLEW init
-	Jade::Window window(screenWidth, screenHeight, "Sandbox", true);
 	Jade::Window window(screenWidth, screenHeight, "Sandbox", false);
 
 	window.addFrameBufferSizeCallback(framebufferSizeCallback);
@@ -157,7 +156,7 @@ int main() {
 	// ======================== Shader Creator Testing ========================
 	Jade::RenderingRuleSet ruleSet;
 
-	Jade::ShaderCreator shaderCreator(ruleSet);
+	//Jade::ShaderCreator shaderCreator(ruleSet);
 
 	// ======================== Cube ========================
 	// Transform
