@@ -1,7 +1,7 @@
 #include "High Level Rendering/ShaderCreator.h"
 
 namespace Jade {
-	VertexShader ShaderCreator::vertexShaderInit() {
+	VertexShader& ShaderCreator::vertexShaderInit() {
 		std::string vertexShaderSource =
 			"#version 330 core\n"
 			"\n"
@@ -16,10 +16,11 @@ namespace Jade {
 		vertexShaderPath += std::to_string(m_RuleSet.getID());
 		vertexShaderPath += ".vert";
 
-		return VertexShader(TextFile(vertexShaderPath, vertexShaderSource));
+		VertexShader shader(TextFile(vertexShaderPath, vertexShaderSource));
+		return shader;
 	}
 
-	FragmentShader ShaderCreator::fragmentShaderInit() {
+	FragmentShader& ShaderCreator::fragmentShaderInit() {
 		std::string fragmentShaderSource =
 			"#version 330 core\n"
 			"\n"
@@ -34,6 +35,7 @@ namespace Jade {
 		fragmentShaderPath += std::to_string(m_RuleSet.getID());
 		fragmentShaderPath += ".frag";
 
-		return FragmentShader(TextFile(fragmentShaderPath, fragmentShaderSource));
+		FragmentShader shader(TextFile(fragmentShaderPath, fragmentShaderSource));
+		return shader;
 	}
 }
