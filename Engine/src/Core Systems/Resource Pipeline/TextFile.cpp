@@ -41,4 +41,22 @@ namespace Jade {
 
 		inputFileStream.close();
 	}
+
+	TextFile::TextFile(const std::string& path, const std::string& content) : m_Path(path), m_Content(content) {
+		std::ofstream outFile(m_Path);
+
+		outFile << m_Content;
+
+		outFile.close();
+	}
+
+	void TextFile::append(const std::string& content) {
+		m_Content += content;
+
+		std::ofstream outFile(m_Path);
+
+		outFile << m_Content;
+
+		outFile.close();
+	}
 }

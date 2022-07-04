@@ -29,6 +29,50 @@ TEST_CASE("TextFile class can save path of file", "[TextFile]") {
 	REQUIRE(file.getPath() == path);
 }
 
+TEST_CASE("TextFile can be created via string input", "[TextFile]") {
+	std::string content = "This is a text file";
+	std::string path = "assets\\Unit Test Text File 1.txt";
+	Jade::TextFile file(path, content);
+	
+	REQUIRE(file.getContent() == content);
+
+	Jade::TextFile file2(path);
+
+	REQUIRE(file2.getContent() == file.getContent());
+}
+
+TEST_CASE("TextFile can be created via string input with multiple lines", "[TextFile]") {
+	std::string content = "Lorem Ipsum is simply dummy text of the printing and typesetting industry.\n \
+		Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,\n \
+		when an unknown printer took a galley of type and scrambled it to make a type specimen book.\n \
+		It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.\n \
+		It was popularised in the 1960s with the release of Letraset sheets containing\n \
+		Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\n";
+
+	std::string path = "assets\\Unit Test Text File 2.txt";
+	Jade::TextFile file(path, content);
+
+	REQUIRE(file.getContent() == content);
+
+	Jade::TextFile file2(path);
+
+	REQUIRE(file2.getContent() == file.getContent());
+}
+
+TEST_CASE("Text can be appended to the end of a text file", "[TextFile]") {
+	std::string content = "This is a text file";
+	std::string path = "assets\\Unit Test Text File 3.txt";
+	Jade::TextFile file(path, content);
+
+	REQUIRE(file.getContent() == content);
+
+	file.append("\nthis is still a text file");
+
+	Jade::TextFile file2(path);
+
+	REQUIRE(file2.getContent() == file.getContent());
+}
+
 
 // Images -----------------------------------------------------------------------------------------
 TEST_CASE("Image class can read Max alpha png images", "[Image]") {
