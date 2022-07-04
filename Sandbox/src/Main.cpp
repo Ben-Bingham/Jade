@@ -167,8 +167,7 @@ int main() {
 	};
 	// ======================== Shader Creator Testing ========================
 	Jade::RenderingRuleSet ruleSet;
-	
-	//Jade::ShaderCreator shaderCreator(ruleSet);
+	Jade::ShaderCreator shaderCreator(ruleSet);
 
 	// ======================== Cube ========================
 	// Transform
@@ -205,19 +204,6 @@ int main() {
 	shaderProgram.setVector3f("objectColour", glm::vec3(1.0f, 0.5f, 0.31f));
 	shaderProgram.setVector3f("lightColour", glm::vec3(1.0f, 1.0f, 1.0f));
 	shaderProgram.setVector3f("lightPosition", lightPositon);
-
-	// Texture setup
-	//Jade::Texture texture1("assets\\textures\\container.jpg");
-	//Jade::Texture texture2("assets\\textures\\awesomeface.png");
-
-	//shaderProgram.use();
-	//shaderProgram.setInt("texture1", 0);
-	//shaderProgram.setInt("texture2", 1);
-
-	//Jade::Texture::activateUnit(0);
-	//texture1.bind();
-	//Jade::Texture::activateUnit(1);
-	//texture2.bind();
 
 	// ======================== Light =======================
 	Jade::Transform lightTransform;
@@ -286,10 +272,12 @@ int main() {
 		// Render cleanup
 
 		window.swapBuffers();
-		//glCheckError();
+		glCheckError();
 	}
 
 	// Cleanup
+	//TODO dispose of all the shaders, programs, anf VAOS
+	//TODO also remove the possible dispose call from the distructiors of VAO ect
 
 	window.dispose();
 
@@ -357,15 +345,24 @@ void APIENTRY glDebugOutput(
 	GLsizei length,
 	const char* message,
 	const void* userParam) {
+	Jade::LogLevel level;
+	switch (severity) {
+	case GL_DEBUG_SEVERITY_HIGH:			level = Jade::ERROR; break;
+	case GL_DEBUG_SEVERITY_MEDIUM:			level = Jade::WARNING; break;
+	case GL_DEBUG_SEVERITY_LOW:				level = Jade::WARNING; break;
+	case GL_DEBUG_SEVERITY_NOTIFICATION:	level = Jade::INFO; break;
+	}
+	
 	// ignore non-significant error/warning codes
 	if (id == 131169 || id == 131185 || id == 131218 || id == 131204) return;
+	LOGGER.log("---------------", level);
 
 	std::string string = "Debug message (";
 	string += std::to_string(id);
 	string += "): ";
 	string += message;
-	LOGGER.log("---------------", Jade::ERROR);
-	LOGGER.log(string, Jade::ERROR);
+	
+	LOGGER.log(string, level);
 
 	string = "";
 	switch (source) {
@@ -376,7 +373,7 @@ void APIENTRY glDebugOutput(
 	case GL_DEBUG_SOURCE_APPLICATION:     string += "Source: Application"; break;
 	case GL_DEBUG_SOURCE_OTHER:           string += "Source: Other"; break;
 	}
-	LOGGER.log(string, Jade::ERROR);
+	LOGGER.log(string, level);
 
 	string = "";
 	switch (type) {
@@ -390,7 +387,7 @@ void APIENTRY glDebugOutput(
 	case GL_DEBUG_TYPE_POP_GROUP:           string += "Type: Pop Group"; break;
 	case GL_DEBUG_TYPE_OTHER:               string += "Type: Other"; break;
 	}
-	LOGGER.log(string, Jade::ERROR);
+	LOGGER.log(string, level);
 	string = "";
 	switch (severity) {
 	case GL_DEBUG_SEVERITY_HIGH:         string += "Severity: high"; break;
@@ -398,6 +395,6 @@ void APIENTRY glDebugOutput(
 	case GL_DEBUG_SEVERITY_LOW:          string += "Severity: low"; break;
 	case GL_DEBUG_SEVERITY_NOTIFICATION: string += "Severity: notification"; break;
 	}
-	LOGGER.log(string, Jade::ERROR);
-	LOGGER.log("---------------", Jade::ERROR);
+	LOGGER.log(string, level);
+	LOGGER.log("---------------", level);
 }
