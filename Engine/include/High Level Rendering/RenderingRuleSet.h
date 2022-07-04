@@ -1,25 +1,31 @@
 #pragma once
 
-#include <vector>
-
 #include "Low Level Rendering/Shaders/ShaderHeader.h"
 
 namespace Jade {
-	enum RenderingRule {
-		VERTEX_POSITIONS,
-		VERTEX_NORMALS,
-		TEXTURE_CORDINATES
-	};
-
 	class RenderingRuleSet {
 	public:
-		RenderingRuleSet(std::vector<RenderingRule> renderingRules);
+		RenderingRuleSet();
 
 		void bind() { m_Program.use(); }
 
+		bool Vertex_Positions = true;
+		bool Vertex_Normals = false;
+		bool Phong_Lighting = false;
+		bool Object_Colour = false;
+
+		void createProgram();
+
 	private:
-		std::vector<RenderingRule> m_RenderingRules;
+		int m_ID;
 		ShaderProgram m_Program;
+
+		static int ID;
+
+		static int getNextID() {
+			ID++;
+			return ID;
+		}
 
 		ShaderProgram programInit();
 	};
