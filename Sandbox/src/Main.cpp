@@ -44,6 +44,8 @@ glm::vec3 lightPositon(1.2f, 1.0f, 2.0f);
 void framebufferSizeCallback(GLFWwindow* window, int width, int height);
 void mouseCallback(GLFWwindow* window, double xpos, double ypos);
 void scrollCallback(GLFWwindow* window, double xOffset, double yOffset);
+void APIENTRY glDebugOutput(GLenum source, GLenum type, unsigned int id, GLenum severity,
+	GLsizei length, const char* message, const void* userParam);
 
 // Helper functions
 void porcessInput(GLFWwindow* window);
@@ -61,6 +63,16 @@ int main() {
 
 	// OpenGL settings
 	glEnable(GL_DEPTH_TEST);
+	
+	int flags;
+	glGetIntegerv(GL_CONTEXT_FLAGS, &flags);
+	if (flags & GL_CONTEXT_FLAG_DEBUG_BIT) {
+		LOGGER.log("OpenGL debug context available", Jade::INFO);
+		glEnable(GL_DEBUG_OUTPUT);
+		glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+		glDebugMessageCallback(glDebugOutput, nullptr);
+		glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
+	}
 
 	// Uncomment for wireframe rendering
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -155,7 +167,7 @@ int main() {
 	};
 	// ======================== Shader Creator Testing ========================
 	Jade::RenderingRuleSet ruleSet;
-
+	
 	//Jade::ShaderCreator shaderCreator(ruleSet);
 
 	// ======================== Cube ========================
@@ -274,7 +286,7 @@ int main() {
 		// Render cleanup
 
 		window.swapBuffers();
-		glCheckError();
+		//glCheckError();
 	}
 
 	// Cleanup
@@ -335,4 +347,57 @@ void mouseCallback(GLFWwindow* window, double xPos, double yPos) {
 
 void scrollCallback(GLFWwindow* window, double xOffset, double yOffset) {
 	camera.processScollWheel(yOffset);
+}
+
+void APIENTRY glDebugOutput(
+	GLenum source, 
+	GLenum type,
+	unsigned int id,
+	GLenum severity,
+	GLsizei length,
+	const char* message,
+	const void* userParam) {
+	// ignore non-significant error/warning codes
+	if (id == 131169 || id == 131185 || id == 131218 || id == 131204) return;
+
+	std::string string = "Debug message (";
+	string += std::to_string(id);
+	string += "): ";
+	string += message;
+	LOGGER.log("---------------", Jade::ERROR);
+	LOGGER.log(string, Jade::ERROR);
+
+	string = "";
+	switch (source) {
+	case GL_DEBUG_SOURCE_API:             string += "Source: API"; break;
+	case GL_DEBUG_SOURCE_WINDOW_SYSTEM:   string += "Source: Window System"; break;
+	case GL_DEBUG_SOURCE_SHADER_COMPILER: string += "Source: Shader Compiler"; break;
+	case GL_DEBUG_SOURCE_THIRD_PARTY:     string += "Source: Third Party"; break;
+	case GL_DEBUG_SOURCE_APPLICATION:     string += "Source: Application"; break;
+	case GL_DEBUG_SOURCE_OTHER:           string += "Source: Other"; break;
+	}
+	LOGGER.log(string, Jade::ERROR);
+
+	string = "";
+	switch (type) {
+	case GL_DEBUG_TYPE_ERROR:               string += "Type: Error"; break;
+	case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR: string += "Type: Deprecated Behaviour"; break;
+	case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR:  string += "Type: Undefined Behaviour"; break;
+	case GL_DEBUG_TYPE_PORTABILITY:         string += "Type: Portability"; break;
+	case GL_DEBUG_TYPE_PERFORMANCE:         string += "Type: Performance"; break;
+	case GL_DEBUG_TYPE_MARKER:              string += "Type: Marker"; break;
+	case GL_DEBUG_TYPE_PUSH_GROUP:          string += "Type: Push Group"; break;
+	case GL_DEBUG_TYPE_POP_GROUP:           string += "Type: Pop Group"; break;
+	case GL_DEBUG_TYPE_OTHER:               string += "Type: Other"; break;
+	}
+	LOGGER.log(string, Jade::ERROR);
+	string = "";
+	switch (severity) {
+	case GL_DEBUG_SEVERITY_HIGH:         string += "Severity: high"; break;
+	case GL_DEBUG_SEVERITY_MEDIUM:       string += "Severity: medium"; break;
+	case GL_DEBUG_SEVERITY_LOW:          string += "Severity: low"; break;
+	case GL_DEBUG_SEVERITY_NOTIFICATION: string += "Severity: notification"; break;
+	}
+	LOGGER.log(string, Jade::ERROR);
+	LOGGER.log("---------------", Jade::ERROR);
 }
