@@ -7,18 +7,20 @@
 namespace Jade {
 	class ShaderCreator {
 	public:
-		ShaderCreator(std::vector<RenderingRule>& renderingRules) {}
+		ShaderCreator(RenderingRuleSet& ruleSet)
+			: m_RuleSet(ruleSet), m_VertexShader(vertexShaderInit()), m_FragmentShader(fragmentShaderInit()) {}
 
-		VertexShader getVertexShader() {
-			return VertexShader(TextFile("NULL"));
-		}
+		VertexShader getVertexShader() { return m_VertexShader; }
+		FragmentShader getFragmentShader() { return m_FragmentShader; }
 
-		FragmentShader getFragmentShader() {
-			return FragmentShader(TextFile("NULL"));
-
-		}
-
+		ShaderProgram createProgram() { return ShaderProgram(m_FragmentShader, m_VertexShader); }
 	private:
+		RenderingRuleSet m_RuleSet;
 
+		VertexShader m_VertexShader;
+		FragmentShader m_FragmentShader;
+
+		VertexShader vertexShaderInit();
+		FragmentShader fragmentShaderInit();
 	};
 }

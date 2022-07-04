@@ -16,6 +16,8 @@ namespace Jade {
 
 		void createProgram();
 
+		int getID() { return m_ID; }
+
 	private:
 		int m_ID;
 		ShaderProgram m_Program;
