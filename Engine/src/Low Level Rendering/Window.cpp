@@ -23,6 +23,7 @@ namespace Jade {
 		else {
 			m_Window = glfwCreateWindow(width, height, name.c_str(), NULL, NULL);
 		}
+
 		if (!m_Window) {
 			LOGGER.log("GLFW window creation failed.", Jade::ERROR);
 			LOGGER.log("OpenGL context creation failed.", Jade::ERROR);
