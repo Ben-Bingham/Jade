@@ -12,7 +12,8 @@ namespace Jade {
 
 	ShaderProgram RenderingRuleSet::programInit() {
 		ShaderCreator creator(*this);
-		return creator.createProgram();
+		ShaderProgram program(creator.createProgram());
+		return program;
 	}
 
 	int RenderingRuleSet::ID = -1;
