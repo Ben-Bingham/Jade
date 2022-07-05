@@ -5,6 +5,7 @@
 #include "RenderingRuleSet.h"
 #include "Low Level Rendering/Rendering Objects/VertexAttributeObject.h"
 #include "Low Level Rendering/Rendering Objects/VertexBufferObject.h"
+#include "High Level Rendering/Transform.h"
 
 namespace Jade {
 	enum Primitive { //TODO how do i handel custom models
@@ -14,7 +15,8 @@ namespace Jade {
 	class RenderableObject {
 	public:
 		RenderableObject(Primitive shape = CUBE) : m_VAO(), m_ObjectColour(1.0f, 1.0f, 1.0f, 1.0f), m_Shape(shape), m_VBO(vboInit()) {
-			
+			VertexAttributePointer positionData(3, GL_FLOAT, POSITION);
+			m_VAO.setAttributePointer(positionData);
 		}
 
 		bool followsRuleSet(RenderingRuleSet& ruleSet) {
@@ -35,7 +37,7 @@ namespace Jade {
 			if (
 				ruleSet.Vertex_Normals == hasNormals &&
 				ruleSet.Vertex_Positions == hasPosition &&
-				hasNormals && hasPosition == ruleSet.Phong_Lighting
+				(hasNormals && hasPosition) == ruleSet.Phong_Lighting
 				) {
 				return true;
 			}
@@ -45,24 +47,29 @@ namespace Jade {
 		}
 
 		void render(const RenderingRuleSet& ruleSet) const {
-			m_VAO.bind(); // bind VAO
-			ruleSet.getProgram().setVector3f("objectColour", m_ObjectColour); // upload custom uniforms such as colour
+			ruleSet.getProgram().setVector3f("objectColour", m_ObjectColour);
+			ruleSet.getProgram().setMatrix4f("model", m_Transform.getMatrix());
+
+			m_VAO.bind();
 
 			int numberOfVerticies = 0;
 			switch (m_Shape) {
 			case CUBE: numberOfVerticies = 36; break;
 			}
 
-			glDrawArrays(GL_TRIANGLES, 0, numberOfVerticies); // call the draw function
+			glDrawArrays(GL_TRIANGLES, 0, numberOfVerticies);
 		}
 
 		void dispose() { m_VAO.dispose(); }
+
+		Transform getTransform() { return m_Transform; }
 
 	private:
 		VertexAttributeObject m_VAO;
 		Primitive m_Shape;
 		VertexBufferObject m_VBO;
 		glm::vec4 m_ObjectColour;
+		Transform m_Transform;
 
 		// EBO //TODO
 		// Possibly textures
