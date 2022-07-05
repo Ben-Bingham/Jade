@@ -31,7 +31,7 @@ namespace Jade {
 			glDeleteVertexArrays(1, &m_VAO);
 		}
 
-		void bind() {
+		void bind() const {
 			glBindVertexArray(m_VAO);
 		}
 
