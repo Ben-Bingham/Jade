@@ -8,11 +8,11 @@ namespace Jade {
 
 		// ============================ Layout ============================
 		if (m_RuleSet.Vertex_Positions && m_RuleSet.Vertex_Normals) {
-			vertexShaderSource += "layout(location = 0) in vec3 inputPositon;\n";
-			vertexShaderSource += "layout(location = 1) in vec3 inputNormal;\n";
+			vertexShaderSource += "layout (location = 0) in vec3 inputPositon;\n";
+			vertexShaderSource += "layout (location = 1) in vec3 inputNormal;\n";
 		}
 		else if (m_RuleSet.Vertex_Positions) {
-			vertexShaderSource += "layout(location = 0) in vec3 inputPositon;\n";
+			vertexShaderSource += "layout (location = 0) in vec3 inputPositon;\n";
 		}
 		else {
 			LOGGER.log("Non standard vertex attributes used, none taken as input.", Jade::WARNING);
