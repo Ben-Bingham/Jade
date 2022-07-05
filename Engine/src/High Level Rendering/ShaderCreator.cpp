@@ -50,8 +50,8 @@ namespace Jade {
 		vertexShaderPath += std::to_string(m_RuleSet.getID());
 		vertexShaderPath += ".vert";
 
-		VertexShader shader(TextFile(vertexShaderPath, vertexShaderSource));
-		return shader;
+		
+		return VertexShader(TextFile(vertexShaderPath, vertexShaderSource));;
 	}
 
 	FragmentShader& ShaderCreator::fragmentShaderInit() {
@@ -122,7 +122,7 @@ namespace Jade {
 		fragmentShaderPath += std::to_string(m_RuleSet.getID());
 		fragmentShaderPath += ".frag";
 
-		FragmentShader shader(TextFile(fragmentShaderPath, fragmentShaderSource));
-		return shader;
+		
+		return FragmentShader(TextFile(fragmentShaderPath, fragmentShaderSource));;
 	}
 }
