@@ -17,6 +17,8 @@
 #include "High Level Rendering/Transform.h"
 #include "High Level Rendering/RenderingRuleSet.h"
 #include "High Level Rendering/ShaderCreator.h"
+#include "High Level Rendering/RenderableObject.h"
+#include "High Level Rendering/Renderer.h"
 
 // Global variables
 unsigned int screenWidth = 640;
@@ -170,6 +172,14 @@ int main() {
 	ruleSet.Phong_Lighting = true;
 
 	ruleSet.createProgram();
+
+	Jade::Renderer renderer(ruleSet, camera.getViewMatrixReference(), projection);
+
+	Jade::RenderableObject renderObject(Jade::CUBE);
+
+	renderer.addRenderable(renderObject);
+
+	renderer.render();
 
 	// ======================== Cube ========================
 	// Transform
