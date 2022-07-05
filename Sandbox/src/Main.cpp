@@ -173,16 +173,17 @@ int main() {
 
 	ruleSet.createProgram();
 
-	Jade::Renderer renderer(ruleSet, camera.getViewMatrixReference(), projection);
+	Jade::Renderer renderer(ruleSet, camera.getViewMatrix(), projection);
 
 	Jade::RenderableObject renderObject(Jade::CUBE);
 
+	//renderObject.getTransform().translate(lightPositon);
+	//renderObject.getTransform().scale(0.2f);
+
 	renderer.addRenderable(renderObject);
 
-	renderer.render();
-
 	// ======================== Cube ========================
-	// Transform
+	//Transform
 	Jade::Transform cubeTransform;
 
 	// Vertex array object
@@ -257,6 +258,9 @@ int main() {
 		glm::mat4 view;
 		view = camera.getViewMatrix();
 
+		renderer.setMatrices(view, projection);
+		renderer.render();
+
 		// ======================== Cube ========================
 		cubeTransform.clearMatrix();
 		cubeTransform.rotate(Jade::Rotation{ glm::vec3(0.5f, 1.0f, 0.0f), (float)glfwGetTime() * 50.0f });
@@ -281,19 +285,21 @@ int main() {
 		lightVAO.bind();
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
-		// Render cleanup
+		//Render cleanup
 
 		window.swapBuffers();
 		glCheckError();
 	}
 
-	// Cleanup
+	//Cleanup
 	VAO.dispose();
 	VBO.dispose();
 	shaderProgram.dispose();
 	lightVAO.dispose();
 	lightVBO.dispose();
 	lightShaderProgram.dispose();
+
+	renderObject.dispose();
 	//TODO dispose of all the shaders, programs, anf VAOS
 	//TODO also remove the possible dispose call from the distructiors of VAO ect
 
