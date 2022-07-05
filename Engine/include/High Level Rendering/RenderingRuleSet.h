@@ -15,6 +15,7 @@ namespace Jade {
 		bool Object_Colour = false;
 
 		void createProgram();
+		void createAttributePointers(); //TODO
 
 		int getID() { return m_ID; }
 
@@ -30,5 +31,12 @@ namespace Jade {
 		}
 
 		ShaderProgram programInit();
+
+		void processRules() {
+			if (Phong_Lighting) {
+				Object_Colour = true;
+				Vertex_Normals = true;
+			}
+		}
 	};
 }

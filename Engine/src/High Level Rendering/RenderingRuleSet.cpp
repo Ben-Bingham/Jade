@@ -6,9 +6,11 @@ namespace Jade {
 	RenderingRuleSet::RenderingRuleSet() : m_Program(programInit()), m_ID(getNextID()) {}
 
 	void RenderingRuleSet::createProgram() {
+		processRules();
 		m_Program.dispose();
 		ShaderCreator creator(*this);
 		m_Program = creator.createProgram();
+		creator.dispose();
 	}
 
 	ShaderProgram RenderingRuleSet::programInit() {
