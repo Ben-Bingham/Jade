@@ -167,7 +167,9 @@ int main() {
 	};
 	// ======================== Shader Creator Testing ========================
 	Jade::RenderingRuleSet ruleSet;
-	Jade::ShaderCreator shaderCreator(ruleSet);
+	ruleSet.Phong_Lighting = true;
+
+	ruleSet.createProgram();
 
 	// ======================== Cube ========================
 	// Transform
@@ -276,7 +278,6 @@ int main() {
 	}
 
 	// Cleanup
-	shaderCreator.dispose();
 	VAO.dispose();
 	VBO.dispose();
 	shaderProgram.dispose();
