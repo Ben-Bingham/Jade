@@ -276,6 +276,13 @@ int main() {
 	}
 
 	// Cleanup
+	shaderCreator.dispose();
+	VAO.dispose();
+	VBO.dispose();
+	shaderProgram.dispose();
+	lightVAO.dispose();
+	lightVBO.dispose();
+	lightShaderProgram.dispose();
 	//TODO dispose of all the shaders, programs, anf VAOS
 	//TODO also remove the possible dispose call from the distructiors of VAO ect
 
