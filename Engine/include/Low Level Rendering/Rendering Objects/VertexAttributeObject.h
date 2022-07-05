@@ -7,9 +7,9 @@
 
 namespace Jade {
 	enum AttributeNames {
-		POSITIONS,
-		NORMALS,
-		TEXTURE_CORDINATES
+		POSITION,
+		NORMAL,
+		TEXTURE_CORDINATE
 	};
 
 	struct VertexAttributePointer {
