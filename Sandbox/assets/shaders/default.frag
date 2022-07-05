@@ -12,19 +12,15 @@ uniform vec3 cameraPosition;  // Specular
 
 void main()
 {
-	vec3 lightValue; // Default
-
 	// ======================== Ambient ========================
 	float ambientStrength = 0.1;
 	vec3 ambient = ambientStrength * lightColour;
-	lightValue += ambient;
 
 	// ======================== Diffuse ========================
 	vec3 normalizedNormal = normalize(normal);										// Specular
 	vec3 lightDirection = normalize(lightPosition - fragmentPosition);				// Specular
 	float differenceInVectors = max(dot(normalizedNormal, lightDirection), 0.0);
 	vec3 diffuse = differenceInVectors * lightColour;
-	lightValue += diffuse;
 
 	// ======================== Specular ========================
 	float specularStrength = 0.5;
@@ -35,9 +31,8 @@ void main()
 
 	float specularValue = pow(max(dot(viewDirection, reflectionDirection), 0.0), shininess);
 	vec3 specular = specularStrength * specularValue * lightColour;
-	lightValue += specular;
 
 	// ======================== Combination ========================
-	vec3 result = lightValue * objectColour; // Default
+	vec3 result = (ambient + diffuse + specular) * objectColour; // Default
 	FragColor = vec4(result, 1.0); // Default
 }
