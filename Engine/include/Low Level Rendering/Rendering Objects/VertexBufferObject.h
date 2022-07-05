@@ -29,8 +29,7 @@ namespace Jade {
 			delete[] cVertices;
 		}
 
-
-		~VertexBufferObject() {
+		void dispose() {
 			glDeleteBuffers(1, &m_VBO);
 		}
 
