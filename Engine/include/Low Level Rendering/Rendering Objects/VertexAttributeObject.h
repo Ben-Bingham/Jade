@@ -27,9 +27,7 @@ namespace Jade {
 		VertexAttributeObject& operator=(const VertexAttributeObject&) = default;
 		VertexAttributeObject& operator=(VertexAttributeObject&&) = default;
 
-		~VertexAttributeObject() {
-			bind();
-
+		void dispose() {
 			glDeleteVertexArrays(1, &m_VAO);
 		}
 
