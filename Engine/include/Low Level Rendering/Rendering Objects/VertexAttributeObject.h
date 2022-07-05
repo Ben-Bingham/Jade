@@ -49,6 +49,8 @@ namespace Jade {
 		void setAttributePointer(VertexAttributePointer attributePointer);
 		void addAttributePointers(std::vector<VertexAttributePointer> attributePointers);
 
+		std::vector<VertexAttributePointer> getAttributePointers() { return m_VertexAttributePointers; }
+
 	private:
 		unsigned int m_VAO;
 		std::vector<VertexAttributePointer> m_VertexAttributePointers;
