@@ -18,8 +18,30 @@ namespace Jade {
 		}
 
 		bool followsRuleSet(RenderingRuleSet& ruleSet) {
-			//if this object contains at least all all the required rules in the rule set
-			return true;
+			bool hasPosition = false;
+			bool hasNormals = false;
+			std::vector<VertexAttributePointer>::iterator it;
+			std::vector<VertexAttributePointer> attributes = m_VAO.getAttributePointers();
+			for (it = attributes.begin(); it != attributes.end(); it++) {
+				if (it->name == POSITION) {
+					hasPosition = true;
+				}
+
+				if (it->name == NORMAL) {
+					hasNormals = true;
+				}
+			}
+
+			if (
+				ruleSet.Vertex_Normals == hasNormals &&
+				ruleSet.Vertex_Positions == hasPosition &&
+				hasNormals && hasPosition == ruleSet.Phong_Lighting
+				) {
+				return true;
+			}
+			else {
+				return false;
+			}
 		}
 
 		void render(const RenderingRuleSet& ruleSet) const {
