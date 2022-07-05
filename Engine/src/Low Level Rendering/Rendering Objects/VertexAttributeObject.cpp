@@ -57,7 +57,7 @@ namespace Jade {
 		}
 	}
 
-	VertexAttributePointer::VertexAttributePointer(unsigned int Size, GLenum Type) 
+	VertexAttributePointer::VertexAttributePointer(unsigned int Size, GLenum Type, AttributeNames name)
 		: size(Size), type(Type) {
 		switch (type) {
 		default:

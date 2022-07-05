@@ -6,12 +6,19 @@
 #include "Jade.h"
 
 namespace Jade {
+	enum AttributeNames {
+		POSITIONS,
+		NORMALS,
+		TEXTURE_CORDINATES
+	};
+
 	struct VertexAttributePointer {
-		VertexAttributePointer(unsigned int Size, GLenum Type);
+		VertexAttributePointer(unsigned int Size, GLenum Type, AttributeNames name);
 
 		unsigned int size;
 		GLenum type;
 		unsigned int sizeOfType;
+		AttributeNames name;
 	};
 
 	class VertexAttributeObject {
