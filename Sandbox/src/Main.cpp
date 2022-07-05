@@ -167,9 +167,9 @@ int main() {
 		-0.5f,  0.5f,  0.5f,
 		-0.5f,  0.5f, -0.5f
 	};
+
 	// ======================== Shader Creator Testing ========================
 	Jade::RenderingRuleSet ruleSet;
-	ruleSet.Phong_Lighting = true;
 
 	ruleSet.createProgram();
 
@@ -192,9 +192,9 @@ int main() {
 	Jade::VertexBufferObject VBO(cubeVerticies, sizeof(cubeVerticies));
 
 	// Vertex attribute pointers
-	Jade::VertexAttributePointer positionData(3, GL_FLOAT);
+	Jade::VertexAttributePointer positionData(3, GL_FLOAT, Jade::POSITION);
 	//Jade::VertexAttributePointer texCordData(2, GL_FLOAT);
-	Jade::VertexAttributePointer normalData(3, GL_FLOAT);
+	Jade::VertexAttributePointer normalData(3, GL_FLOAT, Jade::NORMAL);
 
 	std::vector<Jade::VertexAttributePointer> attributePointers = {
 		positionData,
@@ -225,7 +225,7 @@ int main() {
 	Jade::VertexAttributeObject lightVAO;
 	Jade::VertexBufferObject lightVBO(lightVerticies, sizeof(lightVerticies));
 
-	Jade::VertexAttributePointer lightPositonData(3, GL_FLOAT);
+	Jade::VertexAttributePointer lightPositonData(3, GL_FLOAT, Jade::POSITION);
 
 	lightVAO.setAttributePointer(lightPositonData);
 
