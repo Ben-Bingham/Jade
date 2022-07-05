@@ -61,7 +61,7 @@ namespace Jade {
 			m_Rotation = { glm::vec3(0.0f, 0.0f, 0.0f), 0.0f };
 		}
 
-		glm::mat4 getMatrix() { return m_Model; }
+		glm::mat4 getMatrix() const { return m_Model; }
 
 	private:
 
