@@ -15,9 +15,9 @@ namespace Jade {
 		bool Object_Colour = false;
 
 		void createProgram();
-		void createAttributePointers(); //TODO
 
-		int getID() { return m_ID; }
+		int getID() const { return m_ID; }
+		ShaderProgram getProgram() const { return m_Program; }
 
 	private:
 		int m_ID;
