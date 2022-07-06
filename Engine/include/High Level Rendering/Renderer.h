@@ -29,9 +29,9 @@ namespace Jade {
 			m_RuleSet.getProgram().setMatrix4f("projection", m_Projection);
 			
 			//upload any additional data needed for ruleset like lights TODO
-			std::vector<RenderableObject>::iterator it;
+			std::vector<std::reference_wrapper<RenderableObject>>::iterator it;
 			for (it = m_Renderables.begin(); it != m_Renderables.end(); it++) {
-				it->render(m_RuleSet);
+				it->get().render(m_RuleSet);
 			}
 		}
 
@@ -42,7 +42,7 @@ namespace Jade {
 
 	private:
 		RenderingRuleSet m_RuleSet;
-		std::vector<RenderableObject> m_Renderables;
+		std::vector<std::reference_wrapper<RenderableObject>> m_Renderables;
 		glm::mat4 m_View;
 		glm::mat4 m_Projection;
 	};
