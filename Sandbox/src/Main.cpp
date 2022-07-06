@@ -170,6 +170,8 @@ int main() {
 
 	// ======================== Shader Creator Testing ========================
 	Jade::RenderingRuleSet ruleSet;
+	//ruleSet.Phong_Lighting = true;
+	ruleSet.Vertex_Normals = true;
 	ruleSet.Object_Colour = true;
 
 	ruleSet.createProgram();
