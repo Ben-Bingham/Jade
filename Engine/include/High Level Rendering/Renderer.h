@@ -13,7 +13,7 @@ namespace Jade {
 			: m_RuleSet(ruleSet), m_View(viewMatrix), m_Projection(projectionMatrix) { }
 
 		void addRenderable(RenderableObject& renderable) {
-			if (renderable.followsRuleSet(m_RuleSet)) {
+			if (m_RuleSet.allowsRenderable(renderable)) {
 				m_Renderables.push_back(renderable);
 			}
 			else {
