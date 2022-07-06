@@ -170,17 +170,22 @@ int main() {
 
 	// ======================== Shader Creator Testing ========================
 	Jade::RenderingRuleSet ruleSet;
+	ruleSet.Object_Colour = true;
 
 	ruleSet.createProgram();
 
 	Jade::Renderer renderer(ruleSet, camera.getViewMatrix(), projection);
 
-	Jade::RenderableObject renderObject(Jade::CUBE);
+	Jade::RenderableObject renderObject(Jade::CUBE, glm::vec4(0.2f, 0.5f, 0.2f, 1.0f));
 
-	//renderObject.getTransform().translate(lightPositon);
-	//renderObject.getTransform().scale(0.2f);
+	renderObject.getTransform().translate(2, 1, 2);
+	renderObject.getTransform().scale(0.25f);
 
 	renderer.addRenderable(renderObject);
+
+	Jade::RenderableObject renderObject2(Jade::CUBE);
+
+	renderer.addRenderable(renderObject2);
 
 	// ======================== Cube ========================
 	//Transform
