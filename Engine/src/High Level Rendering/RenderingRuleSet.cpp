@@ -4,7 +4,12 @@
 #include <High Level Rendering/RenderableObject.h>
 
 namespace Jade {
-	RenderingRuleSet::RenderingRuleSet(RuleSet rules) : m_Program(programInit()), m_ID(getNextID()), ruleSet(rules) {}
+	RenderingRuleSet::RenderingRuleSet(RuleSet rules) : m_Program(programInit()), m_ID(getNextID()), ruleSet(rules) {
+		m_Light.ambient = glm::vec3(0.2f, 0.2f, 0.2f);
+		m_Light.diffuse = glm::vec3(0.5f, 0.5f, 0.5f);
+		m_Light.specular = glm::vec3(1.0f, 1.0f, 1.0f);
+		m_Light.position = glm::vec3(1.2f, 1.0f, 2.0f);
+	}
 
 	void RenderingRuleSet::createProgram() {
 		m_Program.dispose();
