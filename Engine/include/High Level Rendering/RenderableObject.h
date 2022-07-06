@@ -8,8 +8,9 @@
 #include "High Level Rendering/Transform.h"
 
 namespace Jade {
-	enum Primitive { //TODO how do i handel custom models
-		CUBE
+	enum Primitive { //TODO how do i handle custom models
+		CUBE,
+		PYRAMID
 	};
 
 	class RenderableObject {
@@ -43,9 +44,11 @@ namespace Jade {
 			switch (m_Shape) {
 			default:
 			case CUBE: return VertexBufferObject(cubeVerticies);
+			case PYRAMID: return VertexBufferObject(pyramidVerticies);
 			}
 		}
 
 		static std::vector<float> cubeVerticies;
+		static std::vector<float> pyramidVerticies;
 	};
 }

@@ -39,6 +39,7 @@ namespace Jade {
 		int numberOfVerticies = 0;
 		switch (m_Shape) {
 		case CUBE: numberOfVerticies = 36; break;
+		case PYRAMID: numberOfVerticies = 12; break;
 		}
 
 		glDrawArrays(GL_TRIANGLES, 0, numberOfVerticies);
@@ -86,5 +87,23 @@ namespace Jade {
 		 0.5f,  0.5f,  0.5f,
 		-0.5f,  0.5f,  0.5f,
 		-0.5f,  0.5f, -0.5f
+	};
+
+	std::vector<float> RenderableObject::pyramidVerticies = {
+		-0.5f, -0.5f,  0.5f,
+		 0.5f, -0.5f,  0.5f,
+		 0.0f,  0.5f,  0.0f,
+
+		 0.5f, -0.5f,  0.5f,
+		 0.0f,  0.5f,  0.0f,
+		 0.5f, -0.5f, -0.5f,
+
+		-0.5f, -0.5f, -0.5f,
+		 0.5f, -0.5f, -0.5f,
+		 0.0f,  0.5f,  0.0f,
+
+		-0.5f, -0.5f,  0.5f,
+		-0.5f, -0.5f, -0.5f,
+		 0.0f,  0.5f,  0.0f
 	};
 }
