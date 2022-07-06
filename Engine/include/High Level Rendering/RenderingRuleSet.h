@@ -5,23 +5,23 @@
 namespace Jade {
 	class RenderableObject;
 
+	enum RuleSet {
+		STANDARD, // Vertex postions, and normals along with static object colour, implemets Phong lighting
+		TEXTURE	  // Same as standard but has tex cords and textures aswell, implemets Phong lighting
+	};
+
 	class RenderingRuleSet {
 	public:
-		RenderingRuleSet();
+		RenderingRuleSet(RuleSet rules = STANDARD);
 
 		void bind() { m_Program.use(); }
 
-		bool Vertex_Positions = true;
-		bool Vertex_Normals = false;
-		bool Phong_Lighting = false;
-		bool Object_Colour = false;
+		RuleSet ruleSet;
 
 		void createProgram();
 
 		int getID() const { return m_ID; }
 		ShaderProgram getProgram() const { return m_Program; }
-
-		bool allowsRenderable(RenderableObject& renderable);
 
 	private:
 		int m_ID;
@@ -35,12 +35,5 @@ namespace Jade {
 		}
 
 		ShaderProgram programInit();
-
-		void processRules() {
-			if (Phong_Lighting) {
-				Object_Colour = true;
-				Vertex_Normals = true;
-			}
-		}
 	};
 }
