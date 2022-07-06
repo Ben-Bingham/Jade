@@ -14,7 +14,9 @@ namespace Jade {
 
 	class RenderableObject {
 	public:
-		RenderableObject(Primitive shape = CUBE) : m_VAO(), m_ObjectColour(1.0f, 1.0f, 1.0f, 1.0f), m_Shape(shape), m_VBO(vboInit()) {
+		RenderableObject(Primitive shape = CUBE, glm::vec4 objectColour = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f)) 
+			: m_VAO(), m_ObjectColour(objectColour), m_Shape(shape), m_VBO(vboInit()) {
+
 			VertexAttributePointer positionData(3, GL_FLOAT, POSITION);
 			m_VAO.setAttributePointer(positionData);
 		}
