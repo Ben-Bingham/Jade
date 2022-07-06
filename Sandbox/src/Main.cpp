@@ -169,7 +169,7 @@ int main() {
 	};
 
 	// ======================== Shader Creator Testing ========================
-	Jade::RenderingRuleSet ruleSet(Jade::STANDARD);
+	Jade::RenderingRuleSet ruleSet;
 
 	ruleSet.createProgram();
 
