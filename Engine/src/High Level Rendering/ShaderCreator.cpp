@@ -47,8 +47,23 @@ namespace Jade {
 		std::string fragmentShaderSource = "";
 
 		fragmentShaderSource += "#version 330 core\n";
-		fragmentShaderSource += "\n";
 		fragmentShaderSource += "out vec4 FragColor;\n";
+		fragmentShaderSource += "\n";
+		fragmentShaderSource += "struct Material {\n";
+		fragmentShaderSource += "	vec3 ambient;\n";
+		fragmentShaderSource += "	vec3 diffuse;\n";
+		fragmentShaderSource += "	vec3 specular;\n";
+		fragmentShaderSource += "	float shininess;\n";
+		fragmentShaderSource += "};\n";
+		fragmentShaderSource += "\n";
+		fragmentShaderSource += "struct Light {\n";
+		fragmentShaderSource += "	vec3 position;\n";
+		fragmentShaderSource += "\n";
+		fragmentShaderSource += "	vec3 ambient;\n";
+		fragmentShaderSource += "	vec3 diffuse;\n";
+		fragmentShaderSource += "	vec3 specular;\n";
+		fragmentShaderSource += "};\n";
+
 		fragmentShaderSource += "\n";
 		fragmentShaderSource += "in vec3 normal;\n";
 		fragmentShaderSource += "in vec3 fragmentPosition;\n";
@@ -56,30 +71,24 @@ namespace Jade {
 			fragmentShaderSource += "in vec2 textureCordinates;\n"; //TODO actually do something with this stuff
 		}
 		fragmentShaderSource += "\n";
-		fragmentShaderSource += "uniform vec3 objectColour;\n";
-		fragmentShaderSource += "uniform vec3 lightColour;\n";
-		fragmentShaderSource += "uniform vec3 lightPosition;\n";
 		fragmentShaderSource += "uniform vec3 cameraPosition;\n";
+		fragmentShaderSource += "uniform Material material;\n";
+		fragmentShaderSource += "uniform Light light;\n";
 		fragmentShaderSource += "\n";
 		fragmentShaderSource += "void main() {\n";
-		fragmentShaderSource += "	float ambientStrength = 0.1;\n";
-		fragmentShaderSource += "	vec3 ambient = ambientStrength * lightColour;\n";
+		fragmentShaderSource += "	vec3 ambient = light.ambient * material.ambient;\n";
 		fragmentShaderSource += "\n";
-		fragmentShaderSource += "	vec3 normalizedNormal = normalize(normal);\n";
-		fragmentShaderSource += "	vec3 lightDirection = normalize(lightPosition - fragmentPosition);\n";
-		fragmentShaderSource += "	float differenceInVectors = max(dot(normalizedNormal, lightDirection), 0.0);\n";
-		fragmentShaderSource += "	vec3 diffuse = differenceInVectors * lightColour;\n";
+		fragmentShaderSource += "	vec3 norm = normalize(normal);\n";
+		fragmentShaderSource += "	vec3 lightDir = normalize(light.position - fragmentPosition);\n";
+		fragmentShaderSource += "	float diff = max(dot(norm, lightDir), 0.0);\n";
+		fragmentShaderSource += "	vec3 diffuse = light.diffuse * (diff * material.diffuse);\n";
 		fragmentShaderSource += "\n";
-		fragmentShaderSource += "	float specularStrength = 0.5;\n";
-		fragmentShaderSource += "	float shininess = 32;\n";
+		fragmentShaderSource += "	vec3 viewDir = normalize(cameraPosition - fragmentPosition);\n";
+		fragmentShaderSource += "	vec3 reflectDir = reflect(-lightDir, norm);\n";
+		fragmentShaderSource += "	float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);\n";
+		fragmentShaderSource += "	vec3 specular = light.specular * (spec * material.specular);\n";
 		fragmentShaderSource += "\n";
-		fragmentShaderSource += "	vec3 viewDirection = normalize(cameraPosition - fragmentPosition);\n";
-		fragmentShaderSource += "	vec3 reflectionDirection = reflect(-lightDirection, normalizedNormal);\n";
-		fragmentShaderSource += "\n";
-		fragmentShaderSource += "	float specularValue = pow(max(dot(viewDirection, reflectionDirection), 0.0), shininess);\n";
-		fragmentShaderSource += "	vec3 specular = specularStrength * specularValue * lightColour;\n";
-		fragmentShaderSource += "\n";
-		fragmentShaderSource += "	vec3 result = (ambient + diffuse + specular) * objectColour;\n";
+		fragmentShaderSource += "	vec3 result = ambient + diffuse + specular;\n";
 		fragmentShaderSource += "	FragColor = vec4(result, 1.0);\n";
 		fragmentShaderSource += "}\0";
 
