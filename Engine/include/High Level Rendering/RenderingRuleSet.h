@@ -1,6 +1,8 @@
 #pragma once
+#include <vector>
 
 #include "Low Level Rendering/Shaders/ShaderHeader.h"
+#include "Low Level Rendering/Shaders/ShaderStructs.h"
 
 namespace Jade {
 	class RenderableObject;
@@ -23,9 +25,12 @@ namespace Jade {
 		int getID() const { return m_ID; }
 		ShaderProgram getProgram() const { return m_Program; }
 
+		Light getLight() { return m_Light; }
+
 	private:
 		int m_ID;
 		ShaderProgram m_Program;
+		Light m_Light; //TODO allow multiple lights
 
 		static int ID;
 
