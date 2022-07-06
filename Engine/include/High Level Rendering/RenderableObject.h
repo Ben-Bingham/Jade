@@ -37,8 +37,6 @@ namespace Jade {
 			}
 		}
 
-		bool followsRuleSet(RenderingRuleSet& ruleSet);
-
 		void render(const RenderingRuleSet& ruleSet) const;
 
 		void dispose() { m_VAO.dispose(); }
