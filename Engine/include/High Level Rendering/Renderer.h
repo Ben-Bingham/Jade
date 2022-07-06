@@ -16,6 +16,9 @@ namespace Jade {
 			if (renderable.followsRuleSet(m_RuleSet)) {
 				m_Renderables.push_back(renderable);
 			}
+			else {
+				LOGGER.log("Renderable did not follow rule set", WARNING);
+			}
 		}
 
 		void render() {
