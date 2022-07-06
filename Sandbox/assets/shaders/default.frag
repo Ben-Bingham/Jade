@@ -1,5 +1,20 @@
 #version 330 core
 
+struct Light {
+	vec3 position;
+
+	vec3 ambient;
+	vec3 diffuse;
+	vec3 specular;
+};
+
+struct Material {
+	vec3 ambient;
+	vec3 diffuse;
+	vec3 specular;
+	float shininess;
+};
+
 out vec4 FragColor;
 
 in vec3 normal; // Diffuse
@@ -8,7 +23,10 @@ in vec3 fragmentPosition; // Diffuse // Specular
 uniform vec3 objectColour; // Default
 uniform vec3 lightColour;  // Default
 uniform vec3 lightPosition; // Diffuse
-uniform vec3 cameraPosition;  // Specular
+
+uniform vec3 cameraPosition;
+uniform Material material;
+uniform Light light;
 
 void main()
 {
