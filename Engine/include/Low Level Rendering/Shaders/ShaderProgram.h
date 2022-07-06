@@ -7,7 +7,7 @@
 
 #include "VertexShader.h"
 #include "FragmentShader.h"
-
+#include "ShaderStructs.h"
 
 namespace Jade {
 	class ShaderProgram {
@@ -26,12 +26,30 @@ namespace Jade {
 			glUniform1i(glGetUniformLocation(m_Program, variableName.c_str()), value);
 		}
 
+		void setFloat(const std::string& variableName, const float value) const {
+			glUniform1f(glGetUniformLocation(m_Program, variableName.c_str()), value);
+		}
+
 		void setMatrix4f(const std::string& variableName, const glm::mat4& matrix) const {
 			glUniformMatrix4fv(glGetUniformLocation(m_Program, variableName.c_str()), 1, GL_FALSE, glm::value_ptr(matrix));
 		}
 
 		void setVector3f(const std::string& variableName, const glm::vec3& vector) const {
 			glUniform3fv(glGetUniformLocation(m_Program, variableName.c_str()), 1, &vector[0]);
+		}
+
+		void setLight(const std::string& structName, const Light& light) {
+			setVector3f(structName + ".position", light.position);
+			setVector3f(structName + ".ambient", light.ambient);
+			setVector3f(structName + ".diffuse", light.diffuse);
+			setVector3f(structName + ".specular", light.specular);
+		}
+
+		void setMaterial(const std::string& structName, const Material& material) {
+			setVector3f(structName + ".ambient", material.ambient);
+			setVector3f(structName + ".diffuse", material.diffuse);
+			setVector3f(structName + ".specular", material.specular);
+			setFloat(structName + ".shininess", material.shininess);
 		}
 
 	private:
