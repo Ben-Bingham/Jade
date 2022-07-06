@@ -7,7 +7,6 @@
 #include "Core Systems/Logging/Log.h"
 extern Jade::Log LOGGER;
 
-
 inline GLenum glCheckError_(const char* file, int line) {
 	GLenum errorCode;
 	while ((errorCode = glGetError()) != GL_NO_ERROR) {
