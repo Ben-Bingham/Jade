@@ -43,6 +43,8 @@ namespace Jade {
 
 		void dispose() { m_VAO.dispose(); }
 
+		VertexAttributeObject getVAO() { return m_VAO; }
+
 		Transform& getTransform() { return m_Transform; }
 
 	private:
