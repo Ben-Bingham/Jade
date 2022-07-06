@@ -177,25 +177,23 @@ int main() {
 
 	// Object 1
 	Jade::RenderableObject renderObject(Jade::CUBE, glm::vec4(0.2f, 0.5f, 0.2f, 1.0f));
-
-	renderObject.getTransform().translate(2, 1, 2);
-	renderObject.getTransform().scale(0.25f);
+	//renderObject.getTransform().translate(2, 1, 2);
 
 	renderer.addRenderable(renderObject);
 
-	// Object 2
-	Jade::RenderableObject renderObject2(Jade::CUBE, glm::vec4(1.0f, 0.5f, 0.0f, 1.0f));
-	renderObject2.getTransform().scale(glm::vec3(0.0f, 3.0f, 0.0f));
-	renderObject2.getTransform().translate(-4, 0, -2);
+	//// Object 2
+	//Jade::RenderableObject renderObject2(Jade::CUBE, glm::vec4(1.0f, 0.5f, 0.0f, 1.0f));
+	//renderObject2.getTransform().scale(glm::vec3(0.0f, 3.0f, 0.0f));
+	//renderObject2.getTransform().translate(-4, 0, -2);
 
-	renderer.addRenderable(renderObject2);
+	//renderer.addRenderable(renderObject2);
 
-	// Object 3
-	Jade::RenderableObject renderObject3(Jade::PYRAMID, glm::vec4(0.0f, 0.0f, 1.0f, 1.0f));
-	renderObject3.getTransform().translate(1, 3, 0);
-	renderObject3.getTransform().scale(0.25f);
+	//// Object 3
+	//Jade::RenderableObject renderObject3(Jade::PYRAMID, glm::vec4(0.0f, 0.0f, 1.0f, 1.0f));
+	//renderObject3.getTransform().translate(1, 3, 0);
+	//renderObject3.getTransform().scale(0.25f);
 
-	renderer.addRenderable(renderObject3);
+	//renderer.addRenderable(renderObject3);
 
 	// ======================== Cube ========================
 	//Transform
@@ -272,12 +270,16 @@ int main() {
 
 		glm::mat4 view;
 		view = camera.getViewMatrix();
+		renderObject.getTransform().clearMatrix();
+		renderObject.getTransform().rotate(Jade::Rotation{ glm::vec3(0.5f, 1.0f, 0.0f), (float)glfwGetTime() * 50.0f });
 
 		renderer.setMatrices(view, projection);
+		renderer.getRuleSet().getProgram().use();
+		renderer.getRuleSet().getProgram().setVector3f("cameraPosition", camera.getPosition());
 		renderer.render();
 
 		// ======================== Cube ========================
-		cubeTransform.clearMatrix();
+		/*cubeTransform.clearMatrix();
 		cubeTransform.rotate(Jade::Rotation{ glm::vec3(0.5f, 1.0f, 0.0f), (float)glfwGetTime() * 50.0f });
 
 		shaderProgram.use();
@@ -288,7 +290,7 @@ int main() {
 		shaderProgram.setVector3f("cameraPosition", camera.getPosition());
 
 		VAO.bind();
-		glDrawArrays(GL_TRIANGLES, 0, 36);
+		glDrawArrays(GL_TRIANGLES, 0, 36);*/
 
 		// ======================== Light =======================
 		lightShaderProgram.use();
