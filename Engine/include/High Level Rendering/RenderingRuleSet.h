@@ -3,6 +3,8 @@
 #include "Low Level Rendering/Shaders/ShaderHeader.h"
 
 namespace Jade {
+	class RenderableObject;
+
 	class RenderingRuleSet {
 	public:
 		RenderingRuleSet();
@@ -18,6 +20,8 @@ namespace Jade {
 
 		int getID() const { return m_ID; }
 		ShaderProgram getProgram() const { return m_Program; }
+
+		bool allowsRenderable(RenderableObject& renderable);
 
 	private:
 		int m_ID;
