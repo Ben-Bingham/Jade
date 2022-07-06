@@ -189,6 +189,7 @@ int main() {
 	// Object 2
 	Jade::RenderableObject renderObject2(Jade::CUBE, glm::vec4(1.0f, 0.5f, 0.0f, 1.0f));
 	renderObject2.getTransform().scale(glm::vec3(0.0f, 3.0f, 0.0f));
+	renderObject2.getTransform().translate(-4, 0, -2);
 
 	renderer.addRenderable(renderObject2);
 
