@@ -176,6 +176,7 @@ int main() {
 
 	Jade::Renderer renderer(ruleSet, camera.getViewMatrix(), projection);
 
+	// Object 1
 	Jade::RenderableObject renderObject(Jade::CUBE, glm::vec4(0.2f, 0.5f, 0.2f, 1.0f));
 
 	renderObject.getTransform().translate(2, 1, 2);
@@ -183,9 +184,18 @@ int main() {
 
 	renderer.addRenderable(renderObject);
 
-	Jade::RenderableObject renderObject2(Jade::CUBE);
+	// Object 2
+	Jade::RenderableObject renderObject2(Jade::CUBE, glm::vec4(1.0f, 0.5f, 0.0f, 1.0f));
+	renderObject2.getTransform().scale(glm::vec3(0.0f, 3.0f, 0.0f));
 
 	renderer.addRenderable(renderObject2);
+
+	// Object 3
+	Jade::RenderableObject renderObject3(Jade::PYRAMID, glm::vec4(0.0f, 0.0f, 1.0f, 1.0f));
+	renderObject3.getTransform().translate(1, 3, 0);
+	renderObject3.getTransform().scale(0.25f);
+
+	renderer.addRenderable(renderObject3);
 
 	// ======================== Cube ========================
 	//Transform
