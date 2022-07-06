@@ -8,18 +8,33 @@
 #include "High Level Rendering/Transform.h"
 
 namespace Jade {
-	enum Primitive { //TODO how do i handle custom models
+	enum Model { //TODO how do i handle custom models
 		CUBE,
-		PYRAMID
+		PYRAMID,
+		CUSTOM
 	};
 
 	class RenderableObject {
 	public:
-		RenderableObject(Primitive shape = CUBE, glm::vec4 objectColour = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f)) 
+		RenderableObject(Model shape = CUBE, glm::vec4 objectColour = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f)) 
 			: m_VAO(), m_ObjectColour(objectColour), m_Shape(shape), m_VBO(vboInit()) {
 
-			VertexAttributePointer positionData(3, GL_FLOAT, POSITION);
-			m_VAO.setAttributePointer(positionData);
+			if (m_Shape == CUBE || m_Shape == PYRAMID) {
+				VertexAttributePointer positionData(3, GL_FLOAT, POSITION);
+				VertexAttributePointer normalData(3, GL_FLOAT, NORMAL);
+
+				std::vector<VertexAttributePointer> attributePointers = {
+					positionData,
+					normalData
+				};
+
+				m_VAO.addAttributePointers(attributePointers);
+			}
+			else {
+				VertexAttributePointer positionData(3, GL_FLOAT, POSITION);
+
+				m_VAO.setAttributePointer(positionData);
+			}
 		}
 
 		bool followsRuleSet(RenderingRuleSet& ruleSet);
@@ -32,7 +47,7 @@ namespace Jade {
 
 	private:
 		VertexAttributeObject m_VAO;
-		Primitive m_Shape;
+		Model m_Shape;
 		VertexBufferObject m_VBO;
 		glm::vec4 m_ObjectColour;
 		Transform m_Transform;
