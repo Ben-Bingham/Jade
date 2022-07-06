@@ -17,7 +17,7 @@ namespace Jade {
 	class RenderableObject {
 	public:
 		RenderableObject(Model shape = CUBE, glm::vec4 objectColour = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f)) 
-			: m_VAO(), m_ObjectColour(objectColour), m_Shape(shape), m_VBO(vboInit()) {
+			: m_VAO(), m_ObjectColour(objectColour), m_Shape(shape), m_VBO(vboInit()), m_RuleSet(STANDARD) {
 
 			if (m_Shape == CUBE || m_Shape == PYRAMID) {
 				VertexAttributePointer positionData(3, GL_FLOAT, POSITION);
@@ -45,12 +45,17 @@ namespace Jade {
 
 		Transform& getTransform() { return m_Transform; }
 
+		bool followsRuleSet(const RenderingRuleSet& ruleSet) {
+			return ruleSet.ruleSet == m_RuleSet;
+		}
+
 	private:
 		VertexAttributeObject m_VAO;
 		Model m_Shape;
 		VertexBufferObject m_VBO;
 		glm::vec4 m_ObjectColour;
 		Transform m_Transform;
+		RuleSet m_RuleSet;
 
 		// EBO //TODO
 		// Possibly textures
