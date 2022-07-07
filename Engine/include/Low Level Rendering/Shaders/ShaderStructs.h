@@ -18,7 +18,7 @@ namespace Jade {
 		float shininess;
 	};
 
-    struct DirLight {
+    struct DirectionalLight {
         glm::vec3 direction;
 
         glm::vec3 ambient;
