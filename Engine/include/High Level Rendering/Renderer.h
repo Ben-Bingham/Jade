@@ -26,7 +26,6 @@ namespace Jade {
 			m_RuleSet->bind();
 
 			m_RuleSet->getProgram().setMatrix4f("view", m_View);
-
 			m_RuleSet->getProgram().setMatrix4f("projection", m_Projection);
 
 			std::vector<std::reference_wrapper<RenderableObject>>::iterator it;
