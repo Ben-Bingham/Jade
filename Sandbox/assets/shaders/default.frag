@@ -1,5 +1,6 @@
 #version 330 core
 
+
 struct Light {
 	vec3 position;
 
@@ -14,6 +15,20 @@ struct Material {
 	vec3 specular;
 	float shininess;
 };
+
+struct PointLight {
+	vec3 position;
+
+	//float constant;
+    //float linear;
+    //float quadratic;
+
+	vec3 ambient;
+	vec3 diffuse;
+	vec3 specular;
+};
+
+vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir); //TODO atinuation
 
 out vec4 FragColor;
 
@@ -30,7 +45,7 @@ uniform Light light;
 
 void main()
 {
-	// ======================== Ambient ========================
+	/*// ======================== Ambient ========================
 	float ambientStrength = 0.1;
 	vec3 ambient = ambientStrength * lightColour;
 
@@ -52,5 +67,23 @@ void main()
 
 	// ======================== Combination ========================
 	vec3 result = (ambient + diffuse + specular) * objectColour; // Default
-	FragColor = vec4(result, 1.0); // Default
+	FragColor = vec4(result, 1.0); // Default*/
+
+
+}
+
+vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 cameraPosition) {
+	vec3 ambient = light.ambient * material.ambient;
+
+	vec3 norm = normalize(normal);
+	vec3 lightDir = normalize(light.position - fragmentPosition);
+	float diff = max(dot(norm, lightDir), 0.0);
+	vec3 diffuse = light.diffuse * (diff * material.diffuse);
+
+	vec3 viewDir = normalize(cameraPosition - fragmentPosition);
+	vec3 reflectDir = reflect(-lightDir, norm);
+	float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
+	vec3 specular = light.specular * (spec * material.specular);
+
+	return (ambient + diffuse + specular);
 }
