@@ -28,6 +28,7 @@ struct DirectionalLight {
 };
 
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir); //TODO atinuation
+vec3 CalcDirLight(DirectionalLight light, vec3 normal, vec3 viewDir);
 
 #define MAX_LIGHTS 128
 
@@ -50,8 +51,11 @@ void main() {
 		
 	for (int i = 0; i < numberOfLights; i++) {
 		result += CalcPointLight(lights[i], normal, fragmentPosition, cameraPosition);
-		result += CalcPointLight(lights[i], normal, fragmentPosition, cameraPosition);
 	}
+
+	vec3 viewDir = normalize(cameraPosition - fragmentPosition);
+
+	result += CalcDirLight(directionalLight, normal, viewDir);
 
 	FragColor = vec4(result, 1.0);
 }
@@ -73,4 +77,19 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 cameraPosi
     float attenuation = 1.0 / (light.constant + light.linear * Distance + light.quadratic * (Distance * Distance));    
 
 	return (ambient + diffuse + specular);
+}
+
+vec3 CalcDirLight(DirectionalLight light, vec3 normal, vec3 viewDir)
+{
+    vec3 lightDir = normalize(-light.direction);
+
+    float diff = max(dot(normal, lightDir), 0.0);
+
+    vec3 reflectDir = reflect(-lightDir, normal);
+    float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
+
+    vec3 ambient = light.ambient * material.diffuse;
+    vec3 diffuse = light.diffuse * diff * material.diffuse;
+    vec3 specular = light.specular * spec * material.specular;
+    return (ambient + diffuse + specular);
 }
