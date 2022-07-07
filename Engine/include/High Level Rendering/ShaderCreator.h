@@ -7,7 +7,7 @@
 namespace Jade {
 	class ShaderCreator {
 	public:
-		ShaderCreator(RenderingRuleSet& ruleSet)
+		ShaderCreator(RenderingRuleSet* ruleSet)
 			: m_RuleSet(ruleSet), m_VertexShader(vertexShaderInit()), m_FragmentShader(fragmentShaderInit()) {}
 
 		ShaderProgram createProgram() {
@@ -25,12 +25,12 @@ namespace Jade {
 		}
 
 	private:
-		RenderingRuleSet m_RuleSet;
+		RenderingRuleSet* m_RuleSet;
 
 		VertexShader m_VertexShader;
 		FragmentShader m_FragmentShader;
 
-		VertexShader& vertexShaderInit();
-		FragmentShader& fragmentShaderInit();
+		VertexShader vertexShaderInit();
+		FragmentShader fragmentShaderInit();
 	};
 }
