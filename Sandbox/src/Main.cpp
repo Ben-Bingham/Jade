@@ -83,11 +83,15 @@ int main() {
 	// ======================== Shader Creator Testing ========================
 	Jade::StandardRuleSet ruleSet;
 
-	Jade::Light light;
+	Jade::PointLight light;
 
 	light.ambient = glm::vec3(0.2f, 0.2f, 0.2f);
 	light.diffuse = glm::vec3(0.5f, 0.5f, 0.5f);
 	light.specular = glm::vec3(1.0f, 1.0f, 1.0f);
+
+	light.constant = 1.0f;
+	light.linear = 0.09f;
+	light.quadratic = 0.32f;
 
 	light.position = lightPositon;
 	ruleSet.addLight(light);
