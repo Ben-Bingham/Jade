@@ -3,11 +3,12 @@
 #include <vector>
 
 #include "High Level Rendering/RenderingRuleSet.h"
+#include "High Level Rendering/LightCreator.h"
 
 namespace Jade {
 	class StandardRuleSet : public RenderingRuleSet {
 	public:
-		StandardRuleSet() : RenderingRuleSet(STANDARD) {}
+		StandardRuleSet() : RenderingRuleSet(STANDARD), m_DirectionalLight(LightCreator::DefaultDirectionalLight()) {}
 
 		void bindAdditionals() override {
 			getProgram().setPointLights("lights", m_PointLights);
@@ -15,8 +16,12 @@ namespace Jade {
 			getProgram().setDirectionalLight("directionalLight", m_DirectionalLight);
 		}
 
-		void addLight(const PointLight& light) {
+		void addPointLight(const PointLight& light) {
 			m_PointLights.push_back(light);
+		}
+
+		void setDirectionalLight(const DirectionalLight& light) {
+			m_DirectionalLight = light;
 		}
 
 		std::vector<PointLight> getPointLights() { return m_PointLights; }
