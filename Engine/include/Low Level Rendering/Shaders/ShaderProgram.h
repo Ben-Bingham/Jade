@@ -42,7 +42,7 @@ namespace Jade {
 			glUniform4fv(glGetUniformLocation(m_Program, variableName.c_str()), 1, &vector[0]);
 		}
 
-		void setLight(const std::string& structName, const Light& light) const {
+		void setLight(const std::string& structName, const PointLight& light) const {
 			setVector3f(structName + ".position", light.position);
 			setVector3f(structName + ".ambient", light.ambient);
 			setVector3f(structName + ".diffuse", light.diffuse);
