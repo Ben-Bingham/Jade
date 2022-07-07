@@ -9,7 +9,7 @@
 #include "Low Level Rendering/Shaders/ShaderStructs.h"
 
 namespace Jade {
-	enum Model { //TODO how do i handle custom models
+	enum Model {
 		CUBE,
 		PYRAMID,
 		CUSTOM
