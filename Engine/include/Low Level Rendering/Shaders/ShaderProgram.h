@@ -42,14 +42,28 @@ namespace Jade {
 			glUniform4fv(glGetUniformLocation(m_Program, variableName.c_str()), 1, &vector[0]);
 		}
 
-		void setLight(const std::string& structName, const Light& light) {
+		void setLight(const std::string& structName, const Light& light) const {
 			setVector3f(structName + ".position", light.position);
 			setVector3f(structName + ".ambient", light.ambient);
 			setVector3f(structName + ".diffuse", light.diffuse);
 			setVector3f(structName + ".specular", light.specular);
 		}
 
-		void setMaterial(const std::string& structName, const Material& material) {
+		void setLights(const std::string& structName, std::vector<Light>& lights) const {
+			int count = 0;
+			std::string StructName = "";
+			std::vector<Light>::iterator it;
+			for (it = lights.begin(); it != lights.end(); it++) {
+				StructName = structName;
+				StructName += "[";
+				StructName += std::to_string(count);
+				StructName += "]";
+				setLight(StructName, *it);
+				count++;
+			}
+		}
+
+		void setMaterial(const std::string& structName, const Material& material) const {
 			setVector3f(structName + ".ambient", material.ambient);
 			setVector3f(structName + ".diffuse", material.diffuse);
 			setVector3f(structName + ".specular", material.specular);
