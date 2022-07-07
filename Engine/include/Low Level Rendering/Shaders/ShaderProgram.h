@@ -49,10 +49,10 @@ namespace Jade {
 			setVector3f(structName + ".specular", light.specular);
 		}
 
-		void setLights(const std::string& structName, std::vector<Light>& lights) const {
+		void setPointLights(const std::string& structName, std::vector<PointLight>& lights) const {
 			int count = 0;
 			std::string StructName = "";
-			std::vector<Light>::iterator it;
+			std::vector<PointLight>::iterator it;
 			for (it = lights.begin(); it != lights.end(); it++) {
 				StructName = structName;
 				StructName += "[";
@@ -61,6 +61,13 @@ namespace Jade {
 				setLight(StructName, *it);
 				count++;
 			}
+		}
+
+		void setDirectionalLight(const std::string& structName, const DirectionalLight& directionalLight) {
+			setVector3f(structName + ".direction", directionalLight.ambient);
+			setVector3f(structName + ".ambient", directionalLight.ambient);
+			setVector3f(structName + ".diffuse", directionalLight.diffuse);
+			setVector3f(structName + ".specular", directionalLight.specular);
 		}
 
 		void setMaterial(const std::string& structName, const Material& material) const {
