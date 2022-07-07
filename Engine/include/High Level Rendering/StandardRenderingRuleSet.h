@@ -10,17 +10,19 @@ namespace Jade {
 		StandardRuleSet() : RenderingRuleSet(STANDARD) {}
 
 		void bindAdditionals() override {
-			getProgram().setLights("lights", m_Lights);
-			getProgram().setFloat("numberOfLights", m_Lights.size());
+			getProgram().setPointLights("lights", m_PointLights);
+			getProgram().setFloat("numberOfLights", m_PointLights.size());
+			getProgram().setDirectionalLight("directionalLight", m_DirectionalLight);
 		}
 
 		void addLight(const PointLight& light) {
 			m_PointLights.push_back(light);
 		}
 
-		std::vector<Light> getLights() { return m_Lights; }
+		std::vector<PointLight> getPointLights() { return m_PointLights; }
 
 	private:
-		std::vector<Light> m_Lights;
+		std::vector<PointLight> m_PointLights;
+		DirectionalLight m_DirectionalLight;
 	};
 }
