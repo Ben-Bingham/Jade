@@ -222,7 +222,6 @@ int main() {
 		renderer.render();
 
 		//Render cleanup
-
 		window.swapBuffers();
 		glCheckError();
 	}

@@ -14,16 +14,8 @@ namespace Jade {
 			getProgram().setFloat("numberOfLights", m_Lights.size());
 		}
 
-		void addLight(const Light& light) {
-			if (ruleSet == STANDARD || ruleSet == TEXTURE) {
-				m_Lights.push_back(light);
-			}
-			else {
-				std::string message = "The rule set with ID: ";
-				message += std::to_string(getID());
-				message += "does not support lights.";
-				LOGGER.log(message, Jade::WARNING);
-			}
+		void addLight(const PointLight& light) {
+			m_PointLights.push_back(light);
 		}
 
 		std::vector<Light> getLights() { return m_Lights; }
