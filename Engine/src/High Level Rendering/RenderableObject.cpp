@@ -12,13 +12,10 @@ namespace Jade {
 		}
 
 		ruleSet.getProgram().setMatrix4f("model", m_Transform.getMatrix());
+
 		m_VAO.bind();
-		int numberOfVerticies = 0;
-		switch (m_Shape) {
-		case CUBE: numberOfVerticies = 36; break;
-		case PYRAMID: numberOfVerticies = 16; break;
-		}
-		glDrawArrays(GL_TRIANGLES, 0, numberOfVerticies);
+		
+		glDrawArrays(GL_TRIANGLES, 0, m_NumberOfVerticies);
 	}
 
 	std::vector<float> RenderableObject::cubeVerticies = {

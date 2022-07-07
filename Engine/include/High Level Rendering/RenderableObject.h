@@ -18,7 +18,7 @@ namespace Jade {
 	class RenderableObject {
 	public:
 		RenderableObject(Model shape = CUBE, glm::vec4 objectColour = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), RuleSet ruleset = STANDARD) 
-			: m_VAO(), m_ObjectColour(objectColour), m_Shape(shape), m_VBO(vboInit()), m_RuleSet(ruleset), m_Material() {
+			: m_VAO(), m_ObjectColour(objectColour), m_Shape(shape), m_VBO(vboInit()), m_RuleSet(ruleset), m_Material(), m_NumberOfVerticies(numberOfVerticiesInit()) {
 
 			if (m_Shape == CUBE || m_Shape == PYRAMID) {
 				VertexAttributePointer positionData(3, GL_FLOAT, POSITION);
@@ -63,6 +63,7 @@ namespace Jade {
 		Transform m_Transform;
 		RuleSet m_RuleSet;
 		Material m_Material;
+		int m_NumberOfVerticies;
 
 		// EBO //TODO
 		// Possibly textures
@@ -72,6 +73,14 @@ namespace Jade {
 			default:
 			case CUBE: return VertexBufferObject(cubeVerticies);
 			case PYRAMID: return VertexBufferObject(pyramidVerticies);
+			}
+		}
+
+		int numberOfVerticiesInit() {
+			switch (m_Shape) {
+			default:
+			case CUBE: return 36;
+			case PYRAMID: return 16;
 			}
 		}
 
