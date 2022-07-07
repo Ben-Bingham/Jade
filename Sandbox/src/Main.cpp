@@ -87,7 +87,10 @@ int main() {
 	Jade::PointLight light = Jade::LightCreator::DefaultPointLight();
 
 	light.position = lightPositon;
-	ruleSet.addLight(light);
+	ruleSet.addPointLight(light);
+
+	Jade::DirectionalLight directionalLight = Jade::LightCreator::DefaultDirectionalLight();
+	ruleSet.setDirectionalLight(directionalLight);
 
 	ruleSet.createProgram();
 
