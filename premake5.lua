@@ -65,7 +65,9 @@ workspace "Jade"
 
 		files {
 			"Engine/**.cpp", "Engine/**.h",
-			"Dependencies/stb image/**.h"
+			"Dependencies/stb image/**.h",
+			"Engine/assets/**.vert",
+			"Engine/assets/**.frag"
 		}
 
 		includedirs {
