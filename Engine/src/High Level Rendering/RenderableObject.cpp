@@ -4,10 +4,14 @@
 
 namespace Jade {
 	void RenderableObject::render(const RenderingRuleSet& ruleSet) const {
-		ruleSet.getProgram().setVector3f("objectColour", m_ObjectColour);
-		ruleSet.getProgram().setMatrix4f("model", m_Transform.getMatrix());
-		ruleSet.getProgram().setMaterial("material", m_Material);
+		if (ruleSet.ruleSet == SOLID_COLOUR) {
+			ruleSet.getProgram().setVector4f("objectColour", m_ObjectColour);
+		}
+		else {
+			ruleSet.getProgram().setMaterial("material", m_Material);
+		}
 
+		ruleSet.getProgram().setMatrix4f("model", m_Transform.getMatrix());
 		m_VAO.bind();
 		int numberOfVerticies = 0;
 		switch (m_Shape) {
