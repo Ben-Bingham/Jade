@@ -181,6 +181,20 @@ int main() {
 
 	renderer.addRenderable(renderObject);
 
+	// Renderer 2
+
+	Jade::RenderingRuleSet ruleSet2(Jade::SOLID_COLOUR);
+	ruleSet2.createProgram();
+
+	Jade::Renderer renderer2(ruleSet2, camera.getViewMatrix(), projection);
+
+	// Object 2
+	Jade::RenderableObject renderObject2(Jade::CUBE, glm::vec4(1.0f, 1.5f, 1.0f, 1.0f), Jade::SOLID_COLOUR);
+	renderObject2.getTransform().translate(lightPositon);
+
+	renderer2.addRenderable(renderObject2);
+
+
 	//// Object 2
 	//Jade::RenderableObject renderObject2(Jade::CUBE, glm::vec4(1.0f, 0.5f, 0.0f, 1.0f));
 	//renderObject2.getTransform().scale(glm::vec3(0.0f, 3.0f, 0.0f));
@@ -188,7 +202,7 @@ int main() {
 
 	//renderer.addRenderable(renderObject2);
 
-	//// Object 3
+	////// Object 3
 	//Jade::RenderableObject renderObject3(Jade::PYRAMID, glm::vec4(0.0f, 0.0f, 1.0f, 1.0f));
 	//renderObject3.getTransform().translate(1, 3, 0);
 	//renderObject3.getTransform().scale(0.25f);
@@ -196,57 +210,57 @@ int main() {
 	//renderer.addRenderable(renderObject3);
 
 	// ======================== Cube ========================
-	//Transform
-	Jade::Transform cubeTransform;
+	////Transform
+	//Jade::Transform cubeTransform;
 
-	// Vertex array object
-	Jade::VertexAttributeObject VAO;
+	//// Vertex array object
+	//Jade::VertexAttributeObject VAO;
 
-	// Vertex buffer object
-	Jade::VertexBufferObject VBO(cubeVerticies, sizeof(cubeVerticies));
+	//// Vertex buffer object
+	//Jade::VertexBufferObject VBO(cubeVerticies, sizeof(cubeVerticies));
 
-	// Vertex attribute pointers
-	Jade::VertexAttributePointer positionData(3, GL_FLOAT, Jade::POSITION);
-	//Jade::VertexAttributePointer texCordData(2, GL_FLOAT);
-	Jade::VertexAttributePointer normalData(3, GL_FLOAT, Jade::NORMAL);
+	//// Vertex attribute pointers
+	//Jade::VertexAttributePointer positionData(3, GL_FLOAT, Jade::POSITION);
+	////Jade::VertexAttributePointer texCordData(2, GL_FLOAT);
+	//Jade::VertexAttributePointer normalData(3, GL_FLOAT, Jade::NORMAL);
 
-	std::vector<Jade::VertexAttributePointer> attributePointers = {
-		positionData,
-		normalData
-	};
+	//std::vector<Jade::VertexAttributePointer> attributePointers = {
+	//	positionData,
+	//	normalData
+	//};
 
-	VAO.addAttributePointers(attributePointers);
+	//VAO.addAttributePointers(attributePointers);
 
-	// Vertex shader
-	Jade::VertexShader vertexShader(Jade::TextFile("assets\\shaders\\default.vert"));
+	//// Vertex shader
+	//Jade::VertexShader vertexShader(Jade::TextFile("assets\\shaders\\default.vert"));
 
-	// Fragment shader
-	Jade::FragmentShader fragmentShader(Jade::TextFile("assets\\shaders\\default.frag"));
+	//// Fragment shader
+	//Jade::FragmentShader fragmentShader(Jade::TextFile("assets\\shaders\\default.frag"));
 
-	// Shader program
-	Jade::ShaderProgram shaderProgram(fragmentShader, vertexShader);
+	//// Shader program
+	//Jade::ShaderProgram shaderProgram(fragmentShader, vertexShader);
 
-	shaderProgram.use();
-	shaderProgram.setVector3f("objectColour", glm::vec3(1.0f, 0.5f, 0.31f));
-	shaderProgram.setVector3f("lightColour", glm::vec3(1.0f, 1.0f, 1.0f));
-	shaderProgram.setVector3f("lightPosition", lightPositon);
+	//shaderProgram.use();
+	//shaderProgram.setVector3f("objectColour", glm::vec3(1.0f, 0.5f, 0.31f));
+	//shaderProgram.setVector3f("lightColour", glm::vec3(1.0f, 1.0f, 1.0f));
+	//shaderProgram.setVector3f("lightPosition", lightPositon);
 
 	// ======================== Light =======================
-	Jade::Transform lightTransform;
-	lightTransform.translate(lightPositon);
-	lightTransform.scale(0.2f);
+	//Jade::Transform lightTransform;
+	//lightTransform.translate(lightPositon);
+	//lightTransform.scale(0.2f);
 
-	Jade::VertexAttributeObject lightVAO;
-	Jade::VertexBufferObject lightVBO(lightVerticies, sizeof(lightVerticies));
+	//Jade::VertexAttributeObject lightVAO;
+	//Jade::VertexBufferObject lightVBO(lightVerticies, sizeof(lightVerticies));
 
-	Jade::VertexAttributePointer lightPositonData(3, GL_FLOAT, Jade::POSITION);
+	//Jade::VertexAttributePointer lightPositonData(3, GL_FLOAT, Jade::POSITION);
 
-	lightVAO.setAttributePointer(lightPositonData);
+	//lightVAO.setAttributePointer(lightPositonData);
 
-	Jade::VertexShader lightVertexShader(Jade::TextFile("assets\\shaders\\light.vert"));
-	Jade::FragmentShader lightFragmentShader(Jade::TextFile("assets\\shaders\\light.frag"));
+	//Jade::VertexShader lightVertexShader(Jade::TextFile("assets\\shaders\\light.vert"));
+	//Jade::FragmentShader lightFragmentShader(Jade::TextFile("assets\\shaders\\light.frag"));
 
-	Jade::ShaderProgram lightShaderProgram(lightFragmentShader, lightVertexShader);	
+	//Jade::ShaderProgram lightShaderProgram(lightFragmentShader, lightVertexShader);	
 
 	// Check for errors
 	glCheckError();
@@ -270,6 +284,7 @@ int main() {
 
 		glm::mat4 view;
 		view = camera.getViewMatrix();
+
 		renderObject.getTransform().clearMatrix();
 		renderObject.getTransform().rotate(Jade::Rotation{ glm::vec3(0.5f, 1.0f, 0.0f), (float)glfwGetTime() * 50.0f });
 
@@ -277,6 +292,11 @@ int main() {
 		renderer.getRuleSet().getProgram().use();
 		renderer.getRuleSet().getProgram().setVector3f("cameraPosition", camera.getPosition());
 		renderer.render();
+
+		renderer2.setMatrices(view, projection);
+		renderer2.getRuleSet().getProgram().use();
+		renderer2.getRuleSet().getProgram().setVector3f("cameraPosition", camera.getPosition());
+		renderer2.render();
 
 		// ======================== Cube ========================
 		/*cubeTransform.clearMatrix();
@@ -293,14 +313,14 @@ int main() {
 		glDrawArrays(GL_TRIANGLES, 0, 36);*/
 
 		// ======================== Light =======================
-		lightShaderProgram.use();
+	/*	lightShaderProgram.use();
 
 		lightShaderProgram.setMatrix4f("model", lightTransform.getMatrix());
 		lightShaderProgram.setMatrix4f("view", view);
 		lightShaderProgram.setMatrix4f("projection", projection);
 
 		lightVAO.bind();
-		glDrawArrays(GL_TRIANGLES, 0, 36);
+		glDrawArrays(GL_TRIANGLES, 0, 36);*/
 
 		//Render cleanup
 
@@ -309,16 +329,16 @@ int main() {
 	}
 
 	//Cleanup
-	VAO.dispose();
-	VBO.dispose();
-	shaderProgram.dispose();
-	lightVAO.dispose();
-	lightVBO.dispose();
-	lightShaderProgram.dispose();
-
-	renderObject.dispose();
+	//VAO.dispose();
+	//VBO.dispose();
+	//shaderProgram.dispose();
+	//lightVAO.dispose();
+	//lightVBO.dispose();
+	//lightShaderProgram.dispose();
+	// 
 	//TODO dispose of all the shaders, programs, anf VAOS
 	//TODO also remove the possible dispose call from the distructiors of VAO ect
+	renderer.dispose();
 
 	window.dispose();
 

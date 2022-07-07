@@ -5,6 +5,7 @@
 
 #include "RenderingRuleSet.h"
 #include "RenderableObject.h"
+#include "Core Systems/Logging/OpenGLErrors.h"
 
 namespace Jade {
 	class Renderer {
@@ -23,15 +24,24 @@ namespace Jade {
 
 		void render() {
 			m_RuleSet.bind();
+			glCheckError();
+
 			m_RuleSet.getProgram().setMatrix4f("view", m_View);
+			glCheckError();
+
 			m_RuleSet.getProgram().setMatrix4f("projection", m_Projection);
+			glCheckError();
 
 			//upload any additional data needed for ruleset like lights
 			m_RuleSet.getProgram().setLight("light", m_RuleSet.getLight());
+			glCheckError();
+
 			std::vector<std::reference_wrapper<RenderableObject>>::iterator it;
 			for (it = m_Renderables.begin(); it != m_Renderables.end(); it++) {
 				it->get().render(m_RuleSet);
 			}
+			glCheckError();
+
 		}
 
 		void setMatrices(const glm::mat4& view, const glm::mat4& projection) {
@@ -40,6 +50,15 @@ namespace Jade {
 		}
 
 		RenderingRuleSet getRuleSet() { return m_RuleSet; }
+
+		void dispose() {
+			std::vector<std::reference_wrapper<RenderableObject>>::iterator it;
+			for (it = m_Renderables.begin(); it != m_Renderables.end(); it++) {
+				it->get().dispose();
+			}
+
+			m_RuleSet.dispose();
+		}
 
 	private:
 		RenderingRuleSet m_RuleSet;
