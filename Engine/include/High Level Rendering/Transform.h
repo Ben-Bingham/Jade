@@ -36,17 +36,38 @@ namespace Jade {
 		}
 
 		void scale(glm::vec3& vector) {
+			if (vector.x == 0.0f) {
+				vector.x = 1.0f;
+			}
+			if (vector.y == 0.0f) {
+				vector.y = 1.0f;
+			}
+			if (vector.z == 0.0f) {
+				vector.z = 1.0f;
+			}
 			m_Scale *= vector;
 			m_Model = glm::scale(m_Model, m_Scale);
 		}
 
 		void scale(float x, float y, float z) {
+			if (x == 0.0f) {
+				x = 1.0f;
+			}
+			if (y == 0.0f) {
+				y = 1.0f;
+			}
+			if (z == 0.0f) {
+				z = 1.0f;
+			}
 			glm::vec3 vector(x, y, z);
 			m_Scale *= vector;
 			m_Model = glm::scale(m_Model, m_Scale);
 		}
 
 		void scale(float value) {
+			if (value == 0.0f) {
+				value = 1.0f;
+			}
 			glm::vec3 vector(value, value, value);
 			m_Scale *= vector;
 			m_Model = glm::scale(m_Model, m_Scale);
@@ -61,7 +82,7 @@ namespace Jade {
 			m_Rotation = { glm::vec3(0.0f, 0.0f, 0.0f), 0.0f };
 		}
 
-		glm::mat4 getMatrix() { return m_Model; }
+		glm::mat4 getMatrix() const { return m_Model; }
 
 	private:
 

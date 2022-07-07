@@ -7,10 +7,10 @@ namespace Jade {
 	public:
 		virtual void dispose() = 0;
 
-		unsigned int getShader() { return m_Shader; };
+		unsigned int getShader() const { return m_Shader; };
 		void setShader(unsigned int shader) { m_Shader = shader; }
 
-		Jade::TextFile getShaderSourceFile() { return m_ShaderSourceFile; }
+		Jade::TextFile getShaderSourceFile() const { return m_ShaderSourceFile; }
 		void setShaderSourceFile(Jade::TextFile shaderSource) { m_ShaderSourceFile = shaderSource; }
 
 	private:

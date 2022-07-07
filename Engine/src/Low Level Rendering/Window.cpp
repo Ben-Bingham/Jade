@@ -14,6 +14,7 @@ namespace Jade {
 
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+		glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true); //Remove in release
 
 		const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
 
@@ -23,6 +24,7 @@ namespace Jade {
 		else {
 			m_Window = glfwCreateWindow(width, height, name.c_str(), NULL, NULL);
 		}
+
 		if (!m_Window) {
 			LOGGER.log("GLFW window creation failed.", Jade::ERROR);
 			LOGGER.log("OpenGL context creation failed.", Jade::ERROR);

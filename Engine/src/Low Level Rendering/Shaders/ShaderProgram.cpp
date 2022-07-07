@@ -3,6 +3,7 @@
 #include "Low Level Rendering/Shaders/VertexShader.h"
 #include "Low Level Rendering/Shaders/FragmentShader.h"
 #include "Low Level Rendering/Shaders/ShaderProgram.h"
+#include "Core Systems/Logging/OpenGLErrors.h"
 
 namespace Jade {
 	ShaderProgram::ShaderProgram(FragmentShader& fragmentShader, VertexShader& vertexShader) {
@@ -13,14 +14,14 @@ namespace Jade {
 		char infoLog[512];
 
 		m_Program = glCreateProgram();
-
+		
 		std::vector<Shader*>::iterator it;
 		for (it = m_Shaders.begin(); it != m_Shaders.end(); it++) {
 			glAttachShader(m_Program, (*it)->getShader());
 		}
 
 		glLinkProgram(m_Program);
-
+		
 		glGetProgramiv(m_Program, GL_LINK_STATUS, &success);
 		if (!success) {
 			glGetProgramInfoLog(m_Program, 512, NULL, infoLog);

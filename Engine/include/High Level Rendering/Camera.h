@@ -77,6 +77,11 @@ namespace Jade {
 			return m_ViewMatrix;
 		}
 
+		glm::mat4& getViewMatrixReference() {
+			recalculateViewMatrix();
+			return m_ViewMatrix;
+		}
+
 		float getFOV() { return m_FOV; }
 
 		glm::vec3 getPosition() { return m_Position; }

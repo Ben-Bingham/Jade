@@ -6,12 +6,19 @@
 #include "Jade.h"
 
 namespace Jade {
+	enum AttributeNames {
+		POSITION,
+		NORMAL,
+		TEXTURE_CORDINATE
+	};
+
 	struct VertexAttributePointer {
-		VertexAttributePointer(unsigned int Size, GLenum Type);
+		VertexAttributePointer(unsigned int Size, GLenum Type, AttributeNames name);
 
 		unsigned int size;
 		GLenum type;
 		unsigned int sizeOfType;
+		AttributeNames name;
 	};
 
 	class VertexAttributeObject {
@@ -27,13 +34,11 @@ namespace Jade {
 		VertexAttributeObject& operator=(const VertexAttributeObject&) = default;
 		VertexAttributeObject& operator=(VertexAttributeObject&&) = default;
 
-		~VertexAttributeObject() {
-			bind();
-
+		void dispose() {
 			glDeleteVertexArrays(1, &m_VAO);
 		}
 
-		void bind() {
+		void bind() const {
 			glBindVertexArray(m_VAO);
 		}
 
@@ -43,6 +48,8 @@ namespace Jade {
 
 		void setAttributePointer(VertexAttributePointer attributePointer);
 		void addAttributePointers(std::vector<VertexAttributePointer> attributePointers);
+
+		std::vector<VertexAttributePointer> getAttributePointers() { return m_VertexAttributePointers; }
 
 	private:
 		unsigned int m_VAO;

@@ -15,10 +15,14 @@
 #include "High Level Rendering/Camera.h"
 #include "Low Level Rendering/GLEW.h"
 #include "High Level Rendering/Transform.h"
+#include "High Level Rendering/RenderingRuleSet.h"
+#include "High Level Rendering/ShaderCreator.h"
+#include "High Level Rendering/RenderableObject.h"
+#include "High Level Rendering/Renderer.h"
 
 // Global variables
-unsigned int screenWidth = 1920;
-unsigned int screenHeight = 1080;
+unsigned int screenWidth = 640;
+unsigned int screenHeight = 480;
 
 glm::mat4 projection;
 
@@ -42,6 +46,8 @@ glm::vec3 lightPositon(1.2f, 1.0f, 2.0f);
 void framebufferSizeCallback(GLFWwindow* window, int width, int height);
 void mouseCallback(GLFWwindow* window, double xpos, double ypos);
 void scrollCallback(GLFWwindow* window, double xOffset, double yOffset);
+void APIENTRY glDebugOutput(GLenum source, GLenum type, unsigned int id, GLenum severity,
+	GLsizei length, const char* message, const void* userParam);
 
 // Helper functions
 void porcessInput(GLFWwindow* window);
@@ -59,6 +65,16 @@ int main() {
 
 	// OpenGL settings
 	glEnable(GL_DEPTH_TEST);
+	
+	int flags;
+	glGetIntegerv(GL_CONTEXT_FLAGS, &flags);
+	if (flags & GL_CONTEXT_FLAG_DEBUG_BIT) {
+		LOGGER.log("OpenGL debug context available", Jade::INFO);
+		glEnable(GL_DEBUG_OUTPUT);
+		glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+		glDebugMessageCallback(glDebugOutput, nullptr);
+		glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
+	}
 
 	// Uncomment for wireframe rendering
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -151,9 +167,36 @@ int main() {
 		-0.5f,  0.5f,  0.5f,
 		-0.5f,  0.5f, -0.5f
 	};
-	 
+
+	// ======================== Shader Creator Testing ========================
+	Jade::RenderingRuleSet ruleSet;
+
+	ruleSet.createProgram();
+
+	Jade::Renderer renderer(ruleSet, camera.getViewMatrix(), projection);
+
+	// Object 1
+	Jade::RenderableObject renderObject(Jade::CUBE, glm::vec4(0.2f, 0.5f, 0.2f, 1.0f));
+	//renderObject.getTransform().translate(2, 1, 2);
+
+	renderer.addRenderable(renderObject);
+
+	//// Object 2
+	//Jade::RenderableObject renderObject2(Jade::CUBE, glm::vec4(1.0f, 0.5f, 0.0f, 1.0f));
+	//renderObject2.getTransform().scale(glm::vec3(0.0f, 3.0f, 0.0f));
+	//renderObject2.getTransform().translate(-4, 0, -2);
+
+	//renderer.addRenderable(renderObject2);
+
+	//// Object 3
+	//Jade::RenderableObject renderObject3(Jade::PYRAMID, glm::vec4(0.0f, 0.0f, 1.0f, 1.0f));
+	//renderObject3.getTransform().translate(1, 3, 0);
+	//renderObject3.getTransform().scale(0.25f);
+
+	//renderer.addRenderable(renderObject3);
+
 	// ======================== Cube ========================
-	// Transform
+	//Transform
 	Jade::Transform cubeTransform;
 
 	// Vertex array object
@@ -163,9 +206,9 @@ int main() {
 	Jade::VertexBufferObject VBO(cubeVerticies, sizeof(cubeVerticies));
 
 	// Vertex attribute pointers
-	Jade::VertexAttributePointer positionData(3, GL_FLOAT);
+	Jade::VertexAttributePointer positionData(3, GL_FLOAT, Jade::POSITION);
 	//Jade::VertexAttributePointer texCordData(2, GL_FLOAT);
-	Jade::VertexAttributePointer normalData(3, GL_FLOAT);
+	Jade::VertexAttributePointer normalData(3, GL_FLOAT, Jade::NORMAL);
 
 	std::vector<Jade::VertexAttributePointer> attributePointers = {
 		positionData,
@@ -188,19 +231,6 @@ int main() {
 	shaderProgram.setVector3f("lightColour", glm::vec3(1.0f, 1.0f, 1.0f));
 	shaderProgram.setVector3f("lightPosition", lightPositon);
 
-	// Texture setup
-	//Jade::Texture texture1("assets\\textures\\container.jpg");
-	//Jade::Texture texture2("assets\\textures\\awesomeface.png");
-
-	//shaderProgram.use();
-	//shaderProgram.setInt("texture1", 0);
-	//shaderProgram.setInt("texture2", 1);
-
-	//Jade::Texture::activateUnit(0);
-	//texture1.bind();
-	//Jade::Texture::activateUnit(1);
-	//texture2.bind();
-
 	// ======================== Light =======================
 	Jade::Transform lightTransform;
 	lightTransform.translate(lightPositon);
@@ -209,7 +239,7 @@ int main() {
 	Jade::VertexAttributeObject lightVAO;
 	Jade::VertexBufferObject lightVBO(lightVerticies, sizeof(lightVerticies));
 
-	Jade::VertexAttributePointer lightPositonData(3, GL_FLOAT);
+	Jade::VertexAttributePointer lightPositonData(3, GL_FLOAT, Jade::POSITION);
 
 	lightVAO.setAttributePointer(lightPositonData);
 
@@ -240,9 +270,16 @@ int main() {
 
 		glm::mat4 view;
 		view = camera.getViewMatrix();
+		renderObject.getTransform().clearMatrix();
+		renderObject.getTransform().rotate(Jade::Rotation{ glm::vec3(0.5f, 1.0f, 0.0f), (float)glfwGetTime() * 50.0f });
+
+		renderer.setMatrices(view, projection);
+		renderer.getRuleSet().getProgram().use();
+		renderer.getRuleSet().getProgram().setVector3f("cameraPosition", camera.getPosition());
+		renderer.render();
 
 		// ======================== Cube ========================
-		cubeTransform.clearMatrix();
+		/*cubeTransform.clearMatrix();
 		cubeTransform.rotate(Jade::Rotation{ glm::vec3(0.5f, 1.0f, 0.0f), (float)glfwGetTime() * 50.0f });
 
 		shaderProgram.use();
@@ -253,7 +290,7 @@ int main() {
 		shaderProgram.setVector3f("cameraPosition", camera.getPosition());
 
 		VAO.bind();
-		glDrawArrays(GL_TRIANGLES, 0, 36);
+		glDrawArrays(GL_TRIANGLES, 0, 36);*/
 
 		// ======================== Light =======================
 		lightShaderProgram.use();
@@ -265,13 +302,23 @@ int main() {
 		lightVAO.bind();
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 
-		// Render cleanup
+		//Render cleanup
 
 		window.swapBuffers();
 		glCheckError();
 	}
 
-	// Cleanup
+	//Cleanup
+	VAO.dispose();
+	VBO.dispose();
+	shaderProgram.dispose();
+	lightVAO.dispose();
+	lightVBO.dispose();
+	lightShaderProgram.dispose();
+
+	renderObject.dispose();
+	//TODO dispose of all the shaders, programs, anf VAOS
+	//TODO also remove the possible dispose call from the distructiors of VAO ect
 
 	window.dispose();
 
@@ -329,4 +376,66 @@ void mouseCallback(GLFWwindow* window, double xPos, double yPos) {
 
 void scrollCallback(GLFWwindow* window, double xOffset, double yOffset) {
 	camera.processScollWheel(yOffset);
+}
+
+void APIENTRY glDebugOutput(
+	GLenum source, 
+	GLenum type,
+	unsigned int id,
+	GLenum severity,
+	GLsizei length,
+	const char* message,
+	const void* userParam) {
+	Jade::LogLevel level;
+	switch (severity) {
+	case GL_DEBUG_SEVERITY_HIGH:			level = Jade::ERROR; break;
+	case GL_DEBUG_SEVERITY_MEDIUM:			level = Jade::WARNING; break;
+	case GL_DEBUG_SEVERITY_LOW:				level = Jade::WARNING; break;
+	case GL_DEBUG_SEVERITY_NOTIFICATION:	level = Jade::INFO; break;
+	}
+	
+	// ignore non-significant error/warning codes
+	if (id == 131169 || id == 131185 || id == 131218 || id == 131204) return;
+	LOGGER.log("---------------", level);
+
+	std::string string = "Debug message (";
+	string += std::to_string(id);
+	string += "): ";
+	string += message;
+	
+	LOGGER.log(string, level);
+
+	string = "";
+	switch (source) {
+	case GL_DEBUG_SOURCE_API:             string += "Source: API"; break;
+	case GL_DEBUG_SOURCE_WINDOW_SYSTEM:   string += "Source: Window System"; break;
+	case GL_DEBUG_SOURCE_SHADER_COMPILER: string += "Source: Shader Compiler"; break;
+	case GL_DEBUG_SOURCE_THIRD_PARTY:     string += "Source: Third Party"; break;
+	case GL_DEBUG_SOURCE_APPLICATION:     string += "Source: Application"; break;
+	case GL_DEBUG_SOURCE_OTHER:           string += "Source: Other"; break;
+	}
+	LOGGER.log(string, level);
+
+	string = "";
+	switch (type) {
+	case GL_DEBUG_TYPE_ERROR:               string += "Type: Error"; break;
+	case GL_DEBUG_TYPE_DEPRECATED_BEHAVIOR: string += "Type: Deprecated Behaviour"; break;
+	case GL_DEBUG_TYPE_UNDEFINED_BEHAVIOR:  string += "Type: Undefined Behaviour"; break;
+	case GL_DEBUG_TYPE_PORTABILITY:         string += "Type: Portability"; break;
+	case GL_DEBUG_TYPE_PERFORMANCE:         string += "Type: Performance"; break;
+	case GL_DEBUG_TYPE_MARKER:              string += "Type: Marker"; break;
+	case GL_DEBUG_TYPE_PUSH_GROUP:          string += "Type: Push Group"; break;
+	case GL_DEBUG_TYPE_POP_GROUP:           string += "Type: Pop Group"; break;
+	case GL_DEBUG_TYPE_OTHER:               string += "Type: Other"; break;
+	}
+	LOGGER.log(string, level);
+	string = "";
+	switch (severity) {
+	case GL_DEBUG_SEVERITY_HIGH:         string += "Severity: high"; break;
+	case GL_DEBUG_SEVERITY_MEDIUM:       string += "Severity: medium"; break;
+	case GL_DEBUG_SEVERITY_LOW:          string += "Severity: low"; break;
+	case GL_DEBUG_SEVERITY_NOTIFICATION: string += "Severity: notification"; break;
+	}
+	LOGGER.log(string, level);
+	LOGGER.log("---------------", level);
 }

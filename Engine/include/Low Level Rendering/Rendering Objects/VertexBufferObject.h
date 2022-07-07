@@ -24,13 +24,12 @@ namespace Jade {
 				i++;
 			}
 
-			init(cVertices, vertices.size());
+			init(cVertices, vertices.size() * sizeof(float));
 
 			delete[] cVertices;
 		}
 
-
-		~VertexBufferObject() {
+		void dispose() {
 			glDeleteBuffers(1, &m_VBO);
 		}
 
