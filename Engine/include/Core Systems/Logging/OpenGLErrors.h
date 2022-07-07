@@ -7,7 +7,6 @@
 #include "Core Systems/Logging/Log.h"
 extern Jade::Log LOGGER;
 
-
 inline GLenum glCheckError_(const char* file, int line) {
 	GLenum errorCode;
 	while ((errorCode = glGetError()) != GL_NO_ERROR) {
@@ -21,7 +20,7 @@ inline GLenum glCheckError_(const char* file, int line) {
 			case GL_OUT_OF_MEMORY:				   error = "OUT_OF_MEMORY"; break;
 			case GL_INVALID_FRAMEBUFFER_OPERATION: error = "INVALID_FRAMEBUFFER_OPERATION"; break;
 		}
-		LOGGER.log(error + " | " + file + " (" + (char)line + ")", Jade::ERROR);
+		LOGGER.log(error + " | " + file + " (" + std::to_string(line) + ")", Jade::ERROR);
 	}
 	return errorCode;
 }

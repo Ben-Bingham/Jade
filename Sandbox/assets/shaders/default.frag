@@ -1,14 +1,32 @@
 #version 330 core
 
+struct Light {
+	vec3 position;
+
+	vec3 ambient;
+	vec3 diffuse;
+	vec3 specular;
+};
+
+struct Material {
+	vec3 ambient;
+	vec3 diffuse;
+	vec3 specular;
+	float shininess;
+};
+
 out vec4 FragColor;
 
-in vec3 normal;
-in vec3 fragmentPosition;
+in vec3 normal; // Diffuse
+in vec3 fragmentPosition; // Diffuse // Specular
 
-uniform vec3 objectColour;
-uniform vec3 lightColour;
-uniform vec3 lightPosition;
+uniform vec3 objectColour; // Default
+uniform vec3 lightColour;  // Default
+uniform vec3 lightPosition; // Diffuse
+
 uniform vec3 cameraPosition;
+uniform Material material;
+uniform Light light;
 
 void main()
 {
@@ -17,8 +35,8 @@ void main()
 	vec3 ambient = ambientStrength * lightColour;
 
 	// ======================== Diffuse ========================
-	vec3 normalizedNormal = normalize(normal);
-	vec3 lightDirection = normalize(lightPosition - fragmentPosition);
+	vec3 normalizedNormal = normalize(normal);										// Specular
+	vec3 lightDirection = normalize(lightPosition - fragmentPosition);				// Specular
 	float differenceInVectors = max(dot(normalizedNormal, lightDirection), 0.0);
 	vec3 diffuse = differenceInVectors * lightColour;
 
@@ -33,6 +51,6 @@ void main()
 	vec3 specular = specularStrength * specularValue * lightColour;
 
 	// ======================== Combination ========================
-	vec3 result = (ambient + diffuse + specular) * objectColour;
-	FragColor = vec4(result, 1.0);
+	vec3 result = (ambient + diffuse + specular) * objectColour; // Default
+	FragColor = vec4(result, 1.0); // Default
 }
