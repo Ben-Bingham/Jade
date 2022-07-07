@@ -17,8 +17,8 @@ namespace Jade {
 
 	class RenderableObject {
 	public:
-		RenderableObject(Model shape = CUBE, glm::vec4 objectColour = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f)) 
-			: m_VAO(), m_ObjectColour(objectColour), m_Shape(shape), m_VBO(vboInit()), m_RuleSet(STANDARD), m_Material() {
+		RenderableObject(Model shape = CUBE, glm::vec4 objectColour = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), RuleSet ruleset = STANDARD) 
+			: m_VAO(), m_ObjectColour(objectColour), m_Shape(shape), m_VBO(vboInit()), m_RuleSet(ruleset), m_Material() {
 
 			if (m_Shape == CUBE || m_Shape == PYRAMID) {
 				VertexAttributePointer positionData(3, GL_FLOAT, POSITION);
