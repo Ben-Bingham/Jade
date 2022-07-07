@@ -48,7 +48,7 @@ void porcessInput(GLFWwindow* window);
 
 int main() {
 	// GLFW and GLEW init
-	Jade::Window window(screenWidth, screenHeight, "Sandbox", true);
+	Jade::Window window(screenWidth, screenHeight, "Sandbox", false);
 
 	window.addFrameBufferSizeCallback(framebufferSizeCallback);
 	window.addMousePositionCallback(mouseCallback);
