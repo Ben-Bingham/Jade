@@ -7,9 +7,10 @@ namespace Jade {
 	VertexShader ShaderCreator::vertexShaderInit() {
 		std::string vertexShaderPath = "..\\Engine\\assets\\shaders\\";
 
-		switch (m_RuleSet->ruleSet) { //TODO add more cases
+		switch (m_RuleSet->ruleSet) {
 		default:
 		case STANDARD: vertexShaderPath += "StandardRuleSet.vert"; break;
+		case SOLID_COLOUR: vertexShaderPath += "SolidRuleSet.vert"; break;
 		}
 
 		TextFile vertexShaderFile(vertexShaderPath);
@@ -20,9 +21,10 @@ namespace Jade {
 	FragmentShader ShaderCreator::fragmentShaderInit() {
 		std::string fragmentShaderPath = "..\\Engine\\assets\\shaders\\";
 
-		switch (m_RuleSet->ruleSet) { //TODO add more cases
+		switch (m_RuleSet->ruleSet) {
 		default:
 		case STANDARD: fragmentShaderPath += "StandardRuleSet.frag"; break;
+		case SOLID_COLOUR: fragmentShaderPath += "SolidRuleSet.frag"; break;
 		}
 
 		TextFile fragmentShaderFile(fragmentShaderPath);
