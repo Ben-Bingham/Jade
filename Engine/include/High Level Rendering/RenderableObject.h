@@ -78,7 +78,7 @@ namespace Jade {
 			switch (m_Shape) {
 			default:
 			case CUBE: return 36;
-			case PYRAMID: return 16;
+			case PYRAMID: return 18;
 			}
 		}
 
