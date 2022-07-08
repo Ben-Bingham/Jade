@@ -21,6 +21,7 @@
 #include "High Level Rendering/Renderer.h"
 #include "High Level Rendering/Rule Sets/StandardRenderingRuleSet.h"
 #include "High Level Rendering/LightCreator.h"
+#include "High Level Rendering/Rule Sets/SolidRenderingRuleSet.h"
 
 // Global variables
 unsigned int screenWidth = 640;
@@ -97,9 +98,22 @@ int main() {
 	Jade::Renderer renderer(&ruleSet, camera.getViewMatrix(), projection);
 
 	// Object 1
-	Jade::RenderableObject renderObject(Jade::CUBE, glm::vec4(0.2f, 0.5f, 0.2f, 1.0f));
+	Jade::RenderableObject renderObject(Jade::CUBE);
 
 	renderer.addRenderable(renderObject);
+
+	// Renderer 2
+	Jade::SolidRuleSet solidRuleSet;
+
+	Jade::Renderer renderer2(&solidRuleSet, camera.getViewMatrix(), projection);
+
+	// Object 2
+
+	Jade::RenderableObject renderObject2(Jade::CUBE, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), Jade::SOLID_COLOUR);
+	renderObject2.getTransform().translate(lightPositon);
+	renderObject2.getTransform().scale(0.2);
+
+	renderer2.addRenderable(renderObject2);
 
 	// Check for errors
 	glCheckError();
@@ -124,6 +138,7 @@ int main() {
 		glm::mat4 view;
 		view = camera.getViewMatrix();
 
+		//Renderer 1
 		renderObject.getTransform().clearMatrix();
 		renderObject.getTransform().rotate(Jade::Rotation{ glm::vec3(0.5f, 1.0f, 0.0f), (float)glfwGetTime() * 50.0f });
 
@@ -131,6 +146,11 @@ int main() {
 		renderer.getRuleSet()->getProgram().use();
 		renderer.getRuleSet()->getProgram().setVector3f("cameraPosition", camera.getPosition());
 		renderer.render();
+
+		//Renderer 2
+		renderer2.setMatrices(view, projection);
+		renderer2.getRuleSet()->getProgram().use();
+		renderer2.render();
 
 		//Render cleanup
 		window.swapBuffers();
