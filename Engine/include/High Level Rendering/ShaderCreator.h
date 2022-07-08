@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 
-#include "RenderingRuleSet.h"
+#include "Rule Sets/RenderingRuleSet.h"
 #include "Low Level Rendering/Shaders/ShaderHeader.h"
 
 namespace Jade {

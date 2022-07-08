@@ -3,7 +3,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtx/string_cast.hpp>
 
-#include "RenderingRuleSet.h"
+#include "Rule Sets/RenderingRuleSet.h"
 #include "RenderableObject.h"
 #include "Core Systems/Logging/OpenGLErrors.h"
 

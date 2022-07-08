@@ -2,7 +2,7 @@
 #include <vector>
 #include <glm/glm.hpp>
 
-#include "RenderingRuleSet.h"
+#include "Rule Sets/RenderingRuleSet.h"
 #include "Low Level Rendering/Rendering Objects/VertexAttributeObject.h"
 #include "Low Level Rendering/Rendering Objects/VertexBufferObject.h"
 #include "High Level Rendering/Transform.h"

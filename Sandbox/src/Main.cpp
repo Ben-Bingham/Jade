@@ -15,11 +15,11 @@
 #include "High Level Rendering/Camera.h"
 #include "Low Level Rendering/GLEW.h"
 #include "High Level Rendering/Transform.h"
-#include "High Level Rendering/RenderingRuleSet.h"
+#include "High Level Rendering/Rule Sets/RenderingRuleSet.h"
 #include "High Level Rendering/ShaderCreator.h"
 #include "High Level Rendering/RenderableObject.h"
 #include "High Level Rendering/Renderer.h"
-#include "High Level Rendering/StandardRenderingRuleSet.h"
+#include "High Level Rendering/Rule Sets/StandardRenderingRuleSet.h"
 #include "High Level Rendering/LightCreator.h"
 
 // Global variables
