@@ -52,7 +52,7 @@ void APIENTRY glDebugOutput(GLenum source, GLenum type, unsigned int id, GLenum 
 	GLsizei length, const char* message, const void* userParam);
 
 // Helper functions
-void porcessInput(GLFWwindow* window);
+void processInput(GLFWwindow* window);
 
 int main() {
 	// GLFW and GLEW init
@@ -115,7 +115,7 @@ int main() {
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
 
-		porcessInput(window.getWindow());
+		processInput(window.getWindow());
 
 		window.pollEvents();
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -144,7 +144,7 @@ int main() {
 	return 0;
 }
 
-void porcessInput(GLFWwindow* window) {
+void processInput(GLFWwindow* window) {
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
 		glfwSetWindowShouldClose(window, true);
 	}
