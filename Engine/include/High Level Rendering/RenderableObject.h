@@ -7,6 +7,7 @@
 #include "Low Level Rendering/Rendering Objects/VertexBufferObject.h"
 #include "High Level Rendering/Transform.h"
 #include "Low Level Rendering/Shaders/ShaderStructs.h"
+#include "High Level Rendering/MaterialCreator.h"
 
 namespace Jade {
 	enum Model {
@@ -18,7 +19,7 @@ namespace Jade {
 	class RenderableObject {
 	public:
 		RenderableObject(Model shape = CUBE, glm::vec4 objectColour = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), RuleSet ruleset = STANDARD) 
-			: m_VAO(), m_ObjectColour(objectColour), m_Shape(shape), m_VBO(vboInit()), m_RuleSet(ruleset), m_Material(), m_NumberOfVerticies(numberOfVerticiesInit()) {
+			: m_VAO(), m_ObjectColour(objectColour), m_Shape(shape), m_VBO(vboInit()), m_RuleSet(ruleset), m_Material(MaterialCreator::DefaultMaterial()), m_NumberOfVerticies(numberOfVerticiesInit()) {
 
 			if (m_Shape == CUBE || m_Shape == PYRAMID) {
 				VertexAttributePointer positionData(3, GL_FLOAT, POSITION);
@@ -37,10 +38,7 @@ namespace Jade {
 				m_VAO.setAttributePointer(positionData);
 			}
 
-			m_Material.ambient = glm::vec3(1.0f, 0.5f, 0.31f); // TODO make somesort of class that gives default materials
-			m_Material.diffuse = glm::vec3(1.0f, 0.5f, 0.31f);
-			m_Material.specular = glm::vec3(0.5f, 0.5f, 0.5f);
-			m_Material.shininess = 32.0f;
+			
 		}
 
 		void render(const RenderingRuleSet& ruleSet) const;
