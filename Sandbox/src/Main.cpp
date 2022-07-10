@@ -139,8 +139,8 @@ int main() {
 		view = camera.getViewMatrix();
 
 		//Renderer 1
-		renderObject.getTransform().clearMatrix();
-		renderObject.getTransform().rotate(Jade::Rotation{ glm::vec3(0.5f, 1.0f, 0.0f), (float)glfwGetTime() * 50.0f });
+		//renderObject.getTransform().clearMatrix();
+		//renderObject.getTransform().rotate(Jade::Rotation{ glm::vec3(0.5f, 1.0f, 0.0f), (float)glfwGetTime() * 50.0f });
 
 		renderer.setMatrices(view, projection);
 		renderer.getRuleSet()->getProgram().use();
