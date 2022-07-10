@@ -24,10 +24,12 @@ namespace Jade {
 			if (m_Shape == CUBE || m_Shape == PYRAMID) {
 				VertexAttributePointer positionData(3, GL_FLOAT, POSITION);
 				VertexAttributePointer normalData(3, GL_FLOAT, NORMAL);
+				VertexAttributePointer textureCords(2, GL_FLOAT, TEXTURE_CORDINATE);
 
 				std::vector<VertexAttributePointer> attributePointers = {
 					positionData,
-					normalData
+					normalData,
+					textureCords
 				};
 
 				m_VAO.addAttributePointers(attributePointers);
