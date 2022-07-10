@@ -13,7 +13,7 @@ namespace Jade {
 
 				1.0f,						 // Constant
 				0.09f,						 // Linear
-				0.32f,						 // Quadratic
+				0.032f,						 // Quadratic
 
 				glm::vec3(0.2f, 0.2f, 0.2f), // Ambient
 				glm::vec3(0.5f, 0.5f, 0.5f), // Diffuse
