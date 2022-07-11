@@ -4,7 +4,8 @@
 #include "High Level Rendering/Renderable Objects/RenderableObject.h"
 
 namespace Jade {
-	RenderingRuleSet::RenderingRuleSet(RuleSet rules) : m_Program(programInit()), m_ID(getNextID()), ruleSet(rules) {}
+	RenderingRuleSet::RenderingRuleSet(RuleSet rules) 
+		: m_Program(programInit()), m_ID(getNextID()), ruleSet(rules) {}
 
 	ShaderProgram RenderingRuleSet::programInit() {
 		ShaderCreator creator(this);

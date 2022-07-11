@@ -24,10 +24,7 @@ namespace Jade {
 
 		virtual void bindAdditionals() = 0;
 
-		void createProgram();
-
 		int getID() const { return m_ID; }
-
 		ShaderProgram getProgram() const { return m_Program; }
 
 		void dispose() { m_Program.dispose(); }
