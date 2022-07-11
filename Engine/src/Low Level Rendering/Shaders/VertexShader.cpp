@@ -3,7 +3,6 @@
 #include "Jade.h"
 
 #include "Low Level Rendering/Shaders/VertexShader.h"
-
 #include "Core Systems/Resource Pipeline/TextFile.h"
 
 namespace Jade {
