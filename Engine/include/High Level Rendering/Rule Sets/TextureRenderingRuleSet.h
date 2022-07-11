@@ -10,7 +10,7 @@ namespace Jade {
 
 		void bindAdditionals() override {
 			getProgram().setPointLights("lights", m_PointLights);
-			getProgram().setFloat("numberOfLights", m_PointLights.size());
+			getProgram().setFloat("numberOfLights", (float)m_PointLights.size());
 			getProgram().setDirectionalLight("directionalLight", m_DirectionalLight);
 		}
 
