@@ -89,7 +89,7 @@ int main() {
 	Jade::DirectionalLight directionalLight = Jade::LightCreator::DefaultDirectionalLight();
 	ruleSet.setDirectionalLight(directionalLight);
 
-	Jade::Renderer renderer(&ruleSet, camera.getViewMatrix(), projection);
+	Jade::Renderer renderer(&ruleSet);
 
 	Jade::StandardRenderable standardRenderable(Jade::CUBE);
 
@@ -98,7 +98,7 @@ int main() {
 	// ======================== Solid Renderer ========================
 	Jade::SolidRuleSet solidRuleSet;
 
-	Jade::Renderer renderer2(&solidRuleSet, camera.getViewMatrix(), projection);
+	Jade::Renderer renderer2(&solidRuleSet);
 
 	Jade::SolidRenderable solidRenderable(Jade::Colour(255, 255, 255));
 	solidRenderable.getTransform().translate(lightPositon);
@@ -117,11 +117,11 @@ int main() {
 	textureRuleSet.addPointLight(light);
 	textureRuleSet.setDirectionalLight(directionalLight);
 
-	Jade::Renderer renderer3(&textureRuleSet, camera.getViewMatrix(), projection);
+	Jade::Renderer renderer3(&textureRuleSet);
 
 	Jade::TexturedRenderable texturedRenderable(Jade::Texture("assets\\textures\\container2.png"), Jade::Texture("assets\\textures\\container2_specular.png"), 32.0f);
 	texturedRenderable.getTransform().translate(1, 0, 0);
-
+	
 	renderer3.addRenderable(&texturedRenderable);
 
 	// Check for errors
