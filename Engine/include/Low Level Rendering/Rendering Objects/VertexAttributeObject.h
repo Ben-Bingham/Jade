@@ -29,10 +29,10 @@ namespace Jade {
 			bind();
 		}
 
-		VertexAttributeObject(const VertexAttributeObject&) = default;
+		/*VertexAttributeObject(const VertexAttributeObject&) = default;
 		VertexAttributeObject(VertexAttributeObject&&) = default;
 		VertexAttributeObject& operator=(const VertexAttributeObject&) = default;
-		VertexAttributeObject& operator=(VertexAttributeObject&&) = default;
+		VertexAttributeObject& operator=(VertexAttributeObject&&) = default;*/
 
 		void dispose() {
 			glDeleteVertexArrays(1, &m_VAO);
