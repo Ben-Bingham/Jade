@@ -22,15 +22,7 @@ namespace Jade {
 			init();
 		}
 
-		void render(const RenderingRuleSet& ruleSet) const {
-			additionalRendering(ruleSet);
-
-			ruleSet.getProgram().setMatrix4f("model", m_Transform.getMatrix());
-
-			m_VAO.bind();
-
-			glDrawArrays(GL_TRIANGLES, 0, m_NumberOfVerticies);
-		}
+		void render(const RenderingRuleSet& ruleSet) const;
 
 		virtual void additionalRendering(const RenderingRuleSet& ruleSet) const = 0;
 
