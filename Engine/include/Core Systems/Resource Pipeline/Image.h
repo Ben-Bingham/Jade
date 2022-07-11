@@ -8,7 +8,7 @@
 namespace Jade {
 	class Image {
 	public:
-		Image(const std::string path, bool flipVertically = true) { setPath(path, flipVertically); }
+		Image(const std::string& path, bool flipVertically = true) { setPath(path, flipVertically); }
 
 		void setPath(const std::string& newPath, bool flipVertically) {
 			m_Path = newPath;
