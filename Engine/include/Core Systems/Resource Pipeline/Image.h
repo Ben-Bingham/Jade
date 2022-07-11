@@ -8,17 +8,13 @@
 namespace Jade {
 	class Image {
 	public:
-		Image(const std::string& path, bool flipVertically = true) { setPath(path, flipVertically); }
-
-		void setPath(const std::string& newPath, bool flipVertically) {
-			m_Path = newPath;
-
+		Image(const std::string& path, bool flipVertically = true) : m_Path(path) {
 			stbi_set_flip_vertically_on_load(flipVertically);
 
 			m_Content = stbi_load(m_Path.c_str(), &m_Width, &m_Height, &m_Channels, 0);
 
 			if (!m_Content) {
-				LOGGER.log("Image: " + newPath + "Failed to load.", Jade::ERROR);
+				LOGGER.log("Image: " + m_Path + "Failed to load.", Jade::ERROR);
 				this->free();
 			}
 		}
