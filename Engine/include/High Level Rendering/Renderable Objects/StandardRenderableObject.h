@@ -1,6 +1,7 @@
 #pragma once
 
 #include "RenderableObject.h"
+#include "High Level Rendering/MaterialCreator.h"
 
 namespace Jade {
 	class StandardRenderable : public RenderableObject {
