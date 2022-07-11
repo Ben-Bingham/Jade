@@ -171,7 +171,9 @@ int main() {
 		glCheckError();
 	}
 
-	//renderer.dispose();
+	renderer.dispose();
+	renderer2.dispose();
+	renderer3.dispose();
 
 	window.dispose();
 
