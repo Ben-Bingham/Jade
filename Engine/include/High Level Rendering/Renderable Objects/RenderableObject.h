@@ -5,6 +5,7 @@
 #include "High Level Rendering/Rule Sets/RenderingRuleSet.h"
 #include "Low Level Rendering/Rendering Objects/VertexAttributeObject.h"
 #include "Low Level Rendering/Rendering Objects/VertexBufferObject.h"
+#include "Low Level Rendering/Rendering Objects/ElementBufferObject.h"
 #include "High Level Rendering/Transform.h"
 
 namespace Jade {
@@ -17,7 +18,7 @@ namespace Jade {
 	class RenderableObject {
 	public:
 		RenderableObject(RuleSet ruleset, Model shape)
-			: m_VAO(), m_Shape(shape), m_VBO(vboInit()), m_RuleSet(ruleset), m_NumberOfVerticies(numberOfVerticiesInit()) {
+			: m_VAO(), m_Shape(shape), m_VBO(vboInit()), m_RuleSet(ruleset), m_NumberOfVerticies(numberOfVerticiesInit()), m_EBO(eboInit()) {
 
 			init();
 		}
@@ -36,14 +37,13 @@ namespace Jade {
 		void dispose() { m_VAO.dispose(); }
 
 	private:
-		VertexAttributeObject m_VAO;
 		Model m_Shape;
+		VertexAttributeObject m_VAO;
 		VertexBufferObject m_VBO;
+		ElementBufferObject m_EBO;
 		Transform m_Transform;
 		RuleSet m_RuleSet;
 		int m_NumberOfVerticies;
-
-		// EBO //TODO
 
 		void init() {
 			if (m_Shape == CUBE || m_Shape == PYRAMID) {
@@ -69,6 +69,14 @@ namespace Jade {
 			}
 		}
 
+		ElementBufferObject eboInit() {
+			switch (m_Shape) {
+			default:
+			case CUBE: return ElementBufferObject(cubeIndicies);
+			case PYRAMID: return ElementBufferObject(pyramidIndicies);
+			}
+		}
+
 		int numberOfVerticiesInit() {
 			switch (m_Shape) {
 			default:
@@ -78,6 +86,9 @@ namespace Jade {
 		}
 
 		static std::vector<float> cubeVerticies;
+		static std::vector<unsigned int> cubeIndicies;
+
 		static std::vector<float> pyramidVerticies;
+		static std::vector<unsigned int> pyramidIndicies;
 	};
 }
