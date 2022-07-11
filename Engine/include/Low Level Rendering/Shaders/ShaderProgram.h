@@ -8,6 +8,7 @@
 #include "VertexShader.h"
 #include "FragmentShader.h"
 #include "ShaderStructs.h"
+#include "Low Level Rendering/Rendering Objects/Texture.h"
 
 namespace Jade {
 	class ShaderProgram {
@@ -69,7 +70,7 @@ namespace Jade {
 		}
 
 		void setDirectionalLight(const std::string& structName, const DirectionalLight& directionalLight) {
-			setVector3f(structName + ".direction", directionalLight.ambient);
+			setVector3f(structName + ".direction", directionalLight.direction);
 			setVector3f(structName + ".ambient", directionalLight.ambient);
 			setVector3f(structName + ".diffuse", directionalLight.diffuse);
 			setVector3f(structName + ".specular", directionalLight.specular);
@@ -79,6 +80,12 @@ namespace Jade {
 			setVector3f(structName + ".ambient", material.ambient);
 			setVector3f(structName + ".diffuse", material.diffuse);
 			setVector3f(structName + ".specular", material.specular);
+			setFloat(structName + ".shininess", material.shininess);
+		}
+
+		void setTexturedMaterial(const std::string& structName, const TexturedMaterial& material) const {
+			setInt(structName + ".diffuse", 0);
+			setInt(structName + ".specular", 1);
 			setFloat(structName + ".shininess", material.shininess);
 		}
 
