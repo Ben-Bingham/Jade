@@ -29,7 +29,7 @@ namespace Jade {
 			glBufferData(GL_ARRAY_BUFFER, length, vertices, GL_STATIC_DRAW);
 		}
 
-		void bind() const{
+		void bind() const {
 			glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 		}
 
