@@ -170,7 +170,6 @@ int main() {
 		renderer2.render();
 
 		renderer3.getRuleSet()->getProgram().use();
-		renderer3.getRuleSet()->getProgram().setTexturedMaterial("material", texturedRenderable.getMaterial()); //TODO need to be moved and called per object
 		renderer3.setMatrices(view, projection);
 		renderer3.getRuleSet()->getProgram().use();
 		renderer3.getRuleSet()->getProgram().setVector3f("cameraPosition", camera.getPosition());

@@ -13,6 +13,7 @@ namespace Jade {
 			m_Material.diffuse.bind();
 			Texture::activateUnit(1);
 			m_Material.specular.bind();
+			ruleSet.getProgram().setTexturedMaterial("material", getMaterial());
 		}
 
 		TexturedMaterial getMaterial() const { return m_Material; }
