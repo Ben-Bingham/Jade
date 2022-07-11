@@ -5,14 +5,6 @@
 namespace Jade {
 	class VertexBufferObject {
 	public:
-		void init(float vertices[], int length) {
-			glGenBuffers(1, &m_VBO);
-
-			bind();
-
-			glBufferData(GL_ARRAY_BUFFER, length, vertices, GL_STATIC_DRAW);
-		}
-
 		VertexBufferObject(float vertices[], int length) { init(vertices, length); }
 		VertexBufferObject(std::vector<float> vertices) {
 			float* cVertices = new float[vertices.size() + 1];
@@ -29,8 +21,12 @@ namespace Jade {
 			delete[] cVertices;
 		}
 
-		void dispose() {
-			glDeleteBuffers(1, &m_VBO);
+		void init(float vertices[], int length) {
+			glGenBuffers(1, &m_VBO);
+
+			bind();
+
+			glBufferData(GL_ARRAY_BUFFER, length, vertices, GL_STATIC_DRAW);
 		}
 
 		void bind() const{
@@ -39,6 +35,10 @@ namespace Jade {
 
 		static void unbind() {
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
+		}
+
+		void dispose() {
+			glDeleteBuffers(1, &m_VBO);
 		}
 
 	private:
