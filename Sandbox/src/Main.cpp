@@ -18,6 +18,7 @@
 #include "High Level Rendering/Renderable Objects/StandardRenderableObject.h"
 #include "High Level Rendering/Renderable Objects/SolidRenderableObject.h"
 #include "High Level Rendering/Renderable Objects/TexturedRenderableObject.h"
+#include "High Level Rendering/Colour.h"
 
 // Global variables
 unsigned int screenWidth = 640;
@@ -103,13 +104,13 @@ int main() {
 
 	Jade::Renderer renderer2(&solidRuleSet, camera.getViewMatrix(), projection);
 
-	Jade::SolidRenderable solidRenderable(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+	Jade::SolidRenderable solidRenderable(Jade::Colour(255, 255, 255));
 	solidRenderable.getTransform().translate(lightPositon);
 	solidRenderable.getTransform().scale(0.1f);
 
 	renderer2.addRenderable(&solidRenderable);
 
-	Jade::SolidRenderable solidRenderable2(glm::vec4(0.329f, 0.388f, 0.631f, 1.0f));
+	Jade::SolidRenderable solidRenderable2(Jade::Colour(83, 194, 91));
 	solidRenderable2.getTransform().translate(2, 0, 0);
 
 	renderer2.addRenderable(&solidRenderable2);
