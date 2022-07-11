@@ -9,14 +9,8 @@ namespace Jade {
 		ShaderCreator(RenderingRuleSet* ruleSet)
 			: m_RuleSet(ruleSet), m_VertexShader(vertexShaderInit()), m_FragmentShader(fragmentShaderInit()) {}
 
-		ShaderProgram createProgram() {
-			m_FragmentShader.dispose();
-			m_VertexShader.dispose();
-
-			m_FragmentShader = fragmentShaderInit();
-			m_VertexShader = vertexShaderInit();
-			return ShaderProgram(m_FragmentShader, m_VertexShader);
-		}
+		VertexShader getVertexShader() { return m_VertexShader; }
+		FragmentShader getFragmentShader() { return m_FragmentShader; }
 
 		void dispose() {
 			m_VertexShader.dispose();

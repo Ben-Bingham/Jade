@@ -11,9 +11,7 @@ namespace Jade {
 	class Renderer {
 	public:
 		Renderer(RenderingRuleSet* ruleSet, const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix)
-			: m_RuleSet(ruleSet), m_View(viewMatrix), m_Projection(projectionMatrix) {
-			m_RuleSet->createProgram();
-		}
+			: m_RuleSet(ruleSet), m_View(viewMatrix), m_Projection(projectionMatrix) {}
 
 		void addRenderable(RenderableObject* renderable) {
 			if (renderable->followsRuleSet(*m_RuleSet)) {
