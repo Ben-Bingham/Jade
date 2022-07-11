@@ -13,10 +13,6 @@ namespace Jade {
 			glBufferData(GL_ELEMENT_ARRAY_BUFFER, length, indices, GL_STATIC_DRAW);
 		}
 
-		~ElementBufferObject() {
-			glDeleteBuffers(1, &m_EBO);
-		}
-
 		void bind() const {
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
 		}
