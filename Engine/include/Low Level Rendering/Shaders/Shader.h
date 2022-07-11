@@ -5,16 +5,16 @@
 namespace Jade {
 	class Shader {
 	public:
+		Shader(unsigned int shaderID, TextFile sourceFile) : m_Shader(shaderID), m_ShaderSourceFile(sourceFile) {}
+
 		virtual void dispose() = 0;
 
 		unsigned int getShader() const { return m_Shader; };
-		void setShader(unsigned int shader) { m_Shader = shader; }
 
 		Jade::TextFile getShaderSourceFile() const { return m_ShaderSourceFile; }
-		void setShaderSourceFile(Jade::TextFile shaderSource) { m_ShaderSourceFile = shaderSource; }
 
 	private:
 		unsigned int m_Shader;
-		Jade::TextFile m_ShaderSourceFile;
+		TextFile m_ShaderSourceFile;
 	};
 }
