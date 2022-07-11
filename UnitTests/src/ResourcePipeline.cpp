@@ -59,21 +59,6 @@ TEST_CASE("TextFile can be created via string input with multiple lines", "[Text
 	REQUIRE(file2.getContent() == file.getContent());
 }
 
-TEST_CASE("Text can be appended to the end of a text file", "[TextFile]") {
-	std::string content = "This is a text file";
-	std::string path = "assets\\Unit Test Text File 3.txt";
-	Jade::TextFile file(path, content);
-
-	REQUIRE(file.getContent() == content);
-
-	file.append("\nthis is still a text file");
-
-	Jade::TextFile file2(path);
-
-	REQUIRE(file2.getContent() == file.getContent());
-}
-
-
 // Images -----------------------------------------------------------------------------------------
 TEST_CASE("Image class can read Max alpha png images", "[Image]") {
 	unsigned char requiredData[] = {
