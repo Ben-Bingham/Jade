@@ -28,5 +28,4 @@ namespace Jade {
 		std::vector<PointLight> m_PointLights;
 		DirectionalLight m_DirectionalLight;
 	};
-
 }
