@@ -13,7 +13,7 @@ namespace Jade {
 		Texture(const Jade::Image& image);
 		Texture(const std::string& path);
 
-		void bind() { glBindTexture(GL_TEXTURE_2D, m_Texture); }
+		void bind() const { glBindTexture(GL_TEXTURE_2D, m_Texture); }
 		static void activateUnit(int unit) { glActiveTexture(GL_TEXTURE0 + unit); }
 
 	private:
