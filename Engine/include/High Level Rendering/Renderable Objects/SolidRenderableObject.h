@@ -3,19 +3,20 @@
 #include <glm/glm.hpp>
 
 #include "RenderableObject.h"
+#include "High Level Rendering/Colour.h"
 
 namespace Jade {
 	class SolidRenderable : public RenderableObject {
 	public:
-		SolidRenderable(glm::vec4 objectColour, Model shape = CUBE)
+		SolidRenderable(Colour objectColour, Model shape = CUBE)
 			: RenderableObject(SOLID_COLOUR, shape), m_ObjectColour(objectColour) {
 		}
 
 		void additionalRendering(const RenderingRuleSet& ruleSet) const override {
-			ruleSet.getProgram().setVector4f("objectColour", m_ObjectColour);
+			ruleSet.getProgram().setVector4f("objectColour", m_ObjectColour.colour);
 		}
 
 	private:
-		glm::vec4 m_ObjectColour;
+		Colour m_ObjectColour;
 	};
 }
