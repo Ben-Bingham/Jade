@@ -169,7 +169,6 @@ int main() {
 		renderer2.getRuleSet()->getProgram().use();
 		renderer2.render();
 
-		renderer3.getRuleSet()->getProgram().use();
 		renderer3.setMatrices(view, projection);
 		renderer3.getRuleSet()->getProgram().use();
 		renderer3.getRuleSet()->getProgram().setVector3f("cameraPosition", camera.getPosition());
