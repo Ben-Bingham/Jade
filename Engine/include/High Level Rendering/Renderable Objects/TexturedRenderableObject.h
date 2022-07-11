@@ -15,7 +15,7 @@ namespace Jade {
 			m_Material.specular.bind();
 		}
 
-		TexturedMaterial getMaterial() { return m_Material; }
+		TexturedMaterial getMaterial() const { return m_Material; }
 
 	private:
 		TexturedMaterial m_Material;
