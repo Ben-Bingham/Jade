@@ -6,8 +6,6 @@
 #include "Low Level Rendering/Rendering Objects/VertexAttributeObject.h"
 #include "Low Level Rendering/Rendering Objects/VertexBufferObject.h"
 #include "High Level Rendering/Transform.h"
-#include "Low Level Rendering/Shaders/ShaderStructs.h"
-#include "High Level Rendering/MaterialCreator.h"
 
 namespace Jade {
 	enum Model {
