@@ -6,7 +6,7 @@
 #include "Core Systems/Resource Pipeline/TextFile.h"
 
 namespace Jade {
-	VertexShader::VertexShader(const Jade::TextFile& shaderSourceFile) 
+	VertexShader::VertexShader(const Jade::TextFile& shaderSourceFile)
 		: Shader(glCreateShader(GL_VERTEX_SHADER), shaderSourceFile) {
 
 		std::string shaderSource = getShaderSourceFile().getContent();
