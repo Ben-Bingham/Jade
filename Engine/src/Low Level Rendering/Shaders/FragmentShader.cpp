@@ -7,9 +7,8 @@
 #include "Core Systems/Resource Pipeline/TextFile.h"
 
 namespace Jade {
-	FragmentShader::FragmentShader(const Jade::TextFile& shaderSourceFile) {
-		setShader(glCreateShader(GL_FRAGMENT_SHADER));
-		setShaderSourceFile(shaderSourceFile);
+	FragmentShader::FragmentShader(const Jade::TextFile& shaderSourceFile) 
+		: Shader(glCreateShader(GL_FRAGMENT_SHADER), shaderSourceFile) {
 
 		std::string shaderSource = getShaderSourceFile().getContent();
 		const char* charShaderSource = shaderSource.c_str();
