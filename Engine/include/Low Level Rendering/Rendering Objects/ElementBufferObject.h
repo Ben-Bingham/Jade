@@ -11,7 +11,7 @@ namespace Jade {
 
 			int i = 0;
 
-			for each (float value in indices) {
+			for each (unsigned int value in indices) {
 				cIndices[i] = value;
 				i++;
 			}
