@@ -8,13 +8,12 @@ namespace Jade {
 		Colour() : colour(0.0f, 0.0f, 0.0f, 1.0f) {}
 		Colour(glm::vec4 colour) : colour(colour) {}
 		explicit Colour(float r, float g, float b, float a = 1.0f) : colour(r, g, b, a) {}
-		explicit Colour(unsigned int r, unsigned int g, unsigned int b, unsigned int a = 255) : colour(initWith0to255(r, g, b, a)) {}
+		explicit Colour(int r, int g, int b, int a = 255) : colour(initWith0to255(r, g, b, a)) {}
 
 		glm::vec4 colour;
 
 	private:
-
-		glm::vec4 initWith0to255(unsigned int r, unsigned int g, unsigned int b, unsigned int a) {
+		glm::vec4 initWith0to255(int r, int g, int b, int a) {
 			float oneOverTwoFifyFive = 1.0f / 255.0f;
 			float x, y, z, w;
 			if (r != 255) {
