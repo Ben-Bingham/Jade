@@ -119,7 +119,7 @@ int main() {
 
 	Jade::Renderer renderer3(&textureRuleSet);
 
-	Jade::TexturedRenderable texturedRenderable(Jade::Texture("assets\\textures\\container2.png"), Jade::Texture("assets\\textures\\container2_specular.png"), 32.0f);
+	Jade::TexturedRenderable texturedRenderable(Jade::Texture(Jade::Image("assets\\textures\\container2.png")), Jade::Texture(Jade::Image("assets\\textures\\container2_specular.png")), 32.0f);
 	texturedRenderable.getTransform().translate(1, 0, 0);
 	
 	renderer3.addRenderable(&texturedRenderable);
