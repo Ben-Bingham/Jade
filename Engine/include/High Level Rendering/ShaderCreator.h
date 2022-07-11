@@ -2,7 +2,6 @@
 #include <vector>
 
 #include "Rule Sets/RenderingRuleSet.h"
-#include "Low Level Rendering/Shaders/ShaderHeader.h"
 
 namespace Jade {
 	class ShaderCreator {
