@@ -95,6 +95,11 @@ int main() {
 
 	renderer.addRenderable(&standardRenderable);
 
+	Jade::StandardRenderable standardRenderable2(Jade::PYRAMID);
+	standardRenderable2.getTransform().translate(0, 2, 0);
+
+	renderer.addRenderable(&standardRenderable2);
+
 	// ======================== Solid Renderer ========================
 	Jade::SolidRuleSet solidRuleSet;
 
@@ -111,6 +116,11 @@ int main() {
 
 	renderer2.addRenderable(&solidRenderable2);
 
+	Jade::SolidRenderable solidRenderable3(Jade::Colour(52, 174, 235), Jade::PYRAMID);
+	solidRenderable3.getTransform().translate(2, 2, 0);
+
+	renderer2.addRenderable(&solidRenderable3);
+
 	// ======================== Textured Renderer ========================
 	Jade::TextureRuleSet textureRuleSet;
 
@@ -123,6 +133,11 @@ int main() {
 	texturedRenderable.getTransform().translate(1, 0, 0);
 	
 	renderer3.addRenderable(&texturedRenderable);
+
+	Jade::TexturedRenderable texturedRenderable2(Jade::Texture(Jade::Image("assets\\textures\\container2.png")), Jade::Texture(Jade::Image("assets\\textures\\container2_specular.png")), 32.0f, Jade::PYRAMID);
+	texturedRenderable2.getTransform().translate(1, 2, 0);
+
+	renderer3.addRenderable(&texturedRenderable2);
 
 	// Check for errors
 	glCheckError();
