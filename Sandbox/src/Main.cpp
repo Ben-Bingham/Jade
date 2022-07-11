@@ -89,7 +89,7 @@ int main() {
 	Jade::DirectionalLight directionalLight = Jade::LightCreator::DefaultDirectionalLight();
 	ruleSet.setDirectionalLight(directionalLight);
 
-	ruleSet.createProgram(); //TODO call this in renderer
+	//ruleSet.createProgram(); //TODO call this in renderer
 
 	Jade::Renderer renderer(&ruleSet, camera.getViewMatrix(), projection);
 
@@ -100,7 +100,7 @@ int main() {
 	// ======================== Solid Renderer ========================
 	Jade::SolidRuleSet solidRuleSet;
 
-	solidRuleSet.createProgram();
+	//solidRuleSet.createProgram();
 
 	Jade::Renderer renderer2(&solidRuleSet, camera.getViewMatrix(), projection);
 
@@ -121,7 +121,7 @@ int main() {
 	textureRuleSet.addPointLight(light);
 	textureRuleSet.setDirectionalLight(directionalLight);
 
-	textureRuleSet.createProgram();
+	//textureRuleSet.createProgram();
 
 	Jade::Renderer renderer3(&textureRuleSet, camera.getViewMatrix(), projection);
 
