@@ -17,11 +17,15 @@
 #include "High Level Rendering/Transform.h"
 #include "High Level Rendering/Rule Sets/RenderingRuleSet.h"
 #include "High Level Rendering/ShaderCreator.h"
-#include "High Level Rendering/RenderableObject.h"
+#include "High Level Rendering/Renderable Objects/RenderableObject.h"
 #include "High Level Rendering/Renderer.h"
 #include "High Level Rendering/Rule Sets/StandardRenderingRuleSet.h"
 #include "High Level Rendering/LightCreator.h"
 #include "High Level Rendering/Rule Sets/SolidRenderingRuleSet.h"
+#include "High Level Rendering/Rule Sets/TextureRenderingRuleSet.h"
+#include "High Level Rendering/Renderable Objects/StandardRenderableObject.h"
+#include "High Level Rendering/Renderable Objects/SolidRenderableObject.h"
+#include "High Level Rendering/Renderable Objects/TexturedRenderableObject.h"
 
 // Global variables
 unsigned int screenWidth = 640;
@@ -82,38 +86,56 @@ int main() {
 	// Uncomment for wireframe rendering
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	
-	// ======================== Shader Creator Testing ========================
+	// ======================== Standard Renderer ========================
 	Jade::StandardRuleSet ruleSet;
 
 	Jade::PointLight light = Jade::LightCreator::DefaultPointLight();
-
 	light.position = lightPositon;
 	ruleSet.addPointLight(light);
-
+	
 	Jade::DirectionalLight directionalLight = Jade::LightCreator::DefaultDirectionalLight();
 	ruleSet.setDirectionalLight(directionalLight);
 
-	ruleSet.createProgram();
+	ruleSet.createProgram(); //TODO call this in renderer
 
 	Jade::Renderer renderer(&ruleSet, camera.getViewMatrix(), projection);
 
-	// Object 1
-	Jade::RenderableObject renderObject(Jade::CUBE);
+	Jade::StandardRenderable standardRenderable(Jade::CUBE);
 
-	renderer.addRenderable(renderObject);
+	renderer.addRenderable(&standardRenderable);
 
-	// Renderer 2
+	// ======================== Solid Renderer ========================
 	Jade::SolidRuleSet solidRuleSet;
+
+	solidRuleSet.createProgram();
 
 	Jade::Renderer renderer2(&solidRuleSet, camera.getViewMatrix(), projection);
 
-	// Object 2
+	Jade::SolidRenderable solidRenderable(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+	solidRenderable.getTransform().translate(lightPositon);
+	solidRenderable.getTransform().scale(0.1f);
 
-	Jade::RenderableObject renderObject2(Jade::CUBE, glm::vec4(1.0f, 1.0f, 1.0f, 1.0f), Jade::SOLID_COLOUR);
-	renderObject2.getTransform().translate(lightPositon);
-	renderObject2.getTransform().scale(0.2);
+	renderer2.addRenderable(&solidRenderable);
 
-	renderer2.addRenderable(renderObject2);
+	Jade::SolidRenderable solidRenderable2(glm::vec4(0.329f, 0.388f, 0.631f, 1.0f));
+	solidRenderable2.getTransform().translate(2, 0, 0);
+
+	renderer2.addRenderable(&solidRenderable2);
+
+	// ======================== Textured Renderer ========================
+	Jade::TextureRuleSet textureRuleSet;
+
+	textureRuleSet.addPointLight(light);
+	textureRuleSet.setDirectionalLight(directionalLight);
+
+	textureRuleSet.createProgram();
+
+	Jade::Renderer renderer3(&textureRuleSet, camera.getViewMatrix(), projection);
+
+	Jade::TexturedRenderable texturedRenderable(Jade::Texture("assets\\textures\\container2.png"), Jade::Texture("assets\\textures\\container2_specular.png"), 32.0f);
+	texturedRenderable.getTransform().translate(1, 0, 0);
+
+	renderer3.addRenderable(&texturedRenderable);
 
 	// Check for errors
 	glCheckError();
@@ -138,26 +160,28 @@ int main() {
 		glm::mat4 view;
 		view = camera.getViewMatrix();
 
-		//Renderer 1
-		renderObject.getTransform().clearMatrix();
-		renderObject.getTransform().rotate(Jade::Rotation{ glm::vec3(0.5f, 1.0f, 0.0f), (float)glfwGetTime() * 50.0f });
-
 		renderer.setMatrices(view, projection);
 		renderer.getRuleSet()->getProgram().use();
 		renderer.getRuleSet()->getProgram().setVector3f("cameraPosition", camera.getPosition());
 		renderer.render();
 
-		//Renderer 2
 		renderer2.setMatrices(view, projection);
 		renderer2.getRuleSet()->getProgram().use();
 		renderer2.render();
+
+		renderer3.getRuleSet()->getProgram().use();
+		renderer3.getRuleSet()->getProgram().setTexturedMaterial("material", texturedRenderable.getMaterial()); //TODO need to be moved and called per object
+		renderer3.setMatrices(view, projection);
+		renderer3.getRuleSet()->getProgram().use();
+		renderer3.getRuleSet()->getProgram().setVector3f("cameraPosition", camera.getPosition());
+		renderer3.render();
 
 		//Render cleanup
 		window.swapBuffers();
 		glCheckError();
 	}
 
-	renderer.dispose();
+	//renderer.dispose();
 
 	window.dispose();
 
