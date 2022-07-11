@@ -18,7 +18,7 @@ namespace Jade {
 	class RenderableObject {
 	public:
 		RenderableObject(RuleSet ruleset, Model shape)
-			: m_VAO(), m_Shape(shape), m_VBO(vboInit()), m_RuleSet(ruleset), m_NumberOfVerticies(numberOfVerticiesInit()), m_EBO(eboInit()) {
+			: m_VAO(), m_Shape(shape), m_VBO(vboInit()), m_RuleSet(ruleset), m_NumberOfIndicies(numberOfVerticiesInit()), m_EBO(eboInit()) {
 
 			init();
 		}
@@ -43,7 +43,7 @@ namespace Jade {
 		ElementBufferObject m_EBO;
 		Transform m_Transform;
 		RuleSet m_RuleSet;
-		int m_NumberOfVerticies;
+		int m_NumberOfIndicies;
 
 		void init() {
 			if (m_Shape == CUBE || m_Shape == PYRAMID) {
