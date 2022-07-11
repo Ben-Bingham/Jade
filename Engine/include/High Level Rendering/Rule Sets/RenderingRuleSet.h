@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 
-#include "Low Level Rendering/Shaders/ShaderHeader.h"
+#include "Low Level Rendering/Shaders/ShaderProgram.h"
 #include "Low Level Rendering/Shaders/ShaderStructs.h"
 
 namespace Jade {
