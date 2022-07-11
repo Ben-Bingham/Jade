@@ -1,7 +1,5 @@
 #include "High Level Rendering/Rule Sets/RenderingRuleSet.h"
 #include "High Level Rendering/ShaderCreator.h"
-#include "Core Systems/Resource Pipeline/TextFile.h"
-#include "High Level Rendering/Renderable Objects/RenderableObject.h"
 
 namespace Jade {
 	RenderingRuleSet::RenderingRuleSet(RuleSet rules) 
