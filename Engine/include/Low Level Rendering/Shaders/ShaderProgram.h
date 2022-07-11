@@ -13,7 +13,7 @@
 namespace Jade {
 	class ShaderProgram {
 	public:
-		ShaderProgram(FragmentShader& fragmentShader, VertexShader& vertexShader); 
+		ShaderProgram(FragmentShader& fragmentShader, VertexShader& vertexShader);
 
 		void use() { glUseProgram(m_Program); }
 		void dispose() { glDeleteProgram(m_Program); }
