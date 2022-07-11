@@ -1,7 +1,5 @@
 #pragma once
 
-#include <vector>
-
 #include "High Level Rendering/Rule Sets/RenderingRuleSet.h"
 #include "High Level Rendering/LightCreator.h"
 
