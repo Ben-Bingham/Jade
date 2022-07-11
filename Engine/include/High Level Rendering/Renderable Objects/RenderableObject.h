@@ -22,12 +22,6 @@ namespace Jade {
 			init();
 		}
 
-		/*RenderableObject(RuleSet ruleset, Model shape = CUBE)
-			: m_VAO(), m_ObjectColour(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f)), m_Shape(shape), m_VBO(vboInit()), m_RuleSet(ruleset), m_Material(MaterialCreator::DefaultMaterial()), m_NumberOfVerticies(numberOfVerticiesInit()), m_Texture(textureInit()) {
-
-			init();
-		}*/
-
 		void render(const RenderingRuleSet& ruleSet) const {
 			additionalRendering(ruleSet);
 
@@ -40,32 +34,22 @@ namespace Jade {
 
 		virtual void additionalRendering(const RenderingRuleSet& ruleSet) const = 0;
 
-		void dispose() { m_VAO.dispose(); }
-
-		VertexAttributeObject getVAO() { return m_VAO; }
-
-		Transform& getTransform() { return m_Transform; }
-
-		//Texture getTexture() const { return m_Texture; }
-
 		bool followsRuleSet(const RenderingRuleSet& ruleSet) {
 			return ruleSet.ruleSet == m_RuleSet;
 		}
 
-		/*void setTexture(Texture texture) { 
-			m_Texture = texture;
-		}*/
+		VertexAttributeObject getVAO() { return m_VAO; }
+		Transform& getTransform() { return m_Transform; }
+
+		void dispose() { m_VAO.dispose(); }
 
 	private:
 		VertexAttributeObject m_VAO;
 		Model m_Shape;
 		VertexBufferObject m_VBO;
-		//glm::vec4 m_ObjectColour;
 		Transform m_Transform;
 		RuleSet m_RuleSet;
-		//Material m_Material;
 		int m_NumberOfVerticies;
-		//Texture m_Texture;
 
 		// EBO //TODO
 
@@ -99,10 +83,6 @@ namespace Jade {
 			case CUBE: return 36;
 			case PYRAMID: return 18;
 			}
-		}
-
-		Texture textureInit() {
-			return Texture(Jade::Image("assets\\textures\\container.jpg"));
 		}
 
 		static std::vector<float> cubeVerticies;
