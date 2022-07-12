@@ -54,19 +54,18 @@ namespace Jade {
 		int m_NumberOfIndicies;
 
 		void init() {
-			if (m_Shape == CUBE || m_Shape == PYRAMID || m_Shape == CUSTOM) {
-				VertexAttributePointer positionData(3, GL_FLOAT, POSITION);
-				VertexAttributePointer normalData(3, GL_FLOAT, NORMAL);
-				VertexAttributePointer textureCords(2, GL_FLOAT, TEXTURE_CORDINATE);
+			VertexAttributePointer positionData(3, GL_FLOAT, POSITION);
+			VertexAttributePointer normalData(3, GL_FLOAT, NORMAL);
+			VertexAttributePointer textureCords(2, GL_FLOAT, TEXTURE_CORDINATE);
 
-				std::vector<VertexAttributePointer> attributePointers = {
-					positionData,
-					normalData,
-					textureCords
-				};
+			std::vector<VertexAttributePointer> attributePointers = {
+				positionData,
+				normalData,
+				textureCords
+			};
 
-				m_VAO.addAttributePointers(attributePointers);
-			}
+			m_VAO.addAttributePointers(attributePointers);
+			
 		}
 
 		VertexBufferObject vboInit() {
