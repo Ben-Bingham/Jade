@@ -21,8 +21,6 @@
 #include "High Level Rendering/Colour.h"
 #include "Core Systems/Resource Pipeline/Model.h"
 
-Jade::threeDModel model;
-
 // Global variables
 unsigned int screenWidth = 640;
 unsigned int screenHeight = 480;
@@ -79,13 +77,13 @@ int main() {
 		glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
 	}
 
-	glEnable(GL_CULL_FACE);
-	glCullFace(GL_BACK);
-	glFrontFace(GL_CW);
+	//glEnable(GL_CULL_FACE);
+	//glCullFace(GL_BACK);
+	//glFrontFace(GL_CW);
 
 	// Uncomment for wireframe rendering
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	
+
 	// ======================== Standard Renderer ========================
 	Jade::StandardRuleSet ruleSet;
 
@@ -106,6 +104,19 @@ int main() {
 	standardRenderable2.getTransform().translate(0, 2, 0);
 
 	renderer.addRenderable(&standardRenderable2);
+
+	// ======================== Model Loading testing ========================
+	Jade::Model model("assets\\models\\backpack\\backpack.obj");
+	std::vector<Jade::StandardRenderable> modelRenderables;
+	for each (Jade::Mesh mesh in model.getMeshes()) {
+		modelRenderables.push_back(Jade::StandardRenderable(mesh));
+	}
+	std::vector<Jade::StandardRenderable>::iterator it;
+	for (it = modelRenderables.begin(); it != modelRenderables.end(); it++) {
+		renderer.addRenderable(&(*it));
+		it->getTransform().translate(0.0f, 0.0f, 5.0f);
+		it->getTransform().rotate(Jade::Rotation{ glm::vec3(0.0f, 1.0f, 0.0f), 180.0f });
+	}
 
 	// ======================== Solid Renderer ========================
 	Jade::SolidRuleSet solidRuleSet;
