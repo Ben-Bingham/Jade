@@ -57,10 +57,10 @@ workspace "Jade"
 		links {"glfw3", "glew32s", "opengl32", "Engine", "zlibstaticd"}
 
 		filter "configurations:Debug"
-			links {"assimp-vc142-mtd"}
+			links {"assimp-vc143-mtd"}
 		
 		filter "configurations:Release"
-			links {"assimp-vc142-mt"}
+			links {"assimp-vc143-mt"}
 		
 		filter {}
 
@@ -95,10 +95,10 @@ workspace "Jade"
 		links {"glfw3", "glew32s", "opengl32", "zlibstaticd"}
 
 		filter "configurations:Debug"
-			links {"assimp-vc142-mtd"}
+			links {"assimp-vc143-mtd"}
 		
 		filter "configurations:Release"
-			links {"assimp-vc142-mt"}
+			links {"assimp-vc143-mt"}
 		
 		filter {}
 
