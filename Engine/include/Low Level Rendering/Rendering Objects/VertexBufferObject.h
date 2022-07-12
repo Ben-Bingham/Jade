@@ -6,7 +6,7 @@ namespace Jade {
 	class VertexBufferObject {
 	public:
 		VertexBufferObject(float vertices[], int length) { init(vertices, length); }
-		VertexBufferObject(std::vector<float> vertices) {
+		VertexBufferObject(const std::vector<float>& vertices) {
 			float* cVertices = new float[vertices.size() + 1];
 			
 			int i = 0;
