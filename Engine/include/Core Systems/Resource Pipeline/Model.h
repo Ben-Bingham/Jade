@@ -5,7 +5,7 @@
 #include <assimp/postprocess.h>
 
 namespace Jade {
-	class threeDModel {
+	class Model {
 		Assimp::Importer importer;
 	};
 }
