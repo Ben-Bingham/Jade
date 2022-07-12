@@ -5,4 +5,3 @@ DEL /S *.vcxproj.user
 DEL /q .vs
 
 CALL Dependencies\premake\premake5.exe vs2022
-
