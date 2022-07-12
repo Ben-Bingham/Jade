@@ -8,7 +8,7 @@
 namespace Jade {
 	class SolidRenderable : public RenderableObject {
 	public:
-		SolidRenderable(Colour objectColour, Model shape = CUBE)
+		SolidRenderable(Colour objectColour, Shape shape = CUBE)
 			: RenderableObject(SOLID_COLOUR, shape), m_ObjectColour(objectColour) {
 		}
 

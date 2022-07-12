@@ -6,7 +6,7 @@
 namespace Jade {
 	class StandardRenderable : public RenderableObject {
 	public:
-		StandardRenderable(Model shape = CUBE) 
+		StandardRenderable(Shape shape = CUBE) 
 			: RenderableObject(STANDARD, shape), m_Material(MaterialCreator::DefaultMaterial()) {}
 
 		void additionalRendering(const RenderingRuleSet& ruleSet) const override {

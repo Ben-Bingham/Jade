@@ -9,7 +9,7 @@
 #include "High Level Rendering/Transform.h"
 
 namespace Jade {
-	enum Model {
+	enum Shape {
 		CUBE,
 		PYRAMID,
 		CUSTOM
@@ -17,7 +17,7 @@ namespace Jade {
 
 	class RenderableObject {
 	public:
-		RenderableObject(RuleSet ruleset, Model shape)
+		RenderableObject(RuleSet ruleset, Shape shape)
 			: m_VAO(), m_Shape(shape), m_VBO(vboInit()), m_RuleSet(ruleset), m_NumberOfIndicies(numberOfVerticiesInit()), m_EBO(eboInit()) {
 
 			init();
@@ -37,7 +37,7 @@ namespace Jade {
 		void dispose() { m_VAO.dispose(); }
 
 	private:
-		Model m_Shape;
+		Shape m_Shape;
 		VertexAttributeObject m_VAO;
 		VertexBufferObject m_VBO;
 		ElementBufferObject m_EBO;

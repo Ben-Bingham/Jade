@@ -5,7 +5,7 @@
 namespace Jade {
 	class TexturedRenderable : public RenderableObject {
 	public:
-		TexturedRenderable(const Texture& diffuse, const Texture& specular, float shininess, Model shape = CUBE)
+		TexturedRenderable(const Texture& diffuse, const Texture& specular, float shininess, Shape shape = CUBE)
 			: RenderableObject(TEXTURE, shape), m_Material{ diffuse, specular, shininess } {}
 
 		void additionalRendering(const RenderingRuleSet& ruleSet) const override {
