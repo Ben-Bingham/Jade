@@ -54,7 +54,15 @@ workspace "Jade"
 			"Dependencies/zlib"
 		}
 
-		links {"glfw3", "glew32s", "opengl32", "Engine", "assimp-vc142-mtd", "zlibstaticd"}
+		links {"glfw3", "glew32s", "opengl32", "Engine", "zlibstaticd"}
+
+		filter "configurations:Debug"
+			links {"assimp-vc142-mtd"}
+		
+		filter "configurations:Release"
+			links {"assimp-vc142-mt"}
+		
+		filter {}
 
 		targetdir ("Sandbox/build/bin")
 		objdir ("Sandbox/build/bin-int")
@@ -84,7 +92,15 @@ workspace "Jade"
 			"Dependencies/zlib"
 		}	
 
-		links {"glfw3", "glew32s", "opengl32", "assimp-vc142-mtd", "zlibstaticd"}
+		links {"glfw3", "glew32s", "opengl32", "zlibstaticd"}
+
+		filter "configurations:Debug"
+			links {"assimp-vc142-mtd"}
+		
+		filter "configurations:Release"
+			links {"assimp-vc142-mt"}
+		
+		filter {}
 
 		targetdir ("Engine/build/bin")
 		objdir ("Engine/build/bin-int")
