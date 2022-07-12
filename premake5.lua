@@ -1,6 +1,6 @@
 workspace "Jade"
 	configurations {"Debug", "Release"}
-	platforms {"x32"}
+	platforms {"x64"}
 
 	startproject "Sandbox"
 
@@ -9,8 +9,8 @@ workspace "Jade"
 		"Dependencies/GLM"
 	}
 
-	filter "platforms:x32"
-		architecture "x32"
+	filter "platforms:x64"
+		architecture "x64"
 
 	filter "configurations:Debug"
 			defines { "DEBUG", "GLEW_STATIC"}
@@ -32,12 +32,10 @@ workspace "Jade"
 			"Sandbox/**.h",
 			"Sandbox/assets/shaders/**.frag",
 			"Sandbox/assets/shaders/**.vert",
-			"Dependencies/stb image/**.h",
 			"Sandbox/assets/textures/**.jpg",
 			"Sandbox/assets/textures/**.jpeg",
 			"Sandbox/assets/textures/**.png",
-			"Dependencies/GLM/*.hpp",
-			"Engine/include/*.h"
+			"Engine/include/*.h",
 		}
 
 		includedirs {
@@ -45,15 +43,18 @@ workspace "Jade"
 			"Dependencies/glew-2.1.0/include",
 			"Sandbox/include",
 			"Sandbox/assets/shaders",
-			"Dependencies/stb image"
+			"Dependencies/stb image",
+			"Dependencies/assimp/include"
 		}
 
 		libdirs {
 			"Dependencies/GLFW/lib-vc2022",
-			"Dependencies/glew-2.1.0/lib/Release/Win32"
+			"Dependencies/glew-2.1.0/lib/Release/x64",
+			"Dependencies/assimp",
+			"Dependencies/zlib"
 		}
 
-		links {"glfw3", "glew32s", "opengl32", "Engine"}
+		links {"glfw3", "glew32s", "opengl32", "Engine", "assimp-vc142-mtd", "zlibstaticd"}
 
 		targetdir ("Sandbox/build/bin")
 		objdir ("Sandbox/build/bin-int")
@@ -65,23 +66,25 @@ workspace "Jade"
 
 		files {
 			"Engine/**.cpp", "Engine/**.h",
-			"Dependencies/stb image/**.h",
 			"Engine/assets/**.vert",
-			"Engine/assets/**.frag"
+			"Engine/assets/**.frag",
 		}
 
 		includedirs {
 			"Dependencies/GLFW/include",
 			"Dependencies/glew-2.1.0/include",
-			"Dependencies/stb image"
+			"Dependencies/stb image",
+			"Dependencies/assimp/include"
 		}
 
 		libdirs {
 			"Dependencies/GLFW/lib-vc2022",
-			"Dependencies/glew-2.1.0/lib/Release/Win32"
+			"Dependencies/glew-2.1.0/lib/Release/x64",
+			"Dependencies/assimp",
+			"Dependencies/zlib"
 		}	
 
-		links {"glfw3", "glew32s", "opengl32"}
+		links {"glfw3", "glew32s", "opengl32", "assimp-vc142-mtd", "zlibstaticd"}
 
 		targetdir ("Engine/build/bin")
 		objdir ("Engine/build/bin-int")
