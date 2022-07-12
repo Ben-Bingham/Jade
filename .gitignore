@@ -10,3 +10,5 @@ UnitTests/assets/Unit Test Text File 2.txt
 UnitTests/assets/Unit Test Text File 3.txt
 
 Sandbox/assets/shaders/ruleSet*
+
+Dependencies/assimp/*.lib
