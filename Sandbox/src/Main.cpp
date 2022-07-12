@@ -19,6 +19,9 @@
 #include "High Level Rendering/Renderable Objects/SolidRenderableObject.h"
 #include "High Level Rendering/Renderable Objects/TexturedRenderableObject.h"
 #include "High Level Rendering/Colour.h"
+#include "Core Systems/Resource Pipeline/Model.h"
+
+Jade::threeDModel model;
 
 // Global variables
 unsigned int screenWidth = 640;
