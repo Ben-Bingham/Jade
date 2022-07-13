@@ -12,7 +12,7 @@
 namespace Jade {
 	class Model {
 	public:
-		Model(const std::string path) : m_Path(path) {
+		Model(const std::string& path);/* : m_Path(path) {
 			Assimp::Importer importer;
 			const aiScene* scene = importer.ReadFile(m_Path, aiProcess_Triangulate | aiProcess_FlipUVs);
 
@@ -26,7 +26,7 @@ namespace Jade {
 			}
 
 			processNode(scene->mRootNode, scene);
-		}
+		}*/
 
 		std::vector<Mesh> getMeshes() { return m_Meshes; }
 
@@ -34,23 +34,23 @@ namespace Jade {
 		std::string m_Path;
 		std::vector<Mesh> m_Meshes;
 
-		void processNode(aiNode* node, const aiScene* scene) {
-			for (int i = 0; i < node->mNumMeshes; i++) {
+		void processNode(aiNode* node, const aiScene* scene);/* {
+			for (unsigned int i = 0; i < node->mNumMeshes; i++) {
 				aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
 				m_Meshes.push_back(processMesh(mesh, scene));
 			}
 
-			for (int i = 0; i < node->mNumChildren; i++) {
+			for (unsigned int i = 0; i < node->mNumChildren; i++) {
 				processNode(node->mChildren[i], scene);
 			}
-		}
+		}*/
 
-		Mesh processMesh(aiMesh* mesh, const aiScene* scene) {
+		Mesh processMesh(aiMesh* mesh, const aiScene* scene);/* {
 			std::vector<Vertex> verticies;
 			std::vector<unsigned int> indicies;
 			std::vector<TextureStruct> textures;
 
-			for (int i = 0; i < mesh->mNumVertices; i++) {
+			for (unsigned int i = 0; i < mesh->mNumVertices; i++) {
 				Vertex vertex;
 
 				glm::vec3 vector;
@@ -76,9 +76,9 @@ namespace Jade {
 				verticies.push_back(vertex);
 			}
 
-			for (int i = 0; i < mesh->mNumFaces; i++) {
+			for (unsigned int i = 0; i < mesh->mNumFaces; i++) {
 				aiFace face = mesh->mFaces[i];
-				for (int j = 0; j < face.mNumIndices; j++) {
+				for (unsigned int j = 0; j < face.mNumIndices; j++) {
 					indicies.push_back(face.mIndices[j]);
 				}
 			}
@@ -95,21 +95,21 @@ namespace Jade {
 			}
 
 			return Mesh(verticies, indicies, textures);
-		}
+		}*/
 
-		std::vector<TextureStruct> loadMaterialTextures(aiMaterial* material, aiTextureType textureType, std::string type) {
-			std::vector<TextureStruct> textures;
-			for (int i = 0; i < material->GetTextureCount(textureType); i++) {
-				aiString str;
-				material->GetTexture(textureType, i, &str);
-				TextureStruct texture;
-				//texture.id = TextureFromFile(); //TODO
-				texture.type = type;
-				//texture.path = str;
-				textures.push_back(texture);
-			}
+		std::vector<TextureStruct> loadMaterialTextures(aiMaterial* material, aiTextureType textureType, std::string type); //{
+		//	std::vector<TextureStruct> textures;
+		//	for (unsigned int i = 0; i < material->GetTextureCount(textureType); i++) {
+		//		aiString str;
+		//		material->GetTexture(textureType, i, &str);
+		//		TextureStruct texture;
+		//		//texture.id = TextureFromFile(); //TODO
+		//		texture.type = type;
+		//		//texture.path = str;
+		//		textures.push_back(texture);
+		//	}
 
-			return textures;
-		}
+		//	return textures;
+		//}
 	};
 }
