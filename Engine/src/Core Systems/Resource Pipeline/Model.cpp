@@ -11,7 +11,7 @@ namespace Jade {
 		const aiScene* scene = importer.ReadFile(m_Path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_FlipWindingOrder);
 
 		if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
-			std::string message = "Assimp failed to load model ";
+			std::string message = "Failed to load model ";
 			message += m_Path;
 			message += ' ';
 			message += importer.GetErrorString();
