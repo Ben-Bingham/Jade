@@ -14,8 +14,10 @@ namespace Jade {
 		void bind() const { glBindTexture(GL_TEXTURE_2D, m_Texture); }
 		static void activateUnit(int unit) { glActiveTexture(GL_TEXTURE0 + unit); }
 
+		Image getImage() { return m_Image; }
+
 	private:
 		unsigned int m_Texture;
-		Jade::Image m_Image;
+		Image m_Image;
 	};
 }
