@@ -111,10 +111,11 @@ int main() {
 	for each (Jade::Mesh mesh in model.getMeshes()) {
 		modelRenderables.push_back(Jade::StandardRenderable(mesh));
 	}
+
 	std::vector<Jade::StandardRenderable>::iterator it;
 	for (it = modelRenderables.begin(); it != modelRenderables.end(); it++) {
 		renderer.addRenderable(&(*it));
-		it->getTransform().translate(0.0f, 0.0f, 5.0f);
+		it->getTransform().translate(0.0f, 1.0f, 5.0f);
 		it->getTransform().rotate(Jade::Rotation{ glm::vec3(0.0f, 1.0f, 0.0f), 180.0f });
 	}
 
