@@ -18,14 +18,20 @@ namespace Jade {
 
 	class RenderableObject {
 	public:
-		RenderableObject(RuleSet ruleset, Shape shape)
+		/*RenderableObject(RuleSet ruleset, Shape shape)
 			: m_VAO(), m_Shape(shape), m_VBO(vboInit()), m_RuleSet(ruleset), m_NumberOfIndicies(numberOfVerticiesInit()), m_EBO(eboInit()), m_Mesh(std::vector<Vertex>{{glm::vec3(1.0), glm::vec3(1.0), glm::vec3(1.0)}}, std::vector<unsigned int>{1}, std::vector<TextureStruct>{ {1, "type", "Path"}}) {
+
+			init();
+		}*/
+
+		RenderableObject(RuleSet ruleset, Mesh mesh)
+			: m_Shape(CUSTOM), m_Mesh(mesh), m_VAO(), m_VBO(m_Mesh.getVerticiesAsFloatVector()), m_EBO(m_Mesh.getIndicies()), m_NumberOfIndicies((int)m_Mesh.getIndicies().size()), m_RuleSet(ruleset) {
 
 			init();
 		}
 
-		RenderableObject(RuleSet ruleset, Mesh mesh)
-			: m_VAO(), m_Shape(CUSTOM), m_VBO(vboInit()), m_RuleSet(ruleset), m_NumberOfIndicies(numberOfVerticiesInit()), m_EBO(eboInit()), m_Mesh(mesh) {
+		RenderableObject(RuleSet ruleset, Shape shape)
+			: m_Shape(CUSTOM), m_Mesh(meshInit()), m_VAO(), m_VBO(m_Mesh.getVerticiesAsFloatVector()), m_EBO(m_Mesh.getIndicies()), m_NumberOfIndicies((int)m_Mesh.getIndicies().size()), m_RuleSet(ruleset) {
 
 			init();
 		}
@@ -44,8 +50,8 @@ namespace Jade {
 		void dispose() { m_VAO.dispose(); }
 
 	private:
-		Mesh m_Mesh;
 		Shape m_Shape;
+		Mesh m_Mesh;
 		VertexAttributeObject m_VAO;
 		VertexBufferObject m_VBO;
 		ElementBufferObject m_EBO;
@@ -65,40 +71,44 @@ namespace Jade {
 			};
 
 			m_VAO.addAttributePointers(attributePointers);
-			
 		}
 
-		VertexBufferObject vboInit() {
+		/*VertexBufferObject vboInit() {
 			switch (m_Shape) {
 			default:
-			case CUBE: return VertexBufferObject(cubeVerticies);
-			case PYRAMID: return VertexBufferObject(pyramidVerticies);
-			case CUSTOM: return VertexBufferObject(m_Mesh.getVerticies());
+			case CUBE: return VertexBufferObject(cubeMesh.getVerticiesAsFloatVector());
+			case PYRAMID: return VertexBufferObject(pyramidMesh.getVerticiesAsFloatVector());
+			case CUSTOM: return VertexBufferObject(m_Mesh.getVerticiesAsFloatVector());
+			}
+		}*/
+
+		//ElementBufferObject eboInit() {
+		//	/*switch (m_Shape) {
+		//	default:
+		//	case CUBE: return ElementBufferObject(cubeMesh.getIndicies());
+		//	case PYRAMID: return ElementBufferObject(pyramidIndicies);
+		//	case CUSTOM: return ElementBufferObject(m_Mesh.getIndicies());
+		//	}*/
+		//}
+
+		Mesh meshInit() {
+			switch (m_Shape) {
+			default:
+			case CUBE: return cubeMesh;
+			case PYRAMID: return pyramidMesh;
 			}
 		}
 
-		ElementBufferObject eboInit() {
-			switch (m_Shape) {
-			default:
-			case CUBE: return ElementBufferObject(cubeIndicies);
-			case PYRAMID: return ElementBufferObject(pyramidIndicies);
-			case CUSTOM: return ElementBufferObject(m_Mesh.getIndicies());
-			}
-		}
-
-		int numberOfVerticiesInit() {
+		/*int numberOfVerticiesInit() {
 			switch (m_Shape) {
 			default:
 			case CUBE: return 36;
 			case PYRAMID: return 18;
 			case CUSTOM: return m_Mesh.getIndicies().size();
 			}
-		}
+		}*/
 
-		static std::vector<float> cubeVerticies;
-		static std::vector<unsigned int> cubeIndicies;
-
-		static std::vector<float> pyramidVerticies;
-		static std::vector<unsigned int> pyramidIndicies;
+		static Mesh cubeMesh;
+		static Mesh pyramidMesh;
 	};
 }
