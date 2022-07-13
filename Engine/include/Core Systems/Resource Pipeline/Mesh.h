@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <string>
 
 #include <glm/glm.hpp>
 
@@ -24,9 +25,9 @@ namespace Jade {
 	};
 
 	struct TextureStruct {
-		unsigned int id;
-		std::string type;
-		std::string path;
+		unsigned int id = 0;
+		std::string type = "";
+		std::string path = "";
 	};
 
 	class Mesh {
@@ -35,7 +36,7 @@ namespace Jade {
 			: m_Verticies(verticies), m_Indicies(indicies), m_Textures(textures) {
 		}
 
-		std::vector<float> getVerticies() const {
+		std::vector<float> getVerticiesAsFloatVector() const {
 			std::vector<float> verticies;
 			std::vector<float> vert;
 			for each (Vertex vertex in m_Verticies) {
