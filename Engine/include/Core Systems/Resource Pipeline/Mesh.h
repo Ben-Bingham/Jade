@@ -4,6 +4,8 @@
 
 #include <glm/glm.hpp>
 
+#include "Low Level Rendering/Rendering Objects/Texture.h"
+
 namespace Jade {
 	struct Vertex {
 		glm::vec3 position;
@@ -24,16 +26,10 @@ namespace Jade {
 		}
 	};
 
-	struct TextureStruct {
-		unsigned int id = 0;
-		std::string type = "";
-		std::string path = "";
-	};
-
 	class Mesh {
 	public:
-		Mesh(const std::vector<Vertex>& verticies, const std::vector<unsigned int>& indicies, const std::vector<TextureStruct>& textures)
-			: m_Verticies(verticies), m_Indicies(indicies), m_Textures(textures) {
+		Mesh(const std::vector<Vertex>& verticies, const std::vector<unsigned int>& indicies)
+			: m_Verticies(verticies), m_Indicies(indicies) {
 		}
 
 		std::vector<float> getVerticiesAsFloatVector() const {
@@ -50,6 +46,5 @@ namespace Jade {
 	private:
 		std::vector<Vertex> m_Verticies;
 		std::vector<unsigned int> m_Indicies;
-		std::vector<TextureStruct> m_Textures;
 	};
 }
