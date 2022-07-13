@@ -8,6 +8,9 @@ namespace Jade {
 		TexturedRenderable(const Texture& diffuse, const Texture& specular, float shininess, Shape shape = CUBE)
 			: RenderableObject(TEXTURE, shape), m_Material{ diffuse, specular, shininess } {}
 
+		TexturedRenderable(const Texture& diffuse, const Texture& specular, float shininess, Mesh mesh)
+			: RenderableObject(TEXTURE, mesh), m_Material{ diffuse, specular, shininess } {}
+
 		void additionalRendering(const RenderingRuleSet& ruleSet) const override {
 			Texture::activateUnit(0);
 			m_Material.diffuse.bind();
