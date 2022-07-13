@@ -18,12 +18,6 @@ namespace Jade {
 
 	class RenderableObject {
 	public:
-		/*RenderableObject(RuleSet ruleset, Shape shape)
-			: m_VAO(), m_Shape(shape), m_VBO(vboInit()), m_RuleSet(ruleset), m_NumberOfIndicies(numberOfVerticiesInit()), m_EBO(eboInit()), m_Mesh(std::vector<Vertex>{{glm::vec3(1.0), glm::vec3(1.0), glm::vec3(1.0)}}, std::vector<unsigned int>{1}, std::vector<TextureStruct>{ {1, "type", "Path"}}) {
-
-			init();
-		}*/
-
 		RenderableObject(RuleSet ruleset, Mesh mesh)
 			: m_Shape(CUSTOM), m_Mesh(mesh), m_VAO(), m_VBO(m_Mesh.getVerticiesAsFloatVector()), m_EBO(m_Mesh.getIndicies()), m_NumberOfIndicies((int)m_Mesh.getIndicies().size()), m_RuleSet(ruleset) {
 
@@ -73,24 +67,6 @@ namespace Jade {
 			m_VAO.addAttributePointers(attributePointers);
 		}
 
-		/*VertexBufferObject vboInit() {
-			switch (m_Shape) {
-			default:
-			case CUBE: return VertexBufferObject(cubeMesh.getVerticiesAsFloatVector());
-			case PYRAMID: return VertexBufferObject(pyramidMesh.getVerticiesAsFloatVector());
-			case CUSTOM: return VertexBufferObject(m_Mesh.getVerticiesAsFloatVector());
-			}
-		}*/
-
-		//ElementBufferObject eboInit() {
-		//	/*switch (m_Shape) {
-		//	default:
-		//	case CUBE: return ElementBufferObject(cubeMesh.getIndicies());
-		//	case PYRAMID: return ElementBufferObject(pyramidIndicies);
-		//	case CUSTOM: return ElementBufferObject(m_Mesh.getIndicies());
-		//	}*/
-		//}
-
 		Mesh meshInit() {
 			switch (m_Shape) {
 			default:
@@ -98,15 +74,6 @@ namespace Jade {
 			case PYRAMID: return pyramidMesh;
 			}
 		}
-
-		/*int numberOfVerticiesInit() {
-			switch (m_Shape) {
-			default:
-			case CUBE: return 36;
-			case PYRAMID: return 18;
-			case CUSTOM: return m_Mesh.getIndicies().size();
-			}
-		}*/
 
 		static Mesh cubeMesh;
 		static Mesh pyramidMesh;
