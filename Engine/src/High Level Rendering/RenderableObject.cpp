@@ -94,7 +94,7 @@ namespace Jade {
         13, 15, 14
     };
 
-    Mesh RenderableObject::cubeMesh = Mesh(cubeVerticies, cubeIndicies, std::vector<TextureStruct>{{0, "", ""}});
+    Mesh RenderableObject::cubeMesh = Mesh(cubeVerticies, cubeIndicies);
 
-    Mesh RenderableObject::pyramidMesh = Mesh(pyramidVerticies, pyramidIndicies, std::vector<TextureStruct>{ {0, "", ""}});
+    Mesh RenderableObject::pyramidMesh = Mesh(pyramidVerticies, pyramidIndicies);
 }
