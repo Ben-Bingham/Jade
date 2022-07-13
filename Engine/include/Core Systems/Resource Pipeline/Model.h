@@ -10,6 +10,11 @@
 #include "Mesh.h"
 
 namespace Jade {
+	struct MetaDataTexture {
+		Texture texture;
+		aiTextureType type;
+	};
+
 	class Model {
 	public:
 		Model(const std::string& path);
