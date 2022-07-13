@@ -16,7 +16,7 @@ namespace Jade {
 				i++;
 			}
 
-			init(cVertices, vertices.size() * sizeof(float));
+			init(cVertices, (int)(vertices.size() * sizeof(float)));
 
 			delete[] cVertices;
 		}

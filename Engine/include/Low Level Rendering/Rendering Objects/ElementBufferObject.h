@@ -16,7 +16,7 @@ namespace Jade {
 				i++;
 			}
 
-			init(cIndices, indices.size() * sizeof(unsigned int));
+			init(cIndices, (int)(indices.size() * sizeof(unsigned int)));
 
 			delete[] cIndices;
 		}
