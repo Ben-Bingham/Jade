@@ -158,6 +158,25 @@ int main() {
 
 	renderer3.addRenderable(&texturedRenderable2);
 
+	// ======================== Textured Model Loading testing ========================
+	Jade::Image diffuseIMG("assets\\models\\backpack\\diffuse.jpg");
+	Jade::Texture diffuse(diffuseIMG);
+
+	Jade::Image specularIMG("assets\\models\\backpack\\specular.jpg");
+	Jade::Texture specular(specularIMG);
+
+	std::vector<Jade::TexturedRenderable> modelRenderables2;
+	for each (Jade::Mesh mesh in model.getMeshes()) {
+		modelRenderables2.push_back(Jade::TexturedRenderable(diffuse, specular, 32.0f, mesh));
+	}
+
+	std::vector<Jade::TexturedRenderable>::iterator it2;
+	for (it2 = modelRenderables2.begin(); it2 != modelRenderables2.end(); it2++) {
+		renderer3.addRenderable(&(*it2));
+		it2->getTransform().translate(4.0f, 1.0f, 5.0f);
+		it2->getTransform().rotate(Jade::Rotation{ glm::vec3(0.0f, 1.0f, 0.0f), 180.0f });
+	}
+
 	// Check for errors
 	glCheckError();
 
