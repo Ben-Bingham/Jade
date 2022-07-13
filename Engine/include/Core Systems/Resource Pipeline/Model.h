@@ -53,12 +53,25 @@ namespace Jade {
 	private:
 		std::string m_Path;
 		std::string m_Directory;
+		std::string m_Name;
 		std::vector<Mesh> m_Meshes;
 		std::vector<MetaDataTexture> m_Textures;
+
+		void loadFromRaw();
+		void createInternal(const Model& model);
+		void loadFromInternal();
 
 		void processNode(aiNode* node, const aiScene* scene);
 		Mesh processMesh(aiMesh* mesh, const aiScene* scene);
 		void loadTextures(const aiScene* scene);
 		void loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::vector<MetaDataTexture>& textureList);
+
+		static std::string internalExtension;
+
+		std::string nameInit() {
+			std::string name;
+			name = m_Path.substr(m_Path.find_last_of('\\'), m_Path.find_first_of('.'));
+			return name;
+		}
 	};
 }

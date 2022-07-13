@@ -1,12 +1,32 @@
 #include <algorithm>
+#include <fstream>
 
 #include "Jade.h"
 
 #include "Core Systems/Resource Pipeline/Model.h"
+#include "Core Systems/Resource Pipeline/TextFile.h"
 
 namespace Jade {
 	Model::Model(const std::string& path) 
-		: m_Path(path), m_Directory(m_Path.substr(0, m_Path.find_last_of('\\'))) {
+		: m_Path(path), m_Directory(m_Path.substr(0, m_Path.find_last_of('\\'))), m_Name(nameInit()) {
+
+		std::string fileName = "";
+		fileName += m_Directory.c_str();
+		fileName += '\\';
+		fileName += m_Name;
+		fileName += internalExtension;
+		std::ifstream f(fileName);
+		if (f.good()) {
+			loadFromInternal();
+		}
+		else {
+			loadFromRaw();
+		}
+	}
+
+	void Model::loadFromRaw() {
+		LOGGER.log("Loading raw", INFO);
+
 		Assimp::Importer importer;
 		const aiScene* scene = importer.ReadFile(m_Path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_FlipWindingOrder);
 
@@ -22,6 +42,19 @@ namespace Jade {
 		processNode(scene->mRootNode, scene);
 
 		loadTextures(scene);
+
+		createInternal(*this);
+	}
+
+	void Model::createInternal(const Model& model) {
+		LOGGER.log("Creating internal", INFO);
+		TextFile file(m_Directory + m_Name + internalExtension, "Internal Model");
+		//TODO
+	}
+
+	void Model::loadFromInternal() {
+		LOGGER.log("Loading internally", INFO);
+		//TODO
 	}
 
 	void Model::processNode(aiNode* node, const aiScene* scene) {
@@ -100,4 +133,6 @@ namespace Jade {
 			textureList.push_back(MetaDataTexture{Texture(Image(m_Directory + '\\' + str.C_Str())), type});
 		}
 	}
+
+	std::string Model::internalExtension = ".JadeModel";
 }
