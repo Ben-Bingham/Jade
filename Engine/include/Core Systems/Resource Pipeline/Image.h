@@ -23,6 +23,8 @@ namespace Jade {
 		int getWidth() const { return m_Width; }
 		int getHeight() const { return m_Height; }
 		int getChannels() const { return m_Channels; }
+		std::string getPath() { return m_Path; }
+
 		void free() { stbi_image_free(m_Content); }
 
 	private:
