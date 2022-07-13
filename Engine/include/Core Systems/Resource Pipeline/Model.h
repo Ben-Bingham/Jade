@@ -20,6 +20,35 @@ namespace Jade {
 		Model(const std::string& path);
 
 		std::vector<Mesh> getMeshes() { return m_Meshes; }
+		Texture* getDiffuseTexture() {
+			std::vector<MetaDataTexture>::iterator it;
+			for (it = m_Textures.begin(); it != m_Textures.end(); it++) {
+				if (it->type == aiTextureType_DIFFUSE) {
+					return &(*it).texture;
+				}
+			}
+			std::string message = "";
+			message += "Model: ";
+			message += m_Path;
+			message += " does not have a diffuse texture";
+			LOGGER.log(message, ERROR);
+			return nullptr;
+		}
+
+		Texture* getSpecularTexture() {
+			std::vector<MetaDataTexture>::iterator it;
+			for (it = m_Textures.begin(); it != m_Textures.end(); it++) {
+				if (it->type == aiTextureType_SPECULAR) {
+					return &(*it).texture;
+				}
+			}
+			std::string message = "";
+			message += "Model: ";
+			message += m_Path;
+			message += " does not have a specular texture";
+			LOGGER.log(message, ERROR);
+			return nullptr;
+		}
 
 	private:
 		std::string m_Path;
