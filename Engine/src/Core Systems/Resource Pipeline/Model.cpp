@@ -1,11 +1,14 @@
+#include <algorithm>
+
 #include "Jade.h"
 
 #include "Core Systems/Resource Pipeline/Model.h"
 
 namespace Jade {
-	Model::Model(const std::string& path) : m_Path(path) {
+	Model::Model(const std::string& path) 
+		: m_Path(path), m_Directory(m_Path.substr(0, m_Path.find_last_of('\\'))) {
 		Assimp::Importer importer;
-		const aiScene* scene = importer.ReadFile(m_Path, aiProcess_Triangulate | aiProcess_FlipUVs);
+		const aiScene* scene = importer.ReadFile(m_Path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_FlipWindingOrder);
 
 		if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
 			std::string message = "Assimp failed to load model ";
@@ -17,6 +20,8 @@ namespace Jade {
 		}
 
 		processNode(scene->mRootNode, scene);
+
+		loadTextures(scene);
 	}
 
 	void Model::processNode(aiNode* node, const aiScene* scene) {
@@ -33,7 +38,7 @@ namespace Jade {
 	Mesh Model::processMesh(aiMesh * mesh, const aiScene * scene) {
 		std::vector<Vertex> verticies;
 		std::vector<unsigned int> indicies;
-		std::vector<TextureStruct> textures;
+		std::vector<Texture> textures;
 
 		for (unsigned int i = 0; i < mesh->mNumVertices; i++) {
 			Vertex vertex;
@@ -68,32 +73,31 @@ namespace Jade {
 			}
 		}
 
-		if (mesh->mMaterialIndex >= 0) {
-			aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
-
-			std::vector<TextureStruct> diffuseMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
-
-			textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
-
-			std::vector<TextureStruct> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
-			textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
-		}
-
-		return Mesh(verticies, indicies, textures);
+		return Mesh(verticies, indicies);
 	}
 
-	std::vector<TextureStruct> Model::loadMaterialTextures(aiMaterial* material, aiTextureType textureType, std::string type) {
-		std::vector<TextureStruct> textures;
-		for (unsigned int i = 0; i < material->GetTextureCount(textureType); i++) {
-			aiString str;
-			material->GetTexture(textureType, i, &str);
-			TextureStruct texture;
-			//texture.id = TextureFromFile(); //TODO
-			texture.type = type;
-			//texture.path = str;
-			textures.push_back(texture);
+	void Model::loadTextures(const aiScene* scene) {
+		int val = scene->mNumMaterials;
+		for (unsigned int i = 0; i < scene->mNumMaterials; i++) {
+			aiMaterial* mat = scene->mMaterials[i];
+			loadMaterialTextures(mat, aiTextureType_DIFFUSE, m_Textures);
+			loadMaterialTextures(mat, aiTextureType_SPECULAR, m_Textures);
 		}
+	}
 
-		return textures;
+	void Model::loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::vector<MetaDataTexture>& textureList) {
+		for (unsigned int j = 0; j < mat->GetTextureCount(type); j++) {
+			aiString str;
+			mat->GetTexture(type, j, &str);
+
+			std::vector<MetaDataTexture>::iterator it;
+			for (it = textureList.begin(); it != textureList.end(); it++) {
+				if (it->type == type) {
+					return;
+				}
+			}
+
+			textureList.push_back(MetaDataTexture{Texture(Image(m_Directory + '\\' + str.C_Str())), type});
+		}
 	}
 }

@@ -23,10 +23,13 @@ namespace Jade {
 
 	private:
 		std::string m_Path;
+		std::string m_Directory;
 		std::vector<Mesh> m_Meshes;
+		std::vector<MetaDataTexture> m_Textures;
 
 		void processNode(aiNode* node, const aiScene* scene);
 		Mesh processMesh(aiMesh* mesh, const aiScene* scene);
-		std::vector<TextureStruct> loadMaterialTextures(aiMaterial* material, aiTextureType textureType, std::string type);
+		void loadTextures(const aiScene* scene);
+		void loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::vector<MetaDataTexture>& textureList);
 	};
 }
