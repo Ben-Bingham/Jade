@@ -10,8 +10,8 @@
 #include "Mesh.h"
 
 namespace Jade {
-	struct MetaDataTexture {
-		Texture texture;
+	struct ImageMetaData {
+		Image image;
 		aiTextureType type;
 	};
 
@@ -20,11 +20,11 @@ namespace Jade {
 		Model(const std::string& path);
 
 		std::vector<Mesh> getMeshes() { return m_Meshes; }
-		Texture* getDiffuseTexture() {
-			std::vector<MetaDataTexture>::iterator it;
-			for (it = m_Textures.begin(); it != m_Textures.end(); it++) {
+		Image* getDiffuseImage() {
+			std::vector<ImageMetaData>::iterator it;
+			for (it = m_Images.begin(); it != m_Images.end(); it++) {
 				if (it->type == aiTextureType_DIFFUSE) {
-					return &(*it).texture;
+					return &(*it).image;
 				}
 			}
 			std::string message = "";
@@ -35,11 +35,11 @@ namespace Jade {
 			return nullptr;
 		}
 
-		Texture* getSpecularTexture() {
-			std::vector<MetaDataTexture>::iterator it;
-			for (it = m_Textures.begin(); it != m_Textures.end(); it++) {
+		Image* getSpecularImage() {
+			std::vector<ImageMetaData>::iterator it;
+			for (it = m_Images.begin(); it != m_Images.end(); it++) {
 				if (it->type == aiTextureType_SPECULAR) {
-					return &(*it).texture;
+					return &(*it).image;
 				}
 			}
 			std::string message = "";
@@ -55,22 +55,23 @@ namespace Jade {
 		std::string m_Directory;
 		std::string m_Name;
 		std::vector<Mesh> m_Meshes;
-		std::vector<MetaDataTexture> m_Textures;
+		std::vector<ImageMetaData> m_Images;
 
 		void loadFromRaw();
-		void createInternal(const Model& model);
-		void loadFromInternal();
+		void createInternal();
+		void loadFromInternal(const std::string& fileName);
 
 		void processNode(aiNode* node, const aiScene* scene);
 		Mesh processMesh(aiMesh* mesh, const aiScene* scene);
 		void loadTextures(const aiScene* scene);
-		void loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::vector<MetaDataTexture>& textureList);
+		void loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::vector<ImageMetaData>& textureList);
 
-		static std::string internalExtension;
+		static std::string internalBinaryExtension;
 
 		std::string nameInit() {
 			std::string name;
-			name = m_Path.substr(m_Path.find_last_of('\\'), m_Path.find_first_of('.'));
+			name = m_Path.substr(m_Path.find_last_of('\\') + 1, m_Path.size());
+			name = name.erase(name.find_first_of('.'), name.size());
 			return name;
 		}
 	};
