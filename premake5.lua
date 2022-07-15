@@ -46,7 +46,8 @@ workspace "Jade"
 			"Sandbox/include",
 			"Sandbox/assets/shaders",
 			"Dependencies/stb image",
-			"Dependencies/assimp/include"
+			"Dependencies/assimp/include",
+			"Dependencies/zlib/include"
 		}
 
 		libdirs {
@@ -84,7 +85,8 @@ workspace "Jade"
 			"Dependencies/GLFW/include",
 			"Dependencies/glew-2.1.0/include",
 			"Dependencies/stb image",
-			"Dependencies/assimp/include"
+			"Dependencies/assimp/include",
+			"Dependencies/zlib/include"
 		}
 
 		libdirs {
