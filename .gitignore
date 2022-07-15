@@ -4,13 +4,15 @@
 *.vcxproj.user
 .vs/
 build/
+*.hint
 
 UnitTests/assets/Unit Test Text File 1.txt
 UnitTests/assets/Unit Test Text File 2.txt
 UnitTests/assets/Unit Test Text File 3.txt
 
-**.hint
 
 Sandbox/assets/shaders/ruleSet*
 
 Dependencies/assimp/*.lib
+
+*.JadeModel
