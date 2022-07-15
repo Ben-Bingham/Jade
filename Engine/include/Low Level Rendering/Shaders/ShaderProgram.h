@@ -84,6 +84,12 @@ namespace Jade {
 			setFloat(structName + ".shininess", material.shininess);
 		}
 
+		void setDiffuseMaterial(const std::string& structName, const DiffuseMaterial& material) const {
+			setInt(structName + ".diffuse", 0);
+			setVector3f(structName + ".specular", material.specular);
+			setFloat(structName + ".shininess", material.shininess);
+		}
+
 	private:
 		unsigned int m_Program;
 		std::vector<Shader*> m_Shaders;

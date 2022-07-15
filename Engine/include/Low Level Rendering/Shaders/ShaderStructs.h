@@ -36,4 +36,10 @@ namespace Jade {
         Texture specular;
         float shininess;
     };
+
+    struct DiffuseMaterial {
+        Texture diffuse;
+        glm::vec3 specular;
+        float shininess;
+    };
 }
