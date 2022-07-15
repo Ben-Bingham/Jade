@@ -159,9 +159,12 @@ int main() {
 	renderer3.addRenderable(&texturedRenderable2);
 
 	// ======================== Textured Model Loading testing ========================
+	Jade::Texture diffuse = Jade::Texture(*model.getDiffuseImage());
+	Jade::Texture specular = Jade::Texture(*model.getSpecularImage());
+
 	std::vector<Jade::TexturedRenderable> modelRenderables2;
 	for each (Jade::Mesh mesh in model.getMeshes()) {
-		modelRenderables2.push_back(Jade::TexturedRenderable(*model.getDiffuseTexture(), *model.getSpecularTexture(), 32.0f, mesh));
+		modelRenderables2.push_back(Jade::TexturedRenderable(diffuse, specular, 32.0f, mesh));
 	}
 
 	std::vector<Jade::TexturedRenderable>::iterator it2;
