@@ -17,7 +17,7 @@ namespace Jade {
 
 	class Model {
 	public:
-		Model(const std::string& path);
+		Model(const std::string& path, bool flipTextures);
 
 		std::vector<Mesh> getMeshes() { return m_Meshes; }
 		Image* getDiffuseImage() {
@@ -57,7 +57,7 @@ namespace Jade {
 		std::vector<Mesh> m_Meshes;
 		std::vector<ImageMetaData> m_Images;
 
-		void loadFromRaw();
+		void loadFromRaw(bool flipTextures);
 		void createInternal();
 		void loadFromInternal(const std::string& fileName);
 

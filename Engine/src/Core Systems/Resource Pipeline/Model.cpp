@@ -9,7 +9,7 @@
 #include "Core Systems/Resource Pipeline/TextFile.h"
 
 namespace Jade {
-	Model::Model(const std::string& path) 
+	Model::Model(const std::string& path, bool flipTextures) 
 		: m_Path(path), m_Directory(m_Path.substr(0, m_Path.find_last_of('\\'))), m_Name(nameInit()) {
 
 		std::string fileName = "";
@@ -27,14 +27,19 @@ namespace Jade {
 			loadFromInternal(fileNameNoExtension);
 		}
 		else {
-			loadFromRaw();
+			loadFromRaw(flipTextures);
 		}
 		f.close();
 	}
 
-	void Model::loadFromRaw() {
+	void Model::loadFromRaw(bool flipTextures) {
 		Assimp::Importer importer;
-		const aiScene* scene = importer.ReadFile(m_Path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_FlipWindingOrder);
+		unsigned int flags = aiProcess_Triangulate | aiProcess_FlipWindingOrder;
+		if (flipTextures) {
+			flags |= aiProcess_FlipUVs;
+		}
+
+		const aiScene* scene = importer.ReadFile(m_Path, flags);
 
 		if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) {
 			std::string message = "Failed to load model ";
@@ -236,7 +241,7 @@ namespace Jade {
 				}
 			}
 
-			textureList.push_back(ImageMetaData{Image(m_Directory + '\\' + str.C_Str()), type});
+			textureList.push_back(ImageMetaData{Image(m_Directory + '\\' + str.C_Str(), false), type});
 		}
 	}
 
