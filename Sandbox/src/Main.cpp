@@ -18,6 +18,8 @@
 #include "High Level Rendering/Renderable Objects/StandardRenderableObject.h"
 #include "High Level Rendering/Renderable Objects/SolidRenderableObject.h"
 #include "High Level Rendering/Renderable Objects/TexturedRenderableObject.h"
+#include "High Level Rendering/Renderable Objects/DiffuseRenderableObject.h"
+#include "High Level Rendering/Rule Sets/DiffuseRenderingRuleSet.h"
 #include "High Level Rendering/Colour.h"
 #include "Core Systems/Resource Pipeline/Model.h"
 
@@ -79,9 +81,9 @@ int main() {
 		glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
 	}
 
-	//glEnable(GL_CULL_FACE);
-	//glCullFace(GL_BACK);
-	//glFrontFace(GL_CW);
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
+	glFrontFace(GL_CW);
 
 	// Uncomment for wireframe rendering
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -108,7 +110,7 @@ int main() {
 	renderer.addRenderable(&standardRenderable2);
 
 	// ======================== Model Loading testing ========================
-	Jade::Model model("assets\\models\\backpack\\backpack.obj");
+	Jade::Model model("assets\\models\\backpack\\backpack.obj", false);
 	std::vector<Jade::StandardRenderable> modelRenderables;
 	for each (Jade::Mesh mesh in model.getMeshes()) {
 		modelRenderables.push_back(Jade::StandardRenderable(mesh));
@@ -177,20 +179,24 @@ int main() {
 	}
 
 	// ======================== Textured Model Loading testing 2 ========================
-	Jade::Model texturedCube("assets\\models\\texturedCube\\Textured_Cube.obj");
-	diffuse = Jade::Texture(*texturedCube.getDiffuseImage());
-	specular = Jade::Texture(*texturedCube.getSpecularImage());
+	Jade::DiffuseRuleSet diffuseRuleSet;
 
-	std::vector<Jade::TexturedRenderable> modelRenderables3;
+	diffuseRuleSet.addPointLight(light);
+	diffuseRuleSet.setDirectionalLight(directionalLight);
+	Jade::Renderer renderer4(&diffuseRuleSet);
+
+	Jade::Model texturedCube("assets\\models\\texturedCube\\Textured_Cube.obj", true);
+	diffuse = Jade::Texture(*texturedCube.getDiffuseImage());
+
+	std::vector<Jade::DiffusedRenderable> modelRenderables3;
 	for each (Jade::Mesh mesh in texturedCube.getMeshes()) {
-		modelRenderables3.push_back(Jade::TexturedRenderable(diffuse, specular, 32.0f, mesh));
+		modelRenderables3.push_back(Jade::DiffusedRenderable(diffuse, glm::vec3(1.0f, 1.0f, 1.0f), 32.0f, mesh));
 	}
 
-	std::vector<Jade::TexturedRenderable>::iterator it3;
+	std::vector<Jade::DiffusedRenderable>::iterator it3;
 	for (it3 = modelRenderables3.begin(); it3 != modelRenderables3.end(); it3++) {
-		renderer3.addRenderable(&(*it3));
-		it3->getTransform().translate(4.0f, 1.0f, 5.0f);
-		it3->getTransform().rotate(Jade::Rotation{ glm::vec3(0.0f, 1.0f, 0.0f), 180.0f });
+		renderer4.addRenderable(&(*it3));
+		it3->getTransform().translate(4.0f, 4.0f, 5.0f);
 	}
 
 	// Check for errors
@@ -210,7 +216,7 @@ int main() {
 		processInput(window.getWindow());
 
 		window.pollEvents();
-		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		glClearColor(0.549f, 0.549f, 0.549f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		glm::mat4 view;
@@ -229,6 +235,11 @@ int main() {
 		renderer3.getRuleSet()->getProgram().use();
 		renderer3.getRuleSet()->getProgram().setVector3f("cameraPosition", camera.getPosition());
 		renderer3.render();
+
+		renderer4.setMatrices(view, projection);
+		renderer4.getRuleSet()->getProgram().use();
+		renderer4.getRuleSet()->getProgram().setVector3f("cameraPosition", camera.getPosition());
+		renderer4.render();
 
 		//Render cleanup
 		window.swapBuffers();
