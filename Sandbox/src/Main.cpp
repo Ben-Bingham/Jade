@@ -21,6 +21,8 @@
 #include "High Level Rendering/Colour.h"
 #include "Core Systems/Resource Pipeline/Model.h"
 
+//#include <zlib.h>
+
 // Global variables
 unsigned int screenWidth = 640;
 unsigned int screenHeight = 480;
@@ -172,6 +174,23 @@ int main() {
 		renderer3.addRenderable(&(*it2));
 		it2->getTransform().translate(4.0f, 1.0f, 5.0f);
 		it2->getTransform().rotate(Jade::Rotation{ glm::vec3(0.0f, 1.0f, 0.0f), 180.0f });
+	}
+
+	// ======================== Textured Model Loading testing 2 ========================
+	Jade::Model texturedCube("assets\\models\\texturedCube\\Textured_Cube.obj");
+	diffuse = Jade::Texture(*texturedCube.getDiffuseImage());
+	specular = Jade::Texture(*texturedCube.getSpecularImage());
+
+	std::vector<Jade::TexturedRenderable> modelRenderables3;
+	for each (Jade::Mesh mesh in texturedCube.getMeshes()) {
+		modelRenderables3.push_back(Jade::TexturedRenderable(diffuse, specular, 32.0f, mesh));
+	}
+
+	std::vector<Jade::TexturedRenderable>::iterator it3;
+	for (it3 = modelRenderables3.begin(); it3 != modelRenderables3.end(); it3++) {
+		renderer3.addRenderable(&(*it3));
+		it3->getTransform().translate(4.0f, 1.0f, 5.0f);
+		it3->getTransform().rotate(Jade::Rotation{ glm::vec3(0.0f, 1.0f, 0.0f), 180.0f });
 	}
 
 	// Check for errors
