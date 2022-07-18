@@ -20,7 +20,6 @@ namespace Jade {
 
 		void bind() { 
 			m_Program.use();
-			bindAdditionals();
 		}
 
 		virtual void bindAdditionals() = 0;
