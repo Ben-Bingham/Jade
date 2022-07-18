@@ -40,7 +40,7 @@ in vec3 fragmentPosition;
 uniform vec3 cameraPosition;
 uniform Material material;
 
-uniform float numberOfLights;
+uniform int numberOfLights;
 uniform PointLight lights[MAX_LIGHTS];
 
 uniform DirectionalLight directionalLight;

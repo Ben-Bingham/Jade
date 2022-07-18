@@ -40,7 +40,7 @@ in vec2 textureCordinates;
 uniform vec3 cameraPosition;
 uniform DiffuseMaterial material;
 
-uniform float numberOfLights;
+uniform int numberOfLights;
 uniform PointLight lights[MAX_LIGHTS];
 
 uniform DirectionalLight directionalLight;
