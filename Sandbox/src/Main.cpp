@@ -23,8 +23,6 @@
 #include "High Level Rendering/Colour.h"
 #include "Core Systems/Resource Pipeline/Model.h"
 
-//#include <zlib.h>
-
 // Global variables
 unsigned int screenWidth = 640;
 unsigned int screenHeight = 480;
@@ -98,7 +96,8 @@ int main() {
 	Jade::DirectionalLight directionalLight = Jade::LightCreator::DefaultDirectionalLight();
 	ruleSet.setDirectionalLight(directionalLight);
 
-	Jade::Renderer renderer(&ruleSet);
+	Jade::Renderer renderer;
+	renderer.addRuleSet(&ruleSet);
 
 	Jade::StandardRenderable standardRenderable(Jade::CUBE);
 
@@ -126,23 +125,24 @@ int main() {
 	// ======================== Solid Renderer ========================
 	Jade::SolidRuleSet solidRuleSet;
 
-	Jade::Renderer renderer2(&solidRuleSet);
+	//Jade::Renderer renderer2(&solidRuleSet);
+	renderer.addRuleSet(&solidRuleSet);
 
 	Jade::SolidRenderable solidRenderable(Jade::Colour(255, 255, 255));
 	solidRenderable.getTransform().translate(lightPositon);
 	solidRenderable.getTransform().scale(0.1f);
 
-	renderer2.addRenderable(&solidRenderable);
+	renderer.addRenderable(&solidRenderable);
 
 	Jade::SolidRenderable solidRenderable2(Jade::Colour(83, 194, 91));
 	solidRenderable2.getTransform().translate(2, 0, 0);
 
-	renderer2.addRenderable(&solidRenderable2);
+	renderer.addRenderable(&solidRenderable2);
 
 	Jade::SolidRenderable solidRenderable3(Jade::Colour(52, 174, 235), Jade::PYRAMID);
 	solidRenderable3.getTransform().translate(2, 2, 0);
 
-	renderer2.addRenderable(&solidRenderable3);
+	renderer.addRenderable(&solidRenderable3);
 
 	// ======================== Textured Renderer ========================
 	Jade::TextureRuleSet textureRuleSet;
@@ -150,17 +150,18 @@ int main() {
 	textureRuleSet.addPointLight(light);
 	textureRuleSet.setDirectionalLight(directionalLight);
 
-	Jade::Renderer renderer3(&textureRuleSet);
+	//Jade::Renderer renderer3(&textureRuleSet);
+	renderer.addRuleSet(&textureRuleSet);
 
 	Jade::TexturedRenderable texturedRenderable(Jade::Texture(Jade::Image("assets\\textures\\container2.png")), Jade::Texture(Jade::Image("assets\\textures\\container2_specular.png")), 32.0f);
 	texturedRenderable.getTransform().translate(1, 0, 0);
 	
-	renderer3.addRenderable(&texturedRenderable);
+	renderer.addRenderable(&texturedRenderable);
 
 	Jade::TexturedRenderable texturedRenderable2(Jade::Texture(Jade::Image("assets\\textures\\container2.png")), Jade::Texture(Jade::Image("assets\\textures\\container2_specular.png")), 32.0f, Jade::PYRAMID);
 	texturedRenderable2.getTransform().translate(1, 2, 0);
 
-	renderer3.addRenderable(&texturedRenderable2);
+	renderer.addRenderable(&texturedRenderable2);
 
 	// ======================== Textured Model Loading testing ========================
 	Jade::Texture diffuse = Jade::Texture(*model.getDiffuseImage());
@@ -173,7 +174,7 @@ int main() {
 
 	std::vector<Jade::TexturedRenderable>::iterator it2;
 	for (it2 = modelRenderables2.begin(); it2 != modelRenderables2.end(); it2++) {
-		renderer3.addRenderable(&(*it2));
+		renderer.addRenderable(&(*it2));
 		it2->getTransform().translate(4.0f, 1.0f, 5.0f);
 		it2->getTransform().rotate(Jade::Rotation{ glm::vec3(0.0f, 1.0f, 0.0f), 180.0f });
 	}
@@ -183,7 +184,8 @@ int main() {
 
 	diffuseRuleSet.addPointLight(light);
 	diffuseRuleSet.setDirectionalLight(directionalLight);
-	Jade::Renderer renderer4(&diffuseRuleSet);
+	//Jade::Renderer renderer4(&diffuseRuleSet);
+	renderer.addRuleSet(&diffuseRuleSet);
 
 	Jade::Model texturedCube("assets\\models\\texturedCube\\Textured_Cube.obj", true);
 	diffuse = Jade::Texture(*texturedCube.getDiffuseImage());
@@ -195,7 +197,7 @@ int main() {
 
 	std::vector<Jade::DiffusedRenderable>::iterator it3;
 	for (it3 = modelRenderables3.begin(); it3 != modelRenderables3.end(); it3++) {
-		renderer4.addRenderable(&(*it3));
+		renderer.addRenderable(&(*it3));
 		it3->getTransform().translate(4.0f, 4.0f, 5.0f);
 	}
 
@@ -223,32 +225,13 @@ int main() {
 		view = camera.getViewMatrix();
 
 		renderer.setMatrices(view, projection);
-		renderer.getRuleSet()->getProgram().use();
-		renderer.getRuleSet()->getProgram().setVector3f("cameraPosition", camera.getPosition());
-		renderer.render();
+		renderer.render(camera.getPosition());
 
-		renderer2.setMatrices(view, projection);
-		renderer2.getRuleSet()->getProgram().use();
-		renderer2.render();
-
-		renderer3.setMatrices(view, projection);
-		renderer3.getRuleSet()->getProgram().use();
-		renderer3.getRuleSet()->getProgram().setVector3f("cameraPosition", camera.getPosition());
-		renderer3.render();
-
-		renderer4.setMatrices(view, projection);
-		renderer4.getRuleSet()->getProgram().use();
-		renderer4.getRuleSet()->getProgram().setVector3f("cameraPosition", camera.getPosition());
-		renderer4.render();
-
-		//Render cleanup
 		window.swapBuffers();
 		glCheckError();
 	}
 
 	renderer.dispose();
-	renderer2.dispose();
-	renderer3.dispose();
 
 	window.dispose();
 
