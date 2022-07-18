@@ -10,29 +10,48 @@
 namespace Jade {
 	class Renderer {
 	public:
-		Renderer(RenderingRuleSet* ruleSet)
-			: m_RuleSet(ruleSet), m_View(glm::mat4(1.0f)), m_Projection(glm::mat4(1.0f)) {}
+		Renderer()
+			: m_View(glm::mat4(1.0f)), m_Projection(glm::mat4(1.0f)) {}
 
 		void addRenderable(RenderableObject* renderable);
 
-		void render();
+		void render(glm::vec3 cameraPos);
 
 		void setMatrices(const glm::mat4& view, const glm::mat4& projection);
 
-		RenderingRuleSet* getRuleSet() const { return m_RuleSet; }
+		void addRuleSet(RenderingRuleSet* ruleSet) {
+			for (RenderingRuleSet* rSet : m_RuleSets) {
+				if (rSet->ruleSet == ruleSet->ruleSet) {
+					LOGGER.log("There is alread a ruleset of that type attached to the renderer, the one you added probably wont be uses", WARNING);
+					break;
+				}
+			}
+			m_RuleSets.push_back(ruleSet);
+			m_Renderables.resize(m_RuleSets.size());
+		}
+
+		void setVector3f(const std::string name, const glm::vec3& vector) {
+			for (RenderingRuleSet* ruleSet : m_RuleSets) {
+				ruleSet->getProgram().use();
+				ruleSet->getProgram().setVector3f(name, vector);
+			}
+		}
 
 		void dispose() {
-			std::vector<RenderableObject*>::iterator it;
-			for (it = m_Renderables.begin(); it != m_Renderables.end(); it++) {
-				(*it)->dispose();
+			for (std::vector<RenderableObject*> renderableVector : m_Renderables) {
+				for (RenderableObject* renderable : renderableVector) {
+					renderable->dispose();
+				}
 			}
 
-			m_RuleSet->dispose();
+			for (RenderingRuleSet* ruleSet : m_RuleSets) {
+				ruleSet->dispose();
+			}
 		}
 
 	private:
-		RenderingRuleSet* m_RuleSet;
-		std::vector<RenderableObject*> m_Renderables;
+		std::vector<RenderingRuleSet*> m_RuleSets;
+		std::vector<std::vector<RenderableObject*>> m_Renderables;
 		glm::mat4 m_View;
 		glm::mat4 m_Projection;
 	};
