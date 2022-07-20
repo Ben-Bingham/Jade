@@ -10,9 +10,9 @@
 #include "Core Systems/Human Interface Devices/Keyboard.h"
 
 namespace Jade {
-	extern Window window;
-	extern GLEW glew;
-	extern Keyboard keyboard;
+	extern Window WINDOW;
+	//extern GLEW openGLInstance;
+	extern Keyboard KEYBOARD;
 
 	class Application {
 	public:
@@ -22,12 +22,20 @@ namespace Jade {
 			glCheckError();
 			begin();
 
-			while (window.getWindowOpen()) {
+			while (WINDOW.getWindowOpen()) {
 				update();
 				lateUpdate();
 			}
 
 			cleanup();
+		}
+
+		void addRuleset(RenderingRuleSet* ruleset) { //TODO remove
+			m_Renderer.addRuleSet(ruleset);
+		}
+
+		void addRenderable(RenderableObject* renderable) { //TODO remove
+			m_Renderer.addRenderable(renderable);
 		}
 
 		virtual void Begin() {}
@@ -43,6 +51,7 @@ namespace Jade {
 
 		Camera m_Camera;
 		Renderer m_Renderer;
+		GLEW m_Glew;
 
 		void begin();
 		void update();
@@ -50,3 +59,7 @@ namespace Jade {
 		void cleanup();
 	};
 }
+
+using Jade::KEYBOARD;
+using Jade::WINDOW;
+using Jade::Application;
