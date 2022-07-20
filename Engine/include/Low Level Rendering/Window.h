@@ -1,6 +1,7 @@
 #pragma once
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 #include "Jade.h"
 
@@ -40,6 +41,11 @@ namespace Jade {
 
 		void disableCursor() {
 			glfwSetInputMode(m_Window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+		}
+
+		glm::mat4 getProjectionMatrix() { 
+			m_ProjectionMatrix = glm::perspective(glm::radians(45.0f), (float)640 / (float)480, 0.1f, 100.0f); //TODO
+			return m_ProjectionMatrix;
 		}
 
 	private:
