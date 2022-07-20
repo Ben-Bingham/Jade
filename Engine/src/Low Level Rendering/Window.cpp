@@ -8,7 +8,6 @@ namespace Jade {
 	Window::Window(int width, int height, std::string name, bool fullscreen)
 		: m_Width(width), m_Height(height), m_Name(name), m_ProjectionMatrix(1.0) {
 
-
 		if (!glfwInit()) {
 			LOGGER.log("GLFW failed to initilize.", Jade::ERROR);
 		}
@@ -25,7 +24,6 @@ namespace Jade {
 		else {
 			m_Window = glfwCreateWindow(width, height, name.c_str(), NULL, NULL);
 		}
-
 
 		if (!m_Window) {
 			LOGGER.log("GLFW window creation failed.", Jade::ERROR);
