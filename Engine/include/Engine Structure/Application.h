@@ -11,7 +11,6 @@
 
 namespace Jade {
 	extern Window WINDOW;
-	//extern GLEW openGLInstance;
 	extern Keyboard KEYBOARD;
 
 	class Application {
