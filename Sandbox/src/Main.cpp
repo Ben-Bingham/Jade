@@ -56,16 +56,35 @@ void APIENTRY glDebugOutput(GLenum source, GLenum type, unsigned int id, GLenum 
 // Helper functions
 void processInput(GLFWwindow* window);
 
-class Game : public Jade::Application {
-public:
-	Game() : Application() {}
+
+
+class Game : public Application {
+	Jade::StandardRuleSet ruleSet;
+
+	Jade::StandardRenderable standardRenderable = Jade::StandardRenderable(Jade::CUBE);
+	Jade::StandardRenderable standardRenderable2 = Jade::StandardRenderable(Jade::PYRAMID);
 
 	void Begin() override {
-		
+		Jade::PointLight light = Jade::LightCreator::DefaultPointLight();
+		light.position = lightPositon;
+		ruleSet.addPointLight(light);
+
+		Jade::DirectionalLight directionalLight = Jade::LightCreator::DefaultDirectionalLight();
+		ruleSet.setDirectionalLight(directionalLight);
+
+		addRuleset(&ruleSet);
+
+		standardRenderable.getTransform().translate(0, 0, -10);
+		addRenderable(&standardRenderable);
+
+		standardRenderable2.getTransform().translate(0, 0, 10);
+		addRenderable(&standardRenderable2);
 	}
 
 	void Update() override {
-
+		if (KEYBOARD.getKeyPressed(Jade::KEY_W)) {
+			LOGGER.log("W");
+		}
 	}
 };
 
