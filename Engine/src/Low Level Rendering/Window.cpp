@@ -6,7 +6,8 @@
 
 namespace Jade {
 	Window::Window(int width, int height, std::string name, bool fullscreen)
-		: m_Width(width), m_Height(height), m_Name(name) {
+		: m_Width(width), m_Height(height), m_Name(name), m_ProjectionMatrix(1.0) {
+
 
 		if (!glfwInit()) {
 			LOGGER.log("GLFW failed to initilize.", Jade::ERROR);
@@ -25,6 +26,7 @@ namespace Jade {
 			m_Window = glfwCreateWindow(width, height, name.c_str(), NULL, NULL);
 		}
 
+
 		if (!m_Window) {
 			LOGGER.log("GLFW window creation failed.", Jade::ERROR);
 			LOGGER.log("OpenGL context creation failed.", Jade::ERROR);
@@ -32,5 +34,20 @@ namespace Jade {
 
 		glfwMakeContextCurrent(m_Window);
 		glfwSwapInterval(1);
+
+		addFrameBufferSizeCallback(windowSizeCallBack);
+		addMousePositionCallback(mousePositionCallback);
+	}
+
+	void windowSizeCallBack(GLFWwindow* window, int width, int height) {
+		//windowInfo.width = (unsigned int)width;
+		//windowInfo.height = (unsigned int)height;
+		//TODO send event
+	}
+
+	void mousePositionCallback(GLFWwindow* window, double xpos, double ypos) {
+		//mousePosition.xPosition = xpos;
+		//mousePosition.yPosition = ypos;
+		//TODO send event
 	}
 }

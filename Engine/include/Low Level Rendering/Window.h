@@ -1,5 +1,6 @@
 #pragma once
 #include <GLFW/glfw3.h>
+#include <glm/glm.hpp>
 
 #include "Jade.h"
 
@@ -10,7 +11,7 @@ namespace Jade {
 
 		~Window() { dispose(); }
 
-		GLFWwindow* getWindow() { return m_Window; }
+		GLFWwindow* getWindow() const { return m_Window; }
 
 		void swapBuffers() { glfwSwapBuffers(m_Window); }
 
@@ -21,8 +22,8 @@ namespace Jade {
 
 		void pollEvents() { glfwPollEvents(); }
 
-		bool getWindowShouldClose() {
-			return glfwWindowShouldClose(m_Window);
+		bool getWindowOpen() {
+			return !glfwWindowShouldClose(m_Window);
 		}
 
 		void addFrameBufferSizeCallback(void (*callback)(GLFWwindow* window, int width, int height)) {
@@ -46,6 +47,9 @@ namespace Jade {
 		int m_Width;
 		int m_Height;
 		std::string m_Name;
+		glm::mat4 m_ProjectionMatrix;
 	};
-	
+
+	void windowSizeCallBack(GLFWwindow* window, int width, int height);
+	void mousePositionCallback(GLFWwindow* window, double xpos, double ypos);
 }
