@@ -7,19 +7,22 @@
 #include "High Level Rendering/Camera.h"
 #include "Low Level Rendering/GLEW.h"
 #include "Low Level Rendering/Window.h"
+#include "Core Systems/Human Interface Devices/Keyboard.h"
 
 namespace Jade {
+	extern Window window;
+	extern GLEW glew;
+	extern Keyboard keyboard;
+
 	class Application {
 	public:
-		Application() :
-			m_ScreenWidth(640),
-			m_ScreenHeight(480),
-			m_Window(m_ScreenWidth, m_ScreenHeight, "Engine", false),
-			m_Glew() {
+		Application() {}
 
+		void start() {
+			glCheckError();
 			begin();
 
-			while (m_Window.getWindowOpen()) {
+			while (window.getWindowOpen()) {
 				update();
 				lateUpdate();
 			}
@@ -33,9 +36,6 @@ namespace Jade {
 		virtual void Cleanup() {}
 
 	private:
-		unsigned int m_ScreenWidth;
-		unsigned int m_ScreenHeight;
-
 		float m_LastMouseX = 0.0f;
 		float m_LastMouseY = 0.0f;
 
@@ -43,8 +43,6 @@ namespace Jade {
 
 		Camera m_Camera;
 		Renderer m_Renderer;
-		Window m_Window;
-		GLEW m_Glew;
 
 		void begin();
 		void update();
