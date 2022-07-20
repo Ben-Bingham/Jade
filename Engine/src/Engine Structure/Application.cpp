@@ -5,9 +5,8 @@
 #include "Engine Structure/Application.h"
 
 namespace Jade {
-	Window window(640, 480, "", false);
-	GLEW glew;
-	Keyboard keyboard(&window);
+	Window WINDOW(640, 480, "", false);
+	Keyboard KEYBOARD(&WINDOW);
 
 	void Application::begin() {
 		Begin();
@@ -24,16 +23,22 @@ namespace Jade {
 	void Application::update() {
 		Update();
 
-		window.pollEvents();
+		WINDOW.pollEvents();
 
 		glClearColor(0.549f, 0.549f, 0.549f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		glm::mat4 view;
+		view = m_Camera.getViewMatrix();
+
+		m_Renderer.setMatrices(view, WINDOW.getProjectionMatrix());
+		m_Renderer.render(m_Camera.getPosition());
 	}
 
 	void Application::lateUpdate() {
 		LateUpdate();
 		
-		window.swapBuffers();
+		WINDOW.swapBuffers();
 		glCheckError();
 	}
 
@@ -41,6 +46,6 @@ namespace Jade {
 		Cleanup();
 
 		m_Renderer.dispose();
-		window.dispose();
+		WINDOW.dispose();
 	}
 }
