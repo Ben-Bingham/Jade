@@ -13,11 +13,11 @@ workspace "Jade"
 		architecture "x64"
 
 	filter "configurations:Debug"
-			defines { "DEBUG", "GLEW_STATIC"}
+			defines { "DEBUG", "GLEW_STATIC", "JADE_DEBUG"}
 			symbols "On"
 		
 	filter "configurations:Release"
-		defines { "NDEBUG", "GLEW_STATIC" }
+		defines { "NDEBUG", "GLEW_STATIC", "JADE_RELEASE" }
 		optimize "On"
 		
 	filter {}
