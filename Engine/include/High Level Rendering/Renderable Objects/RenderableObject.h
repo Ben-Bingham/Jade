@@ -30,7 +30,7 @@ namespace Jade {
 			init();
 		}
 
-		void render(const RenderingRuleSet& ruleSet) const;
+		void render(const RenderingRuleSet& ruleSet);
 
 		virtual void additionalRendering(const RenderingRuleSet& ruleSet) const = 0;
 
