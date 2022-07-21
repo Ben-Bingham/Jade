@@ -5,6 +5,7 @@
 #include <string>
 
 #include "Core Systems/Logging/Log.h"
+
 extern Jade::Log LOGGER;
 
 inline GLenum glCheckError_(const char* file, int line) {
@@ -25,4 +26,9 @@ inline GLenum glCheckError_(const char* file, int line) {
 	return errorCode;
 }
 
+#ifdef JADE_DEBUG
 #define glCheckError() glCheckError_(__FILE__, __LINE__)
+#else
+#define glCheckError()
+#endif // JADE_DEBUG
+
