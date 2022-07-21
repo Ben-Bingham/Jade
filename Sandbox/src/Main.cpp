@@ -48,15 +48,11 @@ glm::vec3 lightPositon(1.2f, 1.0f, 2.0f);
 
 // Function callbacks
 void framebufferSizeCallback(GLFWwindow* window, int width, int height);
-void mouseCallback(GLFWwindow* window, double xpos, double ypos);
-void scrollCallback(GLFWwindow* window, double xOffset, double yOffset);
 void APIENTRY glDebugOutput(GLenum source, GLenum type, unsigned int id, GLenum severity,
 	GLsizei length, const char* message, const void* userParam);
 
 // Helper functions
 void processInput(GLFWwindow* window);
-
-
 
 class Game : public Application {
 	Jade::StandardRuleSet ruleSet;
@@ -82,9 +78,7 @@ class Game : public Application {
 	}
 
 	void Update() override {
-		if (KEYBOARD.getKeyPressed(Jade::KEY_W)) {
-			LOGGER.log("W");
-		}
+
 	}
 };
 
@@ -302,25 +296,6 @@ void framebufferSizeCallback(GLFWwindow* window, int width, int height) {
 	projection = glm::mat4(1.0f);
 	float aspectRatio = (float)width / (float)height;
 	projection = glm::perspective(glm::radians(camera.getFOV()), aspectRatio, 0.1f, 100.0f); //TODO objects seem to stretch when window is resized
-}
-
-void mouseCallback(GLFWwindow* window, double xPos, double yPos) {
-	if (firstMouse) {
-		lastX = (float)xPos;
-		lastY = (float)yPos;
-		firstMouse = false;
-	}
-
-	float xOffset = (float)xPos - lastX;
-	float yOffset = lastY - (float)yPos; // reversed since y-coordinates range from bottom to top
-	lastX = (float)xPos;
-	lastY = (float)yPos;
-
-	camera.processMouseMovement(xOffset, yOffset);
-}
-
-void scrollCallback(GLFWwindow* window, double xOffset, double yOffset) {
-	camera.processScollWheel(yOffset);
 }
 
 void APIENTRY glDebugOutput(
