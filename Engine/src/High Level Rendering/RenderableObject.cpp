@@ -5,8 +5,9 @@
 #include "High Level Rendering/Renderable Objects/RenderableObject.h"
 
 namespace Jade {
-    void RenderableObject::render(const RenderingRuleSet& ruleSet) const {
+    void RenderableObject::render(const RenderingRuleSet& ruleSet) {
         additionalRendering(ruleSet);
+        m_Transform.calculateModelMatrix();
         ruleSet.getProgram().setMatrix4f("model", m_Transform.getMatrix());
         m_VAO.bind();
         glDrawElements(GL_TRIANGLES, m_NumberOfIndicies, GL_UNSIGNED_INT, 0);
