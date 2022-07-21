@@ -72,8 +72,6 @@ namespace Jade {
 	void windowSizeCallBack(GLFWwindow* window, int width, int height) {
 		WINDOW.setWidth((unsigned int)width);
 		WINDOW.setHeight((unsigned int)height);
-		LOGGER.log(std::to_string(width));
-		LOGGER.log(std::to_string(height));
 
 		WINDOW.calculateProjectionMatrix(45.0f);
 
