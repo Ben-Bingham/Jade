@@ -5,11 +5,16 @@
 #include "Engine Structure/Application.h"
 
 namespace Jade {
-	Window WINDOW(640, 480, "", false);
+	Window WINDOW(640, 480, "", false); //TODO make a getter that creates one than always returns the same one
 	Keyboard KEYBOARD(&WINDOW);
+	Mouse MOUSE;
 
 	void Application::begin() {
 		Begin();
+
+		WINDOW.setMouseButtonCallback(mouseButtonCallback);
+		WINDOW.setMousePositionCallback(mousePositionCallback);
+		WINDOW.setScrollWheelCallback(mouseScrolWheelCallback);
 
 		glEnable(GL_CULL_FACE);
 		glCullFace(GL_BACK);
@@ -47,5 +52,17 @@ namespace Jade {
 
 		m_Renderer.dispose();
 		WINDOW.dispose();
+	}
+
+	void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods) {
+		MOUSE.setButton(Mouse::intToMouseButton(button), Mouse::intToMouseState(action));
+	}
+
+	void mousePositionCallback(GLFWwindow* window, double xpos, double ypos) {
+		MOUSE.setPosition((unsigned int)xpos, (unsigned int)ypos);
+	}
+
+	void mouseScrolWheelCallback(GLFWwindow* window, double xoffset, double yoffset) {
+		MOUSE.setScrollOffset((int)yoffset);
 	}
 }

@@ -8,10 +8,12 @@
 #include "Low Level Rendering/GLEW.h"
 #include "Low Level Rendering/Window.h"
 #include "Core Systems/Human Interface Devices/Keyboard.h"
+#include "Core Systems/Human Interface Devices/Mouse.h"
 
 namespace Jade {
 	extern Window WINDOW;
 	extern Keyboard KEYBOARD;
+	extern Mouse MOUSE;
 
 	class Application {
 	public:
@@ -57,8 +59,13 @@ namespace Jade {
 		void lateUpdate();
 		void cleanup();
 	};
+
+	void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
+	void mousePositionCallback(GLFWwindow* window, double xpos, double ypos);
+	void mouseScrolWheelCallback(GLFWwindow* window, double xoffset, double yoffset);
 }
 
 using Jade::KEYBOARD;
 using Jade::WINDOW;
+using Jade::MOUSE;
 using Jade::Application;
