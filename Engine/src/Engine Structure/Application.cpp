@@ -15,6 +15,7 @@ namespace Jade {
 		WINDOW.setMouseButtonCallback(mouseButtonCallback);
 		WINDOW.setMousePositionCallback(mousePositionCallback);
 		WINDOW.setScrollWheelCallback(mouseScrolWheelCallback);
+		WINDOW.setFrameBufferSizeCallback(windowSizeCallBack);
 
 		glEnable(GL_CULL_FACE);
 		glCullFace(GL_BACK);
@@ -35,6 +36,8 @@ namespace Jade {
 
 		glm::mat4 view;
 		view = m_Camera.getViewMatrix();
+
+		WINDOW.calculateProjectionMatrix(m_Camera.getFOV());
 
 		m_Renderer.setMatrices(view, WINDOW.getProjectionMatrix());
 		m_Renderer.render(m_Camera.getTransform().position);
@@ -64,5 +67,16 @@ namespace Jade {
 
 	void mouseScrolWheelCallback(GLFWwindow* window, double xoffset, double yoffset) {
 		MOUSE.setScrollOffset((int)yoffset);
+	}
+
+	void windowSizeCallBack(GLFWwindow* window, int width, int height) {
+		WINDOW.setWidth((unsigned int)width);
+		WINDOW.setHeight((unsigned int)height);
+		LOGGER.log(std::to_string(width));
+		LOGGER.log(std::to_string(height));
+
+		WINDOW.calculateProjectionMatrix(45.0f);
+
+		glViewport(0, 0, WINDOW.getWidth(), WINDOW.getHeight());
 	}
 }

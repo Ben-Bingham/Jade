@@ -65,6 +65,7 @@ namespace Jade {
 	void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
 	void mousePositionCallback(GLFWwindow* window, double xpos, double ypos);
 	void mouseScrolWheelCallback(GLFWwindow* window, double xoffset, double yoffset);
+	void windowSizeCallBack(GLFWwindow* window, int width, int height);
 }
 
 using Jade::KEYBOARD;
