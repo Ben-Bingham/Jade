@@ -59,6 +59,4 @@ namespace Jade {
 		std::string m_Name;
 		glm::mat4 m_ProjectionMatrix;
 	};
-
-	void windowSizeCallBack(GLFWwindow* window, int width, int height);
 }

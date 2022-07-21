@@ -33,8 +33,4 @@ namespace Jade {
 		glfwMakeContextCurrent(m_Window);
 		glfwSwapInterval(1);
 	}
-
-	void windowSizeCallBack(GLFWwindow* window, int width, int height) {
-
-	}
 }
