@@ -10,7 +10,7 @@ namespace Jade{
 			}
 			count++;
 		}
-		LOGGER.log("Renderer does not have a rule set that can support that renderable.", WARNING);
+		LOG("Renderer does not have a rule set that can support that renderable.", WARNING);
 	}
 
 	void Renderer::render(glm::vec3 cameraPos) {

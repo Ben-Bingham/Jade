@@ -9,7 +9,7 @@ namespace Jade {
 	public:
 		GLEW() {
 			if (glewInit() != GLEW_OK) {
-				LOGGER.log("GLEW failed to initilize.", Jade::ERROR);
+				LOG("GLEW failed to initilize.", Jade::ERROR);
 			}
 		}
 	};

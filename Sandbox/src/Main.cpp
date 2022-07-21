@@ -295,14 +295,14 @@ void APIENTRY glDebugOutput(
 	
 	// ignore non-significant error/warning codes
 	if (id == 131169 || id == 131185 || id == 131218 || id == 131204) return;
-	LOGGER.log("---------------", level);
+	LOG("---------------", level);
 
 	std::string string = "Debug message (";
 	string += std::to_string(id);
 	string += "): ";
 	string += message;
 	
-	LOGGER.log(string, level);
+	LOG(string, level);
 
 	string = "";
 	switch (source) {
@@ -313,7 +313,7 @@ void APIENTRY glDebugOutput(
 	case GL_DEBUG_SOURCE_APPLICATION:     string += "Source: Application"; break;
 	case GL_DEBUG_SOURCE_OTHER:           string += "Source: Other"; break;
 	}
-	LOGGER.log(string, level);
+	LOG(string, level);
 
 	string = "";
 	switch (type) {
@@ -327,7 +327,7 @@ void APIENTRY glDebugOutput(
 	case GL_DEBUG_TYPE_POP_GROUP:           string += "Type: Pop Group"; break;
 	case GL_DEBUG_TYPE_OTHER:               string += "Type: Other"; break;
 	}
-	LOGGER.log(string, level);
+	LOG(string, level);
 	string = "";
 	switch (severity) {
 	case GL_DEBUG_SEVERITY_HIGH:         string += "Severity: high"; break;
@@ -335,6 +335,6 @@ void APIENTRY glDebugOutput(
 	case GL_DEBUG_SEVERITY_LOW:          string += "Severity: low"; break;
 	case GL_DEBUG_SEVERITY_NOTIFICATION: string += "Severity: notification"; break;
 	}
-	LOGGER.log(string, level);
-	LOGGER.log("---------------", level);
+	LOG(string, level);
+	LOG("---------------", level);
 }

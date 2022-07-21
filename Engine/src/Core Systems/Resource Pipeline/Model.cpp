@@ -46,7 +46,7 @@ namespace Jade {
 			message += m_Path;
 			message += ' ';
 			message += importer.GetErrorString();
-			LOGGER.log(message, ERROR);
+			LOG(message, ERROR);
 			return;
 		}
 
@@ -61,7 +61,7 @@ namespace Jade {
 		std::string message = "";
 		message += "Loading make take longer than usual, certain models need to be formated, including: ";
 		message += m_Name;
-		LOGGER.log(message, INFO);
+		LOG(message, INFO);
 
 		std::ofstream outputFile(m_Directory + '\\' + m_Name + internalBinaryExtension, std::ios::out | std::ios::binary);
 		if (outputFile.is_open()) {
@@ -106,7 +106,7 @@ namespace Jade {
 			outputFile.close();
 		}
 		else {
-			LOGGER.log("Unable to open binary file: " + m_Directory + m_Name + internalBinaryExtension, ERROR);
+			LOG("Unable to open binary file: " + m_Directory + m_Name + internalBinaryExtension, ERROR);
 		}
 	}
 
@@ -164,7 +164,7 @@ namespace Jade {
 			inputFileStream.close();
 		}
 		else {
-			LOGGER.log("Unable to open binary file: " + fileName, ERROR);
+			LOG("Unable to open binary file: " + fileName, ERROR);
 		}
 	}
 

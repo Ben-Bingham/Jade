@@ -62,7 +62,7 @@ namespace Jade {
 		switch (type) {
 		default:
 			sizeOfType = sizeof(float);
-			LOGGER.log("Unreckognized type for Vertex attribute pointer.", Jade::WARNING);
+			LOG("Unreckognized type for Vertex attribute pointer.", Jade::WARNING);
 			break;
 		case GL_FLOAT:
 			sizeOfType = sizeof(float);

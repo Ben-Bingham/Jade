@@ -21,8 +21,8 @@ namespace Jade {
 		glGetShaderiv(getShader(), GL_COMPILE_STATUS, &success);
 		if (!success) {
 			glGetShaderInfoLog(getShader(), 512, NULL, infoLog);
-			LOGGER.log("Fragment shader failed to compile", Jade::ERROR);
-			LOGGER.log(infoLog, Jade::ERROR);
+			LOG("Fragment shader failed to compile", Jade::ERROR);
+			LOG(infoLog, Jade::ERROR);
 		}
 	}
 }

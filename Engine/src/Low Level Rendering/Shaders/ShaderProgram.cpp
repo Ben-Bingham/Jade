@@ -25,8 +25,8 @@ namespace Jade {
 		glGetProgramiv(m_Program, GL_LINK_STATUS, &success);
 		if (!success) {
 			glGetProgramInfoLog(m_Program, 512, NULL, infoLog);
-			LOGGER.log("Shader program failed to link", Jade::ERROR);
-			LOGGER.log(infoLog, Jade::ERROR);
+			LOG("Shader program failed to link", Jade::ERROR);
+			LOG(infoLog, Jade::ERROR);
 		}
 
 		for (it = m_Shaders.begin(); it != m_Shaders.end(); it++) {

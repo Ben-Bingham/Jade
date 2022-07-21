@@ -14,7 +14,7 @@ namespace Jade {
 			m_Content = stbi_load(m_Path.c_str(), &m_Width, &m_Height, &m_Channels, 0);
 
 			if (!m_Content) {
-				LOGGER.log("Image: " + m_Path + "Failed to load.", Jade::ERROR);
+				LOG("Image: " + m_Path + "Failed to load.", Jade::ERROR);
 				this->free();
 			}
 		}

@@ -31,7 +31,7 @@ namespace Jade {
 			message += "Model: ";
 			message += m_Path;
 			message += " does not have a diffuse texture";
-			LOGGER.log(message, ERROR);
+			LOG(message, ERROR);
 			return nullptr;
 		}
 
@@ -46,7 +46,7 @@ namespace Jade {
 			message += "Model: ";
 			message += m_Path;
 			message += " does not have a specular texture";
-			LOGGER.log(message, ERROR);
+			LOG(message, ERROR);
 			return nullptr;
 		}
 

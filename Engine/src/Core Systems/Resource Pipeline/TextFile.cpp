@@ -11,7 +11,7 @@ namespace Jade {
 
 		inputFileStream.open(m_Path);
 		if (!inputFileStream) {
-			LOGGER.log("Unable to open text file: " + m_Path, ERROR);
+			LOG("Unable to open text file: " + m_Path, ERROR);
 		}
 
 		char character;

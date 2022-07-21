@@ -25,7 +25,7 @@ namespace Jade {
 			imageFormat = GL_RGBA;
 		}
 		else {
-			LOGGER.log("Unrecognized number of channels", Jade::WARNING);
+			LOG("Unrecognized number of channels", Jade::WARNING);
 			imageFormat = GL_RGB;
 		}
 

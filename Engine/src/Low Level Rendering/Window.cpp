@@ -9,7 +9,7 @@ namespace Jade {
 		: m_Width(width), m_Height(height), m_Name(name), m_ProjectionMatrix(1.0) {
 
 		if (!glfwInit()) {
-			LOGGER.log("GLFW failed to initilize.", Jade::ERROR);
+			LOG("GLFW failed to initilize.", Jade::ERROR);
 		}
 
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -26,8 +26,8 @@ namespace Jade {
 		}
 
 		if (!m_Window) {
-			LOGGER.log("GLFW window creation failed.", Jade::ERROR);
-			LOGGER.log("OpenGL context creation failed.", Jade::ERROR);
+			LOG("GLFW window creation failed.", Jade::ERROR);
+			LOG("OpenGL context creation failed.", Jade::ERROR);
 		}
 
 		glfwMakeContextCurrent(m_Window);

@@ -22,7 +22,7 @@ namespace Jade {
 		void addRuleSet(RenderingRuleSet* ruleSet) {
 			for (RenderingRuleSet* rSet : m_RuleSets) {
 				if (rSet->ruleSet == ruleSet->ruleSet) {
-					LOGGER.log("There is alread a ruleset of that type attached to the renderer, the one you added probably wont be uses", WARNING);
+					LOG("There is alread a ruleset of that type attached to the renderer, the one you added probably wont be uses", WARNING);
 					break;
 				}
 			}
