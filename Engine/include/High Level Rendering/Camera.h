@@ -3,6 +3,8 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+#include "High Level Rendering/Transform.h"
+
 namespace Jade {
 	enum MovementDirection {
 		FORWARD,
@@ -13,63 +15,12 @@ namespace Jade {
 		DOWN
 	};
 
-	class Camera {
+	class Camera { //TODO make the camera class extend the future GameObject class
 	public:
 		Camera(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 worldUp = glm::vec3(0.0f, 1.0f, 0.0f), float yaw = defaultYaw, float pitch = defaultPitch) 
-			: m_Position(position), m_WorldUp(worldUp), m_Speed(defaultSpeed), m_Yaw(yaw), m_Pitch(pitch), m_Sensitivity(defaultMouseSens), m_FOV(defaultFOV) {
+			: m_WorldUp(worldUp), m_Speed(defaultSpeed), m_Yaw(yaw), m_Pitch(pitch), m_Sensitivity(defaultMouseSens), m_FOV(defaultFOV) {
 
 			updateCameraVectors();
-		}
-
-		void processMovement(MovementDirection direction, float deltaTime) {
-			float velocity = m_Speed * deltaTime;
-
-			if (direction == FORWARD) {
-				m_Position += m_Front * velocity;
-			}
-			if (direction == BACKWARD) {
-				m_Position -= m_Front * velocity;
-			}
-			if (direction == LEFT) {
-				m_Position -= m_Right * velocity;
-			}
-			if (direction == RIGHT) {
-				m_Position += m_Right * velocity;
-			}
-			if (direction == UP) {
-				m_Position += m_WorldUp * velocity;
-			}
-			if (direction == DOWN) {
-				m_Position -= m_WorldUp * velocity;
-			}
-		}
-
-		void processMouseMovement(float xOffset, float yOffset) {
-			xOffset *= m_Sensitivity;
-			yOffset *= m_Sensitivity;
-
-
-			m_Yaw += xOffset;
-			m_Pitch += yOffset;
-
-			if (m_Pitch > 89.0f) {
-				m_Pitch = 89.0f;
-			}
-			else if (m_Pitch < -89.0f) {
-				m_Pitch = -89.0f;
-			}
-
-			updateCameraVectors();
-		}
-
-		void processScollWheel(double yOffset) {
-			m_Speed += (float)yOffset;
-			if (m_Speed < 0.1f) {
-				m_Speed = 0.1f;
-			}
-			else if (m_Speed > 45000.0f) {
-				m_Speed = 45000.0f;
-			}
 		}
 
 		glm::mat4 getViewMatrix() { 
@@ -84,7 +35,7 @@ namespace Jade {
 
 		float getFOV() { return m_FOV; }
 
-		glm::vec3 getPosition() { return m_Position; }
+		Transform& getTransform() { return m_Transform; }
 
 		static constexpr float defaultSpeed = 2.5f;
 		static constexpr float defaultYaw = -90.0f;
@@ -93,6 +44,8 @@ namespace Jade {
 		static constexpr float defaultFOV = 45.0f;
 
 	private:
+		Transform m_Transform;
+
 		float m_Speed;
 		float m_Yaw;
 		float m_Pitch;
@@ -101,7 +54,6 @@ namespace Jade {
 
 		glm::mat4 m_ViewMatrix;
 
-		glm::vec3 m_Position;
 		glm::vec3 m_Front;
 		glm::vec3 m_Up;
 		glm::vec3 m_Right;
@@ -119,7 +71,7 @@ namespace Jade {
 		}
 
 		void recalculateViewMatrix() {
-			m_ViewMatrix = glm::lookAt(m_Position, m_Position + m_Front, m_Up);
+			m_ViewMatrix = glm::lookAt(m_Transform.position, m_Transform.position + m_Front, m_Up);
 		}
 	};
 }
