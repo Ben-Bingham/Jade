@@ -55,7 +55,7 @@ class Game : public Application {
 
 	Jade::Camera& camera = getCamera();
 
-	float cameraSpeed = 0.4;
+	float cameraSpeed = 0.4f;
 
 	void Begin() override {
 		Jade::PointLight light = Jade::LightCreator::DefaultPointLight();
@@ -75,6 +75,8 @@ class Game : public Application {
 	}
 
 	void Update() override {
+		LOG("Debug Mode");
+
 		if (KEYBOARD.getKeyPressed(Jade::KEY_W)) {
 			camera.getTransform().position.z -= cameraSpeed; //TODO x, y, z are too complicated to remember what way they go, make it like right and left
 		}
