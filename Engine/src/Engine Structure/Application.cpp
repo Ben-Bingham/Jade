@@ -37,7 +37,7 @@ namespace Jade {
 		view = m_Camera.getViewMatrix();
 
 		m_Renderer.setMatrices(view, WINDOW.getProjectionMatrix());
-		m_Renderer.render(m_Camera.getPosition());
+		m_Renderer.render(m_Camera.getTransform().position);
 	}
 
 	void Application::lateUpdate() {
