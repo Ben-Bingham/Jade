@@ -47,15 +47,23 @@ namespace Jade {
 			glfwSetInputMode(m_Window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 		}
 
-		glm::mat4 getProjectionMatrix() { 
-			m_ProjectionMatrix = glm::perspective(glm::radians(45.0f), (float)640 / (float)480, 0.1f, 100.0f); //TODO
-			return m_ProjectionMatrix;
+		void calculateProjectionMatrix(float FOV) {
+			m_ProjectionMatrix = glm::mat4(1.0);
+			m_ProjectionMatrix = glm::perspective(glm::radians(FOV), (float)((float)m_Width / (float)m_Height), 0.1f, 100.0f); //TODO
 		}
+
+		glm::mat4 getProjectionMatrix() { return m_ProjectionMatrix; }
+
+		void setWidth(unsigned int width) { m_Width = width; }
+		void setHeight(unsigned int height) { m_Height = height; }
+
+		unsigned int getHeight() const { return m_Height; }
+		unsigned int getWidth() const { return m_Width; }
 
 	private:
 		GLFWwindow* m_Window;
-		int m_Width;
-		int m_Height;
+		unsigned int m_Width;
+		unsigned int m_Height;
 		std::string m_Name;
 		glm::mat4 m_ProjectionMatrix;
 	};
