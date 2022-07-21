@@ -32,20 +32,9 @@ namespace Jade {
 
 		glfwMakeContextCurrent(m_Window);
 		glfwSwapInterval(1);
-
-		addFrameBufferSizeCallback(windowSizeCallBack);
-		addMousePositionCallback(mousePositionCallback);
 	}
 
 	void windowSizeCallBack(GLFWwindow* window, int width, int height) {
-		//windowInfo.width = (unsigned int)width;
-		//windowInfo.height = (unsigned int)height;
-		//TODO send event
-	}
 
-	void mousePositionCallback(GLFWwindow* window, double xpos, double ypos) {
-		//mousePosition.xPosition = xpos;
-		//mousePosition.yPosition = ypos;
-		//TODO send event
 	}
 }

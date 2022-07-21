@@ -27,16 +27,20 @@ namespace Jade {
 			return !glfwWindowShouldClose(m_Window);
 		}
 
-		void addFrameBufferSizeCallback(void (*callback)(GLFWwindow* window, int width, int height)) {
+		void setFrameBufferSizeCallback(void (*callback)(GLFWwindow* window, int width, int height)) {
 			glfwSetFramebufferSizeCallback(m_Window, callback);
 		}
 
-		void addMousePositionCallback(void (*callback)(GLFWwindow* window, double xpos, double ypos)) {
+		void setMousePositionCallback(void (*callback)(GLFWwindow* window, double xpos, double ypos)) {
 			glfwSetCursorPosCallback(m_Window, callback);
 		}
 
-		void addScrollWheelCallback(void (*callback)(GLFWwindow* window, double xOffset, double yOffset)) {
+		void setScrollWheelCallback(void (*callback)(GLFWwindow* window, double xOffset, double yOffset)) {
 			glfwSetScrollCallback(m_Window, callback);
+		}
+
+		void setMouseButtonCallback(void (*callback)(GLFWwindow* window, int button, int action, int mods)) {
+			glfwSetMouseButtonCallback(m_Window, callback);
 		}
 
 		void disableCursor() {
@@ -57,5 +61,4 @@ namespace Jade {
 	};
 
 	void windowSizeCallBack(GLFWwindow* window, int width, int height);
-	void mousePositionCallback(GLFWwindow* window, double xpos, double ypos);
 }
