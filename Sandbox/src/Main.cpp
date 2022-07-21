@@ -38,27 +38,24 @@ float lastFrame;
 float lastX = screenWidth / 2.0f;
 float lastY = screenHeight / 2.0f;
 
-Jade::Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
-
 bool firstMouse = true;
 
 // Light Globals
-
 glm::vec3 lightPositon(1.2f, 1.0f, 2.0f);
 
 // Function callbacks
-void framebufferSizeCallback(GLFWwindow* window, int width, int height);
 void APIENTRY glDebugOutput(GLenum source, GLenum type, unsigned int id, GLenum severity,
 	GLsizei length, const char* message, const void* userParam);
-
-// Helper functions
-void processInput(GLFWwindow* window);
 
 class Game : public Application {
 	Jade::StandardRuleSet ruleSet;
 
 	Jade::StandardRenderable standardRenderable = Jade::StandardRenderable(Jade::CUBE);
 	Jade::StandardRenderable standardRenderable2 = Jade::StandardRenderable(Jade::PYRAMID);
+
+	Jade::Camera& camera = getCamera();
+
+	float cameraSpeed = 0.4;
 
 	void Begin() override {
 		Jade::PointLight light = Jade::LightCreator::DefaultPointLight();
@@ -70,15 +67,29 @@ class Game : public Application {
 
 		addRuleset(&ruleSet);
 
-		standardRenderable.getTransform().translate(0, 0, -10);
+		standardRenderable.getTransform().position.z -= 10;
 		addRenderable(&standardRenderable);
 
-		standardRenderable2.getTransform().translate(0, 0, 10);
+		standardRenderable2.getTransform().position.z += 10;
 		addRenderable(&standardRenderable2);
 	}
 
 	void Update() override {
+		if (KEYBOARD.getKeyPressed(Jade::KEY_W)) {
+			camera.getTransform().position.z -= cameraSpeed; //TODO x, y, z are too complicated to remember what way they go, make it like right and left
+		}
 
+		if (KEYBOARD.getKeyPressed(Jade::KEY_A)) {
+			camera.getTransform().position.x -= cameraSpeed;
+		}
+
+		if (KEYBOARD.getKeyPressed(Jade::KEY_S)) {
+			camera.getTransform().position.z += cameraSpeed;
+		}
+
+		if (KEYBOARD.getKeyPressed(Jade::KEY_D)) {
+			camera.getTransform().position.x += cameraSpeed;
+		}
 	}
 };
 
@@ -262,40 +273,6 @@ int main() {
 	//window.dispose();
 
 	return 0;
-}
-
-void processInput(GLFWwindow* window) {
-	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
-		glfwSetWindowShouldClose(window, true);
-	}
-	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-		camera.processMovement(Jade::FORWARD, deltaTime);
-	}
-	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-		camera.processMovement(Jade::BACKWARD, deltaTime);
-	}
-	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-		camera.processMovement(Jade::LEFT, deltaTime);
-	}
-	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-		camera.processMovement(Jade::RIGHT, deltaTime);
-	}
-	if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS) {
-		camera.processMovement(Jade::UP, deltaTime);
-	}
-	if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) {
-		camera.processMovement(Jade::DOWN, deltaTime);
-	}
-}
-
-void framebufferSizeCallback(GLFWwindow* window, int width, int height) {
-	glViewport(0, 0, width, height);
-	screenWidth = width;
-	screenHeight = height;
-
-	projection = glm::mat4(1.0f);
-	float aspectRatio = (float)width / (float)height;
-	projection = glm::perspective(glm::radians(camera.getFOV()), aspectRatio, 0.1f, 100.0f); //TODO objects seem to stretch when window is resized
 }
 
 void APIENTRY glDebugOutput(
