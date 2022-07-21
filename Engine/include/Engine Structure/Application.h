@@ -39,6 +39,8 @@ namespace Jade {
 			m_Renderer.addRenderable(renderable);
 		}
 
+		Camera& getCamera() { return m_Camera; }
+
 		virtual void Begin() {}
 		virtual void Update() {}
 		virtual void LateUpdate() {}
