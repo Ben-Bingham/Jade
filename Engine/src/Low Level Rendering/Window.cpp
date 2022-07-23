@@ -1,3 +1,4 @@
+#include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
 #include "Jade.h"
@@ -14,7 +15,9 @@ namespace Jade {
 
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-		glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true); //Remove in release
+#ifdef JADE_DEBUG
+		glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, true);
+#endif // JADE_DEBUG
 
 		const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
 
