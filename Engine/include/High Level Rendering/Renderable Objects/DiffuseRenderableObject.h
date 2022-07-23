@@ -6,7 +6,7 @@
 namespace Jade {
 	class DiffusedRenderable : public RenderableObject {
 	public:
-		DiffusedRenderable(const Texture& diffuse, const glm::vec3& specular, float shininess, Shape shape = CUBE)
+		DiffusedRenderable(const Texture& diffuse, const glm::vec3& specular, float shininess, Shape shape = CUBE) //TODO change specular to Colour class
 			: RenderableObject(DIFFUSE, shape), m_Material{ diffuse, specular, shininess } {}
 
 		DiffusedRenderable(const Texture& diffuse, const glm::vec3& specular, float shininess, Mesh mesh)
