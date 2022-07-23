@@ -46,6 +46,10 @@ namespace Jade {
 		virtual void LateUpdate() {}
 		virtual void Cleanup() {}
 
+		void quit() {
+			WINDOW.setWindowShouldClose();
+		}
+
 	private:
 		float m_LastMouseX = 0.0f;
 		float m_LastMouseY = 0.0f;

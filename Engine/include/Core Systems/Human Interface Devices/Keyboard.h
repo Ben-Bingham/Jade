@@ -3,7 +3,7 @@
 
 namespace Jade {
 	enum Key {
-		KEY_W, KEY_A, KEY_S, KEY_D, KEY_SPACE, KEY_LEFT_SHIFT //TODO add all keys
+		KEY_W, KEY_A, KEY_S, KEY_D, KEY_SPACE, KEY_LEFT_SHIFT, KEY_ESCAPE //TODO add all keys
 	};
 
 	enum KeyState {
@@ -38,6 +38,7 @@ namespace Jade {
 			case KEY_D:             return GLFW_KEY_D;
 			case KEY_SPACE:         return GLFW_KEY_SPACE;
 			case KEY_LEFT_SHIFT:    return GLFW_KEY_LEFT_SHIFT;
+			case KEY_ESCAPE:		return GLFW_KEY_ESCAPE;
 			}
 		}
 

@@ -43,6 +43,10 @@ namespace Jade {
 			glfwSetMouseButtonCallback(m_Window, callback);
 		}
 
+		void setWindowShouldClose() {
+			glfwSetWindowShouldClose(m_Window, true);
+		}
+
 		void disableCursor() {
 			glfwSetInputMode(m_Window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 		}

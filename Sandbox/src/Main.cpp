@@ -57,6 +57,24 @@ class Game : public Application {
 
 	float cameraSpeed = 0.4f;
 
+	void CameraMovement() {
+		if (KEYBOARD.getKeyPressed(Jade::KEY_W)) {
+			camera.getTransform().position.z -= cameraSpeed; //TODO x, y, z are too complicated to remember what way they go, make it like right and left
+		}
+
+		if (KEYBOARD.getKeyPressed(Jade::KEY_A)) {
+			camera.getTransform().position.x -= cameraSpeed;
+		}
+
+		if (KEYBOARD.getKeyPressed(Jade::KEY_S)) {
+			camera.getTransform().position.z += cameraSpeed;
+		}
+
+		if (KEYBOARD.getKeyPressed(Jade::KEY_D)) {
+			camera.getTransform().position.x += cameraSpeed;
+		}
+	}
+
 	void Begin() override {
 		Jade::PointLight light = Jade::LightCreator::DefaultPointLight();
 		light.position = lightPositon;
@@ -77,21 +95,11 @@ class Game : public Application {
 	void Update() override {
 		LOG("Running");
 
-		if (KEYBOARD.getKeyPressed(Jade::KEY_W)) {
-			camera.getTransform().position.z -= cameraSpeed; //TODO x, y, z are too complicated to remember what way they go, make it like right and left
+		if (KEYBOARD.getKeyPressed(Jade::KEY_ESCAPE)) {
+			quit();
 		}
 
-		if (KEYBOARD.getKeyPressed(Jade::KEY_A)) {
-			camera.getTransform().position.x -= cameraSpeed;
-		}
-
-		if (KEYBOARD.getKeyPressed(Jade::KEY_S)) {
-			camera.getTransform().position.z += cameraSpeed;
-		}
-
-		if (KEYBOARD.getKeyPressed(Jade::KEY_D)) {
-			camera.getTransform().position.x += cameraSpeed;
-		}
+		CameraMovement();
 	}
 };
 
