@@ -17,7 +17,7 @@ namespace Jade {
 
 	class Application {
 	public:
-		Application() {}
+		Application() : m_Camera(45.0f) {}
 
 		void start() {
 			glCheckError();
