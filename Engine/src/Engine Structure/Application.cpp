@@ -46,6 +46,8 @@ namespace Jade {
 		glClearColor(0.549f, 0.549f, 0.549f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+		m_Camera.updateCameraVectors();
+
 		glm::mat4 view;
 		view = m_Camera.getViewMatrix();
 
@@ -85,7 +87,7 @@ namespace Jade {
 		WINDOW.setWidth((unsigned int)width);
 		WINDOW.setHeight((unsigned int)height);
 
-		WINDOW.calculateProjectionMatrix(45.0f);
+		WINDOW.calculateProjectionMatrix(45.0f); //TODO should not be hardcoded
 
 		glViewport(0, 0, WINDOW.getWidth(), WINDOW.getHeight());
 	}
@@ -100,6 +102,7 @@ namespace Jade {
 		const void* userParam) {
 		Jade::LogLevel level;
 		switch (severity) {
+		default:
 		case GL_DEBUG_SEVERITY_HIGH:			level = Jade::ERROR; break;
 		case GL_DEBUG_SEVERITY_MEDIUM:			level = Jade::WARNING; break;
 		case GL_DEBUG_SEVERITY_LOW:				level = Jade::WARNING; break;
