@@ -57,8 +57,8 @@ namespace Jade {
 			m_ScrollOffset = offset;
 		}
 
-		unsigned int getXPosition() { return m_XPosition; }
-		unsigned int getYPosition() { return m_YPosition; }
+		int getXPosition() { return m_XPosition; }
+		int getYPosition() { return m_YPosition; }
 		int getScrollOffset() { return m_ScrollOffset; }
 
 		static MouseButton intToMouseButton(int button) {
@@ -80,8 +80,8 @@ namespace Jade {
 
 	private:
 		// Top left of screen is (0,0) bottom right is the screen size in pixels
-		unsigned int m_XPosition;
-		unsigned int m_YPosition;
+		int m_XPosition;
+		int m_YPosition;
 
 		int m_ScrollOffset;
 
