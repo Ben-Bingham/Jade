@@ -14,32 +14,61 @@ class Game : public Application {
 	Jade::Camera& camera = getCamera();
 
 	float cameraSpeed = 0.4f;
+	float mouseSensitivity = 0.1f;
 
-	glm::vec3 lightPositon = glm::vec3(1.2f, 1.0f, 2.0f);
+	int lastX = WINDOW.getWidth();
+	int lastY = WINDOW.getHeight();
+
+	float yaw = 0.0f;
+	float pitch = 0.0f;
 
 	void cameraMovement() {
+		float xOffset = (float)(MOUSE.getXPosition() - lastX);
+		float yOffset = (float)(lastY - MOUSE.getYPosition());
+		lastX = MOUSE.getXPosition();
+		lastY = MOUSE.getYPosition();
+
+		xOffset *= mouseSensitivity;
+		yOffset *= mouseSensitivity;
+
+		yaw += xOffset;
+		pitch += yOffset;
+
+		if (pitch > 89.0f)
+			pitch = 89.0f;
+		if (pitch < -89.0f)
+			pitch = -89.0f;
+
+		glm::vec3 direction;
+		direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
+		direction.y = sin(glm::radians(pitch));
+		direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
+
+		camera.front = glm::vec3(0.0f);
+		camera.front = glm::normalize(direction);
+
 		if (KEYBOARD.getKeyPressed(Jade::KEY_W)) {
-			camera.getTransform().position.z -= cameraSpeed; //TODO x, y, z are too complicated to remember what way they go, make it like right and left
-		}													 //They also do not work when the camera changes directions
+			camera.getTransform().position += camera.front * cameraSpeed;
+		}
 
 		if (KEYBOARD.getKeyPressed(Jade::KEY_A)) {
-			camera.getTransform().position.x -= cameraSpeed;
+			camera.getTransform().position -= camera.right * cameraSpeed;
 		}
 
 		if (KEYBOARD.getKeyPressed(Jade::KEY_S)) {
-			camera.getTransform().position.z += cameraSpeed;
+			camera.getTransform().position -= camera.front * cameraSpeed;
 		}
 
 		if (KEYBOARD.getKeyPressed(Jade::KEY_D)) {
-			camera.getTransform().position.x += cameraSpeed;
+			camera.getTransform().position += camera.right * cameraSpeed;
 		}
 
 		if (KEYBOARD.getKeyPressed(Jade::KEY_SPACE)) {
-			camera.getTransform().position.y += cameraSpeed;
+			camera.getTransform().position += glm::vec3(0.0f, 1.0f, 0.0f) * cameraSpeed;
 		}
 
 		if (KEYBOARD.getKeyPressed(Jade::KEY_LEFT_SHIFT)) {
-			camera.getTransform().position.y -= cameraSpeed;
+			camera.getTransform().position -= glm::vec3(0.0f, 1.0f, 0.0f) * cameraSpeed;
 		}
 	}
 
@@ -58,10 +87,14 @@ class Game : public Application {
 	Jade::DiffuseRuleSet diffuseRuleset;
 	Jade::SolidRuleSet solidRuleset;
 
+	glm::vec3 lightPositon = glm::vec3(1.2f, 1.0f, 2.0f);
+
 	Jade::PointLight pointLight = Jade::LightCreator::DefaultPointLight();
 	Jade::DirectionalLight directionalLight = Jade::LightCreator::DefaultDirectionalLight();
 
 	void initRulesets() {
+		pointLight.position = lightPositon;
+
 		standardRuleSet.addPointLight(pointLight);
 		standardRuleSet.setDirectionalLight(directionalLight);
 
@@ -141,11 +174,11 @@ class Game : public Application {
 		light.getTransform().position = lightPositon;
 		light.getTransform().scale = glm::vec3(0.2f);
 		addRenderable(&light);
-
-
 	}
 
 	void Begin() override {
+		WINDOW.disableCursor();
+
 		initRulesets();
 		initRenderables();
 	}
