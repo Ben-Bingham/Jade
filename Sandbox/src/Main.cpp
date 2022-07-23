@@ -24,25 +24,6 @@
 #include "Core Systems/Resource Pipeline/Model.h"
 #include "Engine Structure/Application.h"
 
-// Global variables
-unsigned int screenWidth = 640;
-unsigned int screenHeight = 480;
-
-glm::mat4 projection;
-
-float deltaTime;
-float lastFrame;
-
-// Camera Globals
-
-float lastX = screenWidth / 2.0f;
-float lastY = screenHeight / 2.0f;
-
-bool firstMouse = true;
-
-// Light Globals
-glm::vec3 lightPositon(1.2f, 1.0f, 2.0f);
-
 // Function callbacks
 void APIENTRY glDebugOutput(GLenum source, GLenum type, unsigned int id, GLenum severity,
 	GLsizei length, const char* message, const void* userParam);
@@ -56,6 +37,8 @@ class Game : public Application {
 	Jade::Camera& camera = getCamera();
 
 	float cameraSpeed = 0.4f;
+
+	glm::vec3 lightPositon = glm::vec3(1.2f, 1.0f, 2.0f);
 
 	void CameraMovement() {
 		if (KEYBOARD.getKeyPressed(Jade::KEY_W)) {
