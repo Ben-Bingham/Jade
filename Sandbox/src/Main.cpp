@@ -1,27 +1,13 @@
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-
 #include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/type_ptr.hpp>
 
-#include "Jade.h"
-
-#include "Low Level Rendering/Window.h"
-#include "Core Systems/Logging/OpenGLErrors.h"
-#include "High Level Rendering/Camera.h"
-#include "Low Level Rendering/GLEW.h"
-#include "High Level Rendering/Renderer.h"
 #include "High Level Rendering/Rule Sets/StandardRenderingRuleSet.h"
 #include "High Level Rendering/Rule Sets/SolidRenderingRuleSet.h"
 #include "High Level Rendering/Rule Sets/TextureRenderingRuleSet.h"
+#include "High Level Rendering/Rule Sets/DiffuseRenderingRuleSet.h"
 #include "High Level Rendering/Renderable Objects/StandardRenderableObject.h"
 #include "High Level Rendering/Renderable Objects/SolidRenderableObject.h"
 #include "High Level Rendering/Renderable Objects/TexturedRenderableObject.h"
 #include "High Level Rendering/Renderable Objects/DiffuseRenderableObject.h"
-#include "High Level Rendering/Rule Sets/DiffuseRenderingRuleSet.h"
-#include "High Level Rendering/Colour.h"
-#include "Core Systems/Resource Pipeline/Model.h"
 #include "Engine Structure/Application.h"
 
 class Game : public Application {
