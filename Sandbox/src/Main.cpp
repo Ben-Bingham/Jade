@@ -75,7 +75,7 @@ class Game : public Application {
 	}
 
 	void Update() override {
-		LOG("Debug Mode");
+		LOG("Running");
 
 		if (KEYBOARD.getKeyPressed(Jade::KEY_W)) {
 			camera.getTransform().position.z -= cameraSpeed; //TODO x, y, z are too complicated to remember what way they go, make it like right and left
