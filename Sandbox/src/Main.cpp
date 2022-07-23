@@ -25,21 +25,16 @@
 #include "Engine Structure/Application.h"
 
 class Game : public Application {
-	Jade::StandardRuleSet ruleSet;
-
-	Jade::StandardRenderable standardRenderable = Jade::StandardRenderable(Jade::CUBE);
-	Jade::StandardRenderable standardRenderable2 = Jade::StandardRenderable(Jade::PYRAMID);
-
 	Jade::Camera& camera = getCamera();
 
 	float cameraSpeed = 0.4f;
 
 	glm::vec3 lightPositon = glm::vec3(1.2f, 1.0f, 2.0f);
 
-	void CameraMovement() {
+	void cameraMovement() {
 		if (KEYBOARD.getKeyPressed(Jade::KEY_W)) {
 			camera.getTransform().position.z -= cameraSpeed; //TODO x, y, z are too complicated to remember what way they go, make it like right and left
-		}
+		}													 //They also do not work when the camera changes directions
 
 		if (KEYBOARD.getKeyPressed(Jade::KEY_A)) {
 			camera.getTransform().position.x -= cameraSpeed;
@@ -52,214 +47,135 @@ class Game : public Application {
 		if (KEYBOARD.getKeyPressed(Jade::KEY_D)) {
 			camera.getTransform().position.x += cameraSpeed;
 		}
+
+		if (KEYBOARD.getKeyPressed(Jade::KEY_SPACE)) {
+			camera.getTransform().position.y += cameraSpeed;
+		}
+
+		if (KEYBOARD.getKeyPressed(Jade::KEY_LEFT_SHIFT)) {
+			camera.getTransform().position.y -= cameraSpeed;
+		}
+	}
+
+	Jade::Model backpack = Jade::Model("assets\\models\\backpack\\backpack.obj", false);
+	Jade::Texture backpackDiffuse = Jade::Texture(*backpack.getDiffuseImage());
+	Jade::Texture backpackSpecular = Jade::Texture(*backpack.getSpecularImage());
+
+	Jade::Model texturedCube = Jade::Model("assets\\models\\texturedCube\\Textured_Cube.obj", true);
+	Jade::Texture texturedCubeDiffuse = Jade::Texture(*texturedCube.getDiffuseImage());
+
+	Jade::Texture containerDiffuse = Jade::Texture(Jade::Image("assets\\textures\\container2.png"));
+	Jade::Texture containerSpecular = Jade::Texture(Jade::Image("assets\\textures\\container2_specular.png"));
+
+	Jade::StandardRuleSet standardRuleSet;
+	Jade::TextureRuleSet texturedRuleSet;
+	Jade::DiffuseRuleSet diffuseRuleset;
+	Jade::SolidRuleSet solidRuleset;
+
+	Jade::PointLight pointLight = Jade::LightCreator::DefaultPointLight();
+	Jade::DirectionalLight directionalLight = Jade::LightCreator::DefaultDirectionalLight();
+
+	void initRulesets() {
+		standardRuleSet.addPointLight(pointLight);
+		standardRuleSet.setDirectionalLight(directionalLight);
+
+		texturedRuleSet.addPointLight(pointLight);
+		texturedRuleSet.setDirectionalLight(directionalLight);
+
+		diffuseRuleset.addPointLight(pointLight);
+		diffuseRuleset.setDirectionalLight(directionalLight);
+
+		addRuleset(&standardRuleSet);
+		addRuleset(&texturedRuleSet);
+		addRuleset(&diffuseRuleset);
+		addRuleset(&solidRuleset);
+	}
+
+	Jade::StandardRenderable standardCube = Jade::StandardRenderable(Jade::CUBE);
+	Jade::StandardRenderable standardPyramid = Jade::StandardRenderable(Jade::PYRAMID);
+
+	Jade::TexturedRenderable texturedCubeRenderable = Jade::TexturedRenderable(containerDiffuse, containerSpecular, 32.0f, Jade::CUBE);
+	Jade::TexturedRenderable texturedPyramid = Jade::TexturedRenderable(containerDiffuse, containerSpecular, 32.0f, Jade::PYRAMID);
+
+	Jade::DiffusedRenderable diffuesdCube = Jade::DiffusedRenderable(containerDiffuse, glm::vec3(1.0f), 32.0, Jade::CUBE);
+	Jade::DiffusedRenderable diffuesdPyramid = Jade::DiffusedRenderable(containerDiffuse, glm::vec3(1.0f), 32.0, Jade::PYRAMID);
+
+	Jade::SolidRenderable solidCube = Jade::SolidRenderable(Jade::Colour(146, 59, 148), Jade::CUBE);
+	Jade::SolidRenderable solidPyramid = Jade::SolidRenderable(Jade::Colour(36, 107, 32), Jade::PYRAMID);
+	Jade::SolidRenderable light = Jade::SolidRenderable(Jade::Colour(255, 255, 255));
+
+	std::vector<Jade::StandardRenderable> backpackStandardRenderables;
+	std::vector<Jade::TexturedRenderable> backpackTexturedRenderables;
+
+	void initRenderables() {
+		for each (Jade::Mesh mesh in backpack.getMeshes()) {
+			backpackStandardRenderables.push_back(Jade::StandardRenderable(mesh));
+		}
+
+		std::vector<Jade::StandardRenderable>::iterator it;
+		for (it = backpackStandardRenderables.begin(); it != backpackStandardRenderables.end(); it++) {
+			addRenderable(&(*it));
+			it->getTransform().position = glm::vec3(0.0f, 1.0f, 5.0f);
+		}
+
+		for each (Jade::Mesh mesh in backpack.getMeshes()) {
+			backpackTexturedRenderables.push_back(Jade::TexturedRenderable(backpackDiffuse, backpackSpecular, 32.0f, mesh));
+		}
+
+		std::vector<Jade::TexturedRenderable>::iterator it2;
+		for (it2 = backpackTexturedRenderables.begin(); it2 != backpackTexturedRenderables.end(); it2++) {
+			addRenderable(&(*it2));
+			it2->getTransform().position = glm::vec3(4.0f, 1.0f, 5.0f);
+		}
+
+		standardCube.getTransform().position = glm::vec3(2, 0, -3);
+		standardPyramid.getTransform().position = glm::vec3(2, 2, -3);
+
+		addRenderable(&standardCube);
+		addRenderable(&standardPyramid);
+
+		texturedCubeRenderable.getTransform().position = glm::vec3(1, 0, -3);
+		texturedPyramid.getTransform().position = glm::vec3(1, 2, -3);
+
+		addRenderable(&texturedCubeRenderable);
+		addRenderable(&texturedPyramid);
+
+		diffuesdCube.getTransform().position = glm::vec3(0, 0, -3);
+		diffuesdPyramid.getTransform().position = glm::vec3(0, 2, -3);
+
+		addRenderable(&diffuesdCube);
+		addRenderable(&diffuesdPyramid);
+
+		solidCube.getTransform().position = glm::vec3(-1, 0, -3);
+		solidPyramid.getTransform().position = glm::vec3(-1, 2, -3);
+
+		addRenderable(&solidCube);
+		addRenderable(&solidPyramid);
+
+		light.getTransform().position = lightPositon;
+		light.getTransform().scale = glm::vec3(0.2f);
+		addRenderable(&light);
+
+
 	}
 
 	void Begin() override {
-		Jade::PointLight light = Jade::LightCreator::DefaultPointLight();
-		light.position = lightPositon;
-		ruleSet.addPointLight(light);
-
-		Jade::DirectionalLight directionalLight = Jade::LightCreator::DefaultDirectionalLight();
-		ruleSet.setDirectionalLight(directionalLight);
-
-		addRuleset(&ruleSet);
-
-		standardRenderable.getTransform().position.z -= 10;
-		addRenderable(&standardRenderable);
-
-		standardRenderable2.getTransform().position.z += 10;
-		addRenderable(&standardRenderable2);
+		initRulesets();
+		initRenderables();
 	}
 
 	void Update() override {
-		LOG("Running");
-
 		if (KEYBOARD.getKeyPressed(Jade::KEY_ESCAPE)) {
 			quit();
 		}
 
-		CameraMovement();
+		cameraMovement();
 	}
 };
 
 int main() {
 	Game game;
 	game.start();
-
-	// GLFW and GLEW init
-	//Jade::Window window(screenWidth, screenHeight, "Sandbox", false);
-
-	//window.addFrameBufferSizeCallback(framebufferSizeCallback);
-	//window.addMousePositionCallback(mouseCallback);
-	//window.addScrollWheelCallback(scrollCallback);
-	//window.disableCursor();
-
-	//Jade::GLEW glew;
-
-	//// OpenGL settings
-	//glEnable(GL_DEPTH_TEST);
-	//
-	//int flags;
-	//glGetIntegerv(GL_CONTEXT_FLAGS, &flags);
-	//if (flags & GL_CONTEXT_FLAG_DEBUG_BIT) {
-	//	LOGGER.log("OpenGL debug context available", Jade::INFO);
-	//	glEnable(GL_DEBUG_OUTPUT);
-	//	glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
-	//	glDebugMessageCallback(glDebugOutput, nullptr);
-	//	glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
-	//}
-
-	//glEnable(GL_CULL_FACE);
-	//glCullFace(GL_BACK);
-	//glFrontFace(GL_CW);
-
-	// Uncomment for wireframe rendering
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-	// ======================== Standard Renderer ========================
-	//Jade::StandardRuleSet ruleSet;
-
-	//Jade::PointLight light = Jade::LightCreator::DefaultPointLight();
-	//light.position = lightPositon;
-	//ruleSet.addPointLight(light);
-	//
-	//Jade::DirectionalLight directionalLight = Jade::LightCreator::DefaultDirectionalLight();
-	//ruleSet.setDirectionalLight(directionalLight);
-
-	//Jade::Renderer renderer;
-	//renderer.addRuleSet(&ruleSet);
-
-	//Jade::StandardRenderable standardRenderable(Jade::CUBE);
-
-	//renderer.addRenderable(&standardRenderable);
-
-	//Jade::StandardRenderable standardRenderable2(Jade::PYRAMID);
-	//standardRenderable2.getTransform().translate(0, 2, 0);
-
-	//renderer.addRenderable(&standardRenderable2);
-
-	//// ======================== Model Loading testing ========================
-	//Jade::Model model("assets\\models\\backpack\\backpack.obj", false);
-	//std::vector<Jade::StandardRenderable> modelRenderables;
-	//for each (Jade::Mesh mesh in model.getMeshes()) {
-	//	modelRenderables.push_back(Jade::StandardRenderable(mesh));
-	//}
-
-	//std::vector<Jade::StandardRenderable>::iterator it;
-	//for (it = modelRenderables.begin(); it != modelRenderables.end(); it++) {
-	//	renderer.addRenderable(&(*it));
-	//	it->getTransform().translate(0.0f, 1.0f, 5.0f);
-	//	it->getTransform().rotate(Jade::Rotation{ glm::vec3(0.0f, 1.0f, 0.0f), 180.0f });
-	//}
-
-	//// ======================== Solid Renderer ========================
-	//Jade::SolidRuleSet solidRuleSet;
-
-	//renderer.addRuleSet(&solidRuleSet);
-
-	//Jade::SolidRenderable solidRenderable(Jade::Colour(255, 255, 255));
-	//solidRenderable.getTransform().translate(lightPositon);
-	//solidRenderable.getTransform().scale(0.1f);
-
-	//renderer.addRenderable(&solidRenderable);
-
-	//Jade::SolidRenderable solidRenderable2(Jade::Colour(83, 194, 91));
-	//solidRenderable2.getTransform().translate(2, 0, 0);
-
-	//renderer.addRenderable(&solidRenderable2);
-
-	//Jade::SolidRenderable solidRenderable3(Jade::Colour(52, 174, 235), Jade::PYRAMID);
-	//solidRenderable3.getTransform().translate(2, 2, 0);
-
-	//renderer.addRenderable(&solidRenderable3);
-
-	//// ======================== Textured Renderer ========================
-	//Jade::TextureRuleSet textureRuleSet;
-
-	//textureRuleSet.addPointLight(light);
-	//textureRuleSet.setDirectionalLight(directionalLight);
-
-	//renderer.addRuleSet(&textureRuleSet);
-
-	//Jade::TexturedRenderable texturedRenderable(Jade::Texture(Jade::Image("assets\\textures\\container2.png")), Jade::Texture(Jade::Image("assets\\textures\\container2_specular.png")), 32.0f);
-	//texturedRenderable.getTransform().translate(1, 0, 0);
-	//
-	//renderer.addRenderable(&texturedRenderable);
-
-	//Jade::TexturedRenderable texturedRenderable2(Jade::Texture(Jade::Image("assets\\textures\\container2.png")), Jade::Texture(Jade::Image("assets\\textures\\container2_specular.png")), 32.0f, Jade::PYRAMID);
-	//texturedRenderable2.getTransform().translate(1, 2, 0);
-
-	//renderer.addRenderable(&texturedRenderable2);
-
-	//// ======================== Textured Model Loading testing ========================
-	//Jade::Texture diffuse = Jade::Texture(*model.getDiffuseImage());
-	//Jade::Texture specular = Jade::Texture(*model.getSpecularImage());
-
-	//std::vector<Jade::TexturedRenderable> modelRenderables2;
-	//for each (Jade::Mesh mesh in model.getMeshes()) {
-	//	modelRenderables2.push_back(Jade::TexturedRenderable(diffuse, specular, 32.0f, mesh));
-	//}
-
-	//std::vector<Jade::TexturedRenderable>::iterator it2;
-	//for (it2 = modelRenderables2.begin(); it2 != modelRenderables2.end(); it2++) {
-	//	renderer.addRenderable(&(*it2));
-	//	it2->getTransform().translate(4.0f, 1.0f, 5.0f);
-	//	it2->getTransform().rotate(Jade::Rotation{ glm::vec3(0.0f, 1.0f, 0.0f), 180.0f });
-	//}
-
-	//// ======================== Textured Model Loading testing 2 ========================
-	//Jade::DiffuseRuleSet diffuseRuleSet;
-
-	//diffuseRuleSet.addPointLight(light);
-	//diffuseRuleSet.setDirectionalLight(directionalLight);
-	//renderer.addRuleSet(&diffuseRuleSet);
-
-	//Jade::Model texturedCube("assets\\models\\texturedCube\\Textured_Cube.obj", true);
-	//diffuse = Jade::Texture(*texturedCube.getDiffuseImage());
-
-	//std::vector<Jade::DiffusedRenderable> modelRenderables3;
-	//for each (Jade::Mesh mesh in texturedCube.getMeshes()) {
-	//	modelRenderables3.push_back(Jade::DiffusedRenderable(diffuse, glm::vec3(1.0f, 1.0f, 1.0f), 32.0f, mesh));
-	//}
-
-	//std::vector<Jade::DiffusedRenderable>::iterator it3;
-	//for (it3 = modelRenderables3.begin(); it3 != modelRenderables3.end(); it3++) {
-	//	renderer.addRenderable(&(*it3));
-	//	it3->getTransform().translate(4.0f, 4.0f, 5.0f);
-	//}
-
-	//// Check for errors
-	//glCheckError();
-
-	//// Matrix setup
-	//glm::mat4 projection = glm::perspective(glm::radians(camera.getFOV()), (float)screenWidth / (float)screenHeight, 0.1f, 100.0f);
-	//
-	//// Render loop
-
-	//while (window.getWindowOpen()) {
-	//	float currentFrame = (float)glfwGetTime();
-	//	deltaTime = currentFrame - lastFrame;
-	//	lastFrame = currentFrame;
-
-	//	processInput(window.getWindow());
-
-	//	window.pollEvents();
-	//	glClearColor(0.549f, 0.549f, 0.549f, 1.0f);
-	//	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-	//	glm::mat4 view;
-	//	view = camera.getViewMatrix();
-
-	//	renderer.setMatrices(view, projection);
-	//	renderer.render(camera.getPosition());
-
-	//	window.swapBuffers();
-	//	glCheckError();
-	//}
-
-	//renderer.dispose();
-
-	//window.dispose();
 
 	return 0;
 }
