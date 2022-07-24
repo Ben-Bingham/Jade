@@ -19,7 +19,7 @@ class Game : public Application {
 	int lastX = WINDOW.getWidth();
 	int lastY = WINDOW.getHeight();
 
-	float yaw = 0.0f;
+	float yaw = -90.0f;
 	float pitch = 0.0f;
 
 	void cameraMovement() {
@@ -47,7 +47,7 @@ class Game : public Application {
 		camera.front = glm::vec3(0.0f);
 		camera.front = glm::normalize(direction);
 
-		if (KEYBOARD.getKeyPressed(Jade::KEY_W)) {
+		if (KEYBOARD.getKeyPressed(Jade::KEY_W)) { //TODO delta time
 			camera.getTransform().position += camera.front * cameraSpeed;
 		}
 
@@ -126,6 +126,8 @@ class Game : public Application {
 	std::vector<Jade::StandardRenderable> backpackStandardRenderables;
 	std::vector<Jade::TexturedRenderable> backpackTexturedRenderables;
 
+	std::vector<Jade::DiffusedRenderable> texturedCubeStandardRenderables;
+
 	void initRenderables() {
 		for each (Jade::Mesh mesh in backpack.getMeshes()) {
 			backpackStandardRenderables.push_back(Jade::StandardRenderable(mesh));
@@ -145,6 +147,16 @@ class Game : public Application {
 		for (it2 = backpackTexturedRenderables.begin(); it2 != backpackTexturedRenderables.end(); it2++) {
 			addRenderable(&(*it2));
 			it2->getTransform().position = glm::vec3(4.0f, 1.0f, 5.0f);
+		}
+
+		for each (Jade::Mesh mesh in texturedCube.getMeshes()) {
+			texturedCubeStandardRenderables.push_back(Jade::DiffusedRenderable(texturedCubeDiffuse, glm::vec3(1.0f), 32.0f, mesh));
+		}
+
+		std::vector<Jade::DiffusedRenderable>::iterator it3;
+		for (it3 = texturedCubeStandardRenderables.begin(); it3 != texturedCubeStandardRenderables.end(); it3++) {
+			addRenderable(&(*it3));
+			it3->getTransform().position = glm::vec3(0.0f, 4.0f, 5.0f);
 		}
 
 		standardCube.getTransform().position = glm::vec3(2, 0, -3);
