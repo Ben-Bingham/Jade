@@ -25,6 +25,9 @@ namespace Jade {
 			stbi_image_free(data);
 		}
 
+		Image(const std::vector<unsigned char>& data, int width, int height, int channels)
+			: m_Content(data), m_Width(width), m_Height(height), m_Channels(channels), m_Path("") { }
+
 		Image(const std::string& path, const Colour& colour, unsigned int width = 1, unsigned int height = 1, unsigned int channels = 3)
 			: m_Path(path), m_Width(width), m_Height(height), m_Channels(channels) {
 
