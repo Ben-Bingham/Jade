@@ -1,6 +1,7 @@
 #pragma once
 
 #include <glm/glm.hpp>
+#include <assimp/types.h>
 
 namespace Jade {
 	class Colour {
@@ -9,6 +10,8 @@ namespace Jade {
 		Colour(glm::vec4 colour) : colour(colour) {}
 		explicit Colour(float r, float g, float b, float a = 1.0f) : colour(r, g, b, a) {}
 		explicit Colour(int r, int g, int b, int a = 255) : colour(initWith0to255(r, g, b, a)) {}
+		Colour(aiColor3D colour) : colour(colour.r, colour.g, colour.b, 1.0) {}
+		Colour(aiColor4D colour) : colour(colour.r, colour.g, colour.b, colour.a) {}
 
 		glm::vec4 colour;
 
