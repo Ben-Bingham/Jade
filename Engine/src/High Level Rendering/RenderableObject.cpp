@@ -92,7 +92,7 @@ namespace Jade {
         13, 15, 14
     };
 
-    Mesh RenderableObject::cubeMesh = Mesh(cubeVerticies, cubeIndicies);
+    Mesh RenderableObject::cubeMesh = Mesh(cubeVerticies, cubeIndicies, 0);
 
-    Mesh RenderableObject::pyramidMesh = Mesh(pyramidVerticies, pyramidIndicies);
+    Mesh RenderableObject::pyramidMesh = Mesh(pyramidVerticies, pyramidIndicies, 0);
 }
