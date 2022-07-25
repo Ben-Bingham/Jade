@@ -127,7 +127,8 @@ workspace "Jade"
 
 		includedirs { 
 			"UnitTests/include",
-			"Dependencies/stb image"
+			"Dependencies/stb image",
+			"Dependencies/assimp/include",
 		}
 
 		links { "Engine" }
