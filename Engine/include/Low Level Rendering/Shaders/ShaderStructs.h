@@ -4,13 +4,6 @@
 #include "Low Level Rendering/Rendering Objects/Texture.h"
 
 namespace Jade {
-	struct Material {
-		glm::vec3 ambient;
-		glm::vec3 diffuse;
-		glm::vec3 specular;
-		float shininess;
-	};
-
     struct DirectionalLight {
         glm::vec3 direction;
 
@@ -29,17 +22,5 @@ namespace Jade {
         glm::vec3 ambient;
         glm::vec3 diffuse;
         glm::vec3 specular;
-    };
-
-    struct TexturedMaterial {
-        Texture diffuse;
-        Texture specular;
-        float shininess;
-    };
-
-    struct DiffuseMaterial {
-        Texture diffuse;
-        glm::vec3 specular;
-        float shininess;
     };
 }
