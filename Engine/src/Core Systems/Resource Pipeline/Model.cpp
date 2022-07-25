@@ -19,7 +19,7 @@ namespace Jade {
 		fileName += m_Name;
 		fileName += internalBinaryExtension;
 
-		/*std::ifstream f(fileName);
+		std::ifstream f(fileName);
 		if (f.good()) {
 			std::string fileNameNoExtension = "";
 			fileNameNoExtension += m_Directory.c_str();
@@ -29,12 +29,15 @@ namespace Jade {
 		}
 		else {
 			loadFromRaw(flipTextures);
-		}*/
-		loadFromRaw(flipTextures);
-		//f.close();
+		}
+		f.close();
 	}
 
 	void Model::loadFromRaw(bool flipTextures) {
+		std::string message = "";
+		message += "Loading make take longer than usual, " + m_Name + " needs to be formated.";
+		LOG(message, INFO);
+
 		Assimp::Importer importer;
 		unsigned int flags = aiProcess_Triangulate | aiProcess_FlipWindingOrder;
 		if (flipTextures) {
@@ -59,17 +62,13 @@ namespace Jade {
 		createInternal();
 	}
 
-	void Model::createInternal() { //TODO
-		std::string message = "";
-		message += "Loading make take longer than usual, certain models need to be formated, including: ";
-		message += m_Name;
-		LOG(message, INFO);
-
+	void Model::createInternal() {
 		std::ofstream outputFile(m_Directory + '\\' + m_Name + internalBinaryExtension, std::ios::out | std::ios::binary);
 		if (outputFile.is_open()) {
 
 			size_t size = m_Meshes.size();
 			outputFile.write((char*)&size, sizeof(size_t));
+
 			std::vector<Mesh>::iterator it;
 			for (it = m_Meshes.begin(); it != m_Meshes.end(); it++) {
 
@@ -78,32 +77,45 @@ namespace Jade {
 				outputFile.write((char*)&size, sizeof(size_t));
 				outputFile.write((char*)&verticies[0], size);
 
-				size_t sizeVert = sizeof(Vertex);
-				size_t sizeUI = sizeof(unsigned int);
-
 				std::vector<unsigned int> indicies = it->getIndicies();
 				size = indicies.size() * sizeof(unsigned int);
 				outputFile.write((char*)&size, sizeof(size_t));
 				outputFile.write((char*)&indicies[0], size);
+
+				unsigned int index = (it)->getMaterialIndex();
+				outputFile.write((char*)&index, sizeof(unsigned int));
 			}
 
-			//size = m_Images.size();
-			//outputFile.write((char*)&size, sizeof(size_t));
-			////std::vector<ImageMetaData>::iterator it2;
-			//for (it2 = m_Images.begin(); it2 != m_Images.end(); it2++) {
-			//	ImageMetaData image = *it2;
-			//	outputFile.write((char*)&image.type, sizeof(aiTextureType));
+			size = m_Materials.size();
+			outputFile.write((char*)&size, sizeof(size_t));
 
-			//	Image pic = image.image;
-			//	size = pic.getWidth();
-			//	outputFile.write((char*)&size, sizeof(size_t));
-			//	size = pic.getHeight();
-			//	outputFile.write((char*)&size, sizeof(size_t));
-			//	size = pic.getChannels();
-			//	outputFile.write((char*)&size, sizeof(size_t));
+			std::vector<AssimpMaterial>::iterator it2;
+			for (it2 = m_Materials.begin(); it2 != m_Materials.end(); it2++) {
+				AssimpMaterial material = *it2;
 
-			//	outputFile.write((char*)&pic.getContent()[0], pic.getWidth() * pic.getHeight() * pic.getChannels() * sizeof(unsigned char));
-			//}
+				Image diffuseImage = material.diffuse;
+				size = diffuseImage.getWidth();
+				outputFile.write((char*)&size, sizeof(size_t));
+				size = diffuseImage.getHeight();
+				outputFile.write((char*)&size, sizeof(size_t));
+				size = diffuseImage.getChannels();
+				outputFile.write((char*)&size, sizeof(size_t));
+
+				outputFile.write((char*)&diffuseImage.getContent()[0], diffuseImage.getWidth() * diffuseImage.getHeight() * diffuseImage.getChannels() * sizeof(unsigned char));
+
+				Image specularImage = material.specular;
+				size = specularImage.getWidth();
+				outputFile.write((char*)&size, sizeof(size_t));
+				size = specularImage.getHeight();
+				outputFile.write((char*)&size, sizeof(size_t));
+				size = specularImage.getChannels();
+				outputFile.write((char*)&size, sizeof(size_t));
+
+				outputFile.write((char*)&specularImage.getContent()[0], specularImage.getWidth() * specularImage.getHeight() * specularImage.getChannels() * sizeof(unsigned char));
+
+				outputFile.write((char*)&material.shininess, sizeof(float));
+				outputFile.write((char*)&material.index, sizeof(unsigned int));
+			}
 
 			outputFile.close();
 		}
@@ -112,62 +124,80 @@ namespace Jade {
 		}
 	}
 
-	void Model::loadFromInternal(const std::string& fileName) { //TODO
-		//std::ifstream inputFileStream(fileName + internalBinaryExtension, std::ios::in | std::ios::binary);
-		//if (inputFileStream.is_open()) {
-		//	size_t size = 0;
-		//	size_t numberOfMeshes = 0;
-		//	inputFileStream.read((char*)&numberOfMeshes, sizeof(size_t));
+	void Model::loadFromInternal(const std::string& fileName) {
+		std::ifstream inputFileStream(fileName + internalBinaryExtension, std::ios::in | std::ios::binary);
+		if (inputFileStream.is_open()) {
+			size_t size = 0;
+			size_t numberOfMeshes = 0;
 
-		//	std::vector<Mesh> meshes;
+			inputFileStream.read((char*)&numberOfMeshes, sizeof(size_t));
 
-		//	for (unsigned int i = 0; i < numberOfMeshes; i++) {
-		//		inputFileStream.read((char*)&size, sizeof(size_t));
-		//		
-		//		std::vector<Vertex> verticies(size / sizeof(Vertex));
-		//		inputFileStream.read((char*)&verticies[0], size);
+			std::vector<Mesh> meshes;
 
-		//		inputFileStream.read((char*)&size, sizeof(size_t));
+			for (unsigned int i = 0; i < numberOfMeshes; i++) {
 
-		//		std::vector<unsigned int> indicies(size / sizeof(unsigned int));
-		//		inputFileStream.read((char*)&indicies[0], size);
+				inputFileStream.read((char*)&size, sizeof(size_t));
+				std::vector<Vertex> verticies(size / sizeof(Vertex));
+				inputFileStream.read((char*)&verticies[0], size);
 
-		//		Mesh mesh(verticies, indicies);
-		//		meshes.push_back(mesh);
-		//	}
+				inputFileStream.read((char*)&size, sizeof(size_t));
+				std::vector<unsigned int> indicies(size / sizeof(unsigned int));
+				inputFileStream.read((char*)&indicies[0], size);
 
-		//	size_t numberOfTextures = 0;
-		//	inputFileStream.read((char*)&numberOfTextures, sizeof(size_t));
+				unsigned int index;
+				inputFileStream.read((char*)&index, sizeof(unsigned int));
 
-		//	std::vector<ImageMetaData> images;
+				meshes.push_back(Mesh(verticies, indicies, index));
+			}
 
-		//	for (unsigned int i = 0; i < numberOfTextures; i++) {
-		//		aiTextureType imageType;
-		//		int width = 0, height = 0, channels = 0;
+			m_Meshes = meshes;
 
-		//		inputFileStream.read((char*)&imageType, sizeof(aiTextureType));
-		//		inputFileStream.read((char*)&size, sizeof(size_t));
-		//		width = (int)size;
-		//		inputFileStream.read((char*)&size, sizeof(size_t));
-		//		height = (int)size;
-		//		inputFileStream.read((char*)&size, sizeof(size_t));
-		//		channels = (int)size;
+			size_t numberOfMaterials = 0;
+			inputFileStream.read((char*)&numberOfMaterials, sizeof(size_t));
 
-		//		unsigned char* imageData = new unsigned char[width * height * channels * sizeof(unsigned char)];
+			std::vector<AssimpMaterial> materials;
+			for (unsigned int i = 0; i < numberOfMaterials; i++) {
+				int width{ 0 }, height{ 0 }, channels{ 0 };
+				float shininess{ 0 };
+				unsigned int index{ 0 };
+			
+				inputFileStream.read((char*)&size, sizeof(size_t));
+				width = (int)size;
+				inputFileStream.read((char*)&size, sizeof(size_t));
+				height = (int)size;
+				inputFileStream.read((char*)&size, sizeof(size_t));
+				channels = (int)size;
+			
+				std::vector<unsigned char> imageData(width * height * channels * sizeof(unsigned char));
+			
+				inputFileStream.read((char*)&imageData[0], imageData.size());
+				Image diffuseImage(imageData, width, height, channels);
 
-		//		inputFileStream.read((char*)imageData, width * height * channels * sizeof(unsigned char));
+				inputFileStream.read((char*)&size, sizeof(size_t));
+				width = (int)size;
+				inputFileStream.read((char*)&size, sizeof(size_t));
+				height = (int)size;
+				inputFileStream.read((char*)&size, sizeof(size_t));
+				channels = (int)size;
 
-		//		Image image(imageData, width, height, channels);
-		//		images.push_back(ImageMetaData{ image, imageType });
-		//	}
+				imageData.resize(width * height * channels * sizeof(unsigned char));
 
-		//	m_Meshes = meshes;
-		//	m_Images = images;
-		//	inputFileStream.close();
-		//}
-		//else {
-		//	LOG("Unable to open binary file: " + fileName, ERROR);
-		//}
+				inputFileStream.read((char*)&imageData[0], imageData.size());
+				Image specularImage(imageData, width, height, channels);
+
+				inputFileStream.read((char*)&shininess, sizeof(float));
+				inputFileStream.read((char*)&index, sizeof(unsigned int));
+
+				materials.push_back(AssimpMaterial{ diffuseImage, specularImage, shininess, index });
+			}
+
+			m_Materials = materials;
+
+			inputFileStream.close();
+		}
+		else {
+			LOG("Unable to open binary file: " + fileName, ERROR);
+		}
 	}
 
 	void Model::processNode(aiNode* node, const aiScene* scene) {
