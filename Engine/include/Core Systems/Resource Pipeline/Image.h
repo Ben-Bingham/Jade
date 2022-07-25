@@ -25,8 +25,23 @@ namespace Jade {
 			stbi_image_free(data);
 		}
 
-		Image(unsigned char* content, int width, int height, int channels) 
-			: m_Content(content), m_Width(width), m_Height(height), m_Channels(channels), m_Stbi(false) {}
+		Image(const std::string& path, const Colour& colour, unsigned int width = 1, unsigned int height = 1, unsigned int channels = 3)
+			: m_Path(path), m_Width(width), m_Height(height), m_Channels(channels) {
+
+			unsigned char r = (unsigned char)(colour.colour.x * 255);
+			unsigned char g = (unsigned char)(colour.colour.y * 255);
+			unsigned char b = (unsigned char)(colour.colour.z * 255);
+
+			m_Content.resize(m_Width * m_Height * m_Channels);
+
+			for (unsigned int i = 0; i < width * height * sizeof(unsigned char); i += 3) {
+				m_Content[i + 0] = r;
+				m_Content[i + 1] = g;
+				m_Content[i + 2] = b;
+			}
+
+			stbi_write_png(path.c_str(), width, height, 3, &m_Content[0], width * 3);
+		}
 
 		std::vector<unsigned char> getContent() const { return m_Content; }
 		int getWidth() const { return m_Width; }
