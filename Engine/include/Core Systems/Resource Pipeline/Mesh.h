@@ -15,11 +15,11 @@ namespace Jade {
 
 	class Mesh {
 	public:
-		Mesh(const std::vector<Vertex>& verticies, const std::vector<unsigned int>& indicies)
-			: m_Verticies(verticies), m_Indicies(indicies) {
+		Mesh(const std::vector<Vertex>& verticies, const std::vector<unsigned int>& indicies, unsigned int materialIndex = 0)
+			: m_Verticies(verticies), m_Indicies(indicies), m_MaterialIndex(materialIndex) {
 		}
 
-		Mesh() : m_Verticies(), m_Indicies() {}
+		Mesh() : m_Verticies(), m_Indicies(), m_MaterialIndex(0) {}
 
 		std::vector<float> getVerticiesAsFloatVector() const {
 			int numberOfFloatsInVertex = 8;
@@ -33,9 +33,11 @@ namespace Jade {
 
 		std::vector<unsigned int> getIndicies() const { return m_Indicies; }
 		std::vector<Vertex> getVerticies() const { return m_Verticies; }
+		unsigned int getMaterialIndex() const { return m_MaterialIndex; }
 
 	private:
 		std::vector<Vertex> m_Verticies;
 		std::vector<unsigned int> m_Indicies;
+		unsigned int m_MaterialIndex;
 	};
 }
