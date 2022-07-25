@@ -8,13 +8,11 @@ namespace Jade {
 	class RenderableObject;
 
 	enum RuleSet {
-		STANDARD, // Vertex postions, and normals along with material, implemets Phong lighting
-		TEXTURE,  // Same as standard but has tex cords and textures aswell, implemets Phong lighting
-		SOLID_COLOUR, // Vertex postions, along with static object colour, implemets No lighting
-		DIFFUSE,  // Same as standard but has tex cords and only diffuse texture, implemets Phong lighting
+		SOLID_COLOUR,	// Solid shading
+		PHONG			// Phong shading
 	};
 
-	class RenderingRuleSet {
+	class RenderingRuleSet { //TODO change name to shader
 	public:
 		RenderingRuleSet(RuleSet rules);
 

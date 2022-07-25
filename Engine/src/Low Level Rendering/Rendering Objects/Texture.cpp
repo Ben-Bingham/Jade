@@ -29,8 +29,7 @@ namespace Jade {
 			imageFormat = GL_RGB;
 		}
 
-		glTexImage2D(GL_TEXTURE_2D, 0, imageFormat, m_Image.getWidth(), m_Image.getHeight(), 0, imageFormat, GL_UNSIGNED_BYTE, m_Image.getContent());
-		m_Image.free();
+		glTexImage2D(GL_TEXTURE_2D, 0, imageFormat, m_Image.getWidth(), m_Image.getHeight(), 0, imageFormat, GL_UNSIGNED_BYTE, &m_Image.getContent()[0]);
 		
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}

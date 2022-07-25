@@ -9,6 +9,7 @@
 #include "FragmentShader.h"
 #include "ShaderStructs.h"
 #include "Low Level Rendering/Rendering Objects/Texture.h"
+#include "High Level Rendering/Material.h"
 
 namespace Jade {
 	class ShaderProgram {
@@ -51,7 +52,7 @@ namespace Jade {
 		}
 
 		void setPointLights(const std::string& structName, std::vector<PointLight>& lights) const {
-			setInt("numberOfLights", (int)lights.size());
+			setInt("numberOfPointLights", (int)lights.size());
 
 			int count = 0;
 			std::string StructName = "";
@@ -66,29 +67,32 @@ namespace Jade {
 			}
 		}
 
-		void setDirectionalLight(const std::string& structName, const DirectionalLight& directionalLight) {
+		void setDirectionalLight(const std::string& structName, const DirectionalLight& directionalLight) const {
 			setVector3f(structName + ".direction", directionalLight.direction);
 			setVector3f(structName + ".ambient", directionalLight.ambient);
 			setVector3f(structName + ".diffuse", directionalLight.diffuse);
 			setVector3f(structName + ".specular", directionalLight.specular);
 		}
 
-		void setMaterial(const std::string& structName, const Material& material) const {
-			setVector3f(structName + ".ambient", material.ambient);
-			setVector3f(structName + ".diffuse", material.diffuse);
-			setVector3f(structName + ".specular", material.specular);
-			setFloat(structName + ".shininess", material.shininess);
+		void setDirectionalLights(const std::string& structName, std::vector<DirectionalLight>& lights) const { //TODO testing
+			setInt("numberOfDirectionalLights", (int)lights.size());
+
+			int count = 0;
+			std::string StructName = "";
+			std::vector<DirectionalLight>::iterator it;
+			for (it = lights.begin(); it != lights.end(); it++) {
+				StructName = structName;
+				StructName += "[";
+				StructName += std::to_string(count);
+				StructName += "]";
+				setDirectionalLight(StructName, *it);
+				count++;
+			}
 		}
 
-		void setTexturedMaterial(const std::string& structName, const TexturedMaterial& material) const {
+		void setMaterial(const std::string& structName, const Material& material) const {
 			setInt(structName + ".diffuse", 0);
 			setInt(structName + ".specular", 1);
-			setFloat(structName + ".shininess", material.shininess);
-		}
-
-		void setDiffuseMaterial(const std::string& structName, const DiffuseMaterial& material) const {
-			setInt(structName + ".diffuse", 0);
-			setVector3f(structName + ".specular", material.specular);
 			setFloat(structName + ".shininess", material.shininess);
 		}
 

@@ -10,9 +10,33 @@
 #include "Mesh.h"
 
 namespace Jade {
-	struct ImageMetaData {
-		Image image;
-		aiTextureType type;
+	enum ImageType {
+		DIFFUSE,
+		SPECULAR
+	};
+
+	struct AssimpMaterial {
+		Image diffuse;
+		Image specular;
+		float shininess;
+		unsigned int index;
+
+		bool operator==(const AssimpMaterial& other) {
+			if (diffuse.getPath() == other.diffuse.getPath() &&
+				specular.getPath() == other.specular.getPath() &&
+				shininess == other.shininess &&
+				index == other.index) {
+
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+
+		bool operator!=(const AssimpMaterial& other) {
+			return !operator==(other);
+		}
 	};
 
 	class Model {
@@ -20,42 +44,14 @@ namespace Jade {
 		Model(const std::string& path, bool flipTextures);
 
 		std::vector<Mesh> getMeshes() { return m_Meshes; }
-		Image* getDiffuseImage() {
-			std::vector<ImageMetaData>::iterator it;
-			for (it = m_Images.begin(); it != m_Images.end(); it++) {
-				if (it->type == aiTextureType_DIFFUSE) {
-					return &(*it).image;
-				}
-			}
-			std::string message = "";
-			message += "Model: ";
-			message += m_Path;
-			message += " does not have a diffuse texture";
-			LOG(message, ERROR);
-			return nullptr;
-		}
-
-		Image* getSpecularImage() {
-			std::vector<ImageMetaData>::iterator it;
-			for (it = m_Images.begin(); it != m_Images.end(); it++) {
-				if (it->type == aiTextureType_SPECULAR) {
-					return &(*it).image;
-				}
-			}
-			std::string message = "";
-			message += "Model: ";
-			message += m_Path;
-			message += " does not have a specular texture";
-			LOG(message, ERROR);
-			return nullptr;
-		}
+		std::vector<AssimpMaterial> getMaterials() { return m_Materials; }
 
 	private:
 		std::string m_Path;
 		std::string m_Directory;
 		std::string m_Name;
 		std::vector<Mesh> m_Meshes;
-		std::vector<ImageMetaData> m_Images;
+		std::vector<AssimpMaterial> m_Materials;
 
 		void loadFromRaw(bool flipTextures);
 		void createInternal();
@@ -64,7 +60,9 @@ namespace Jade {
 		void processNode(aiNode* node, const aiScene* scene);
 		Mesh processMesh(aiMesh* mesh, const aiScene* scene);
 		void loadTextures(const aiScene* scene);
-		void loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::vector<ImageMetaData>& textureList);
+		AssimpMaterial loadMaterial(aiMaterial* mat, unsigned int index);
+		Image loadMaterialImage(aiMaterial* mat, ImageType type, unsigned int index);
+		aiTextureType imageTypeToTextureType(ImageType type);
 
 		static std::string internalBinaryExtension;
 

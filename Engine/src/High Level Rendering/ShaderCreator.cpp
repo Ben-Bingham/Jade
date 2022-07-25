@@ -9,10 +9,8 @@ namespace Jade {
 
 		switch (m_RuleSet->ruleSet) {
 		default:
-		case STANDARD: vertexShaderPath += "StandardRuleSet.vert"; break;
 		case SOLID_COLOUR: vertexShaderPath += "SolidRuleSet.vert"; break;
-		case TEXTURE: vertexShaderPath += "TextureRuleSet.vert"; break;
-		case DIFFUSE: vertexShaderPath += "DiffuseRuleSet.vert"; break;
+		case PHONG: vertexShaderPath += "PhongRuleSet.vert"; break;
 		}
 
 		TextFile vertexShaderFile(vertexShaderPath);
@@ -25,10 +23,8 @@ namespace Jade {
 
 		switch (m_RuleSet->ruleSet) {
 		default:
-		case STANDARD: fragmentShaderPath += "StandardRuleSet.frag"; break;
 		case SOLID_COLOUR: fragmentShaderPath += "SolidRuleSet.frag"; break;
-		case TEXTURE: fragmentShaderPath += "TextureRuleSet.frag"; break;
-		case DIFFUSE: fragmentShaderPath += "DiffuseRuleSet.frag"; break;
+		case PHONG: fragmentShaderPath += "PhongRuleSet.frag"; break;
 		}
 
 		TextFile fragmentShaderFile(fragmentShaderPath);
