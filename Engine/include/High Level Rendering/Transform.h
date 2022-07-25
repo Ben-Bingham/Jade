@@ -24,7 +24,7 @@ namespace Jade {
 			m_Model = glm::scale(m_Model, scale);
 		}
 
-		void rotate(Rotation& rotation) {
+		void rotate(Rotation& rotation) { //TODO broken
 			m_Model = glm::rotate(m_Model, glm::radians(rotation.angle), rotation.vector);
 		}
 
