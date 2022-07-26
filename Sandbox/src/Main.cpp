@@ -9,6 +9,7 @@
 #include "High Level Rendering/LightCreator.h"
 #include "Engine Structure/Application.h"
 #include "Entity Component System/Gameobject.h"
+#include "TestComponent.h"
 
 class Game : public Application {
 	float cameraSpeed = 0.4f;
@@ -180,13 +181,19 @@ class Game : public Application {
 		addRenderable(&light);
 	}
 
-	Jade::Gameobject gb;
+	Jade::Scene level1;
+	Jade::Gameobject gameobject;
+	TestComponent testComponent;
 
 	void Begin() override {
 		WINDOW.disableCursor();
 
 		initRulesets();
 		initRenderables();
+
+		setActiveScene(&level1);
+		level1.addGameobject(&gameobject);
+		gameobject.addComponent(&testComponent);
 	}
 
 	void Update() override {
@@ -201,7 +208,7 @@ class Game : public Application {
 int main() {
 	Jade::Image pic{ "assets\\textures\\container2.png" };
 
-	Game game;
+	Game game{};
 	game.start();
 
 	return 0;

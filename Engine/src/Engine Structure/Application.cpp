@@ -37,6 +37,8 @@ namespace Jade {
 		}
 
 		glCheckError();
+
+		m_ActiveScene->begin();
 	}
 
 	void Application::update() {
@@ -56,6 +58,8 @@ namespace Jade {
 
 		m_Renderer.setMatrices(view, WINDOW.getProjectionMatrix());
 		m_Renderer.render(CAMERA.getTransform().position);
+
+		m_ActiveScene->update();
 	}
 
 	void Application::lateUpdate() {
@@ -70,6 +74,8 @@ namespace Jade {
 
 		m_Renderer.dispose();
 		WINDOW.dispose();
+
+		m_ActiveScene->cleanup();
 	}
 
 	void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods) {

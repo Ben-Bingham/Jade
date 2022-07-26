@@ -9,6 +9,7 @@
 #include "Low Level Rendering/Window.h"
 #include "Core Systems/Human Interface Devices/Keyboard.h"
 #include "Core Systems/Human Interface Devices/Mouse.h"
+#include "Entity Component System/Scene.h"
 
 namespace Jade {
 	extern Window WINDOW;
@@ -40,14 +41,14 @@ namespace Jade {
 			m_Renderer.addRenderable(renderable);
 		}
 
-		virtual void Begin() {}
-		virtual void Update() {}
-		virtual void LateUpdate() {}
-		virtual void Cleanup() {}
+		void setActiveScene(Scene* scene) { m_ActiveScene = scene; }
 
-		void quit() {
-			WINDOW.setWindowShouldClose();
-		}
+		virtual void Begin() {} //TODO there needs to be a good way to remove these
+		virtual void Update() {} //TODO there needs to be a good way to remove these
+		virtual void LateUpdate() {} //TODO there needs to be a good way to remove these
+		virtual void Cleanup() {} //TODO there needs to be a good way to remove these
+		
+		void quit() { WINDOW.setWindowShouldClose(); }
 
 	private:
 		float m_LastMouseX = 0.0f;
@@ -55,8 +56,9 @@ namespace Jade {
 
 		bool m_MouseHasMoved = false;
 
-		Renderer m_Renderer;
-		GLEW m_Glew;
+		Renderer m_Renderer{};
+		GLEW m_Glew{};
+		Scene* m_ActiveScene{};
 
 		void begin();
 		void update();
