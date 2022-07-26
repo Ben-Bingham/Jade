@@ -4,7 +4,7 @@
 class TestComponent : public Jade::Component {
 public:
 	void Update() {
-		LOG("Gameobject updated");
+		//LOG("Gameobject updated");
 	}
 
 private:
