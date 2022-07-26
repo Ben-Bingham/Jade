@@ -87,8 +87,8 @@ class Game : public Application {
 
 	Jade::Model bike = Jade::Model("assets\\models\\bike\\swapfiets.obj", true);
 
-	Jade::SolidRuleSet solidRuleset;
-	Jade::PhongRuleSet phongRuleset;
+	Jade::SolidShader solidRuleset;
+	Jade::PhongShader phongRuleset;
 
 	glm::vec3 lightPositon = glm::vec3(1.2f, 1.0f, 10.0f);
 

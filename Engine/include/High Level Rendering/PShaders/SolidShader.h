@@ -3,9 +3,9 @@
 #include "PShader.h"
 
 namespace Jade {
-	class SolidRuleSet : public PShader {
+	class SolidShader : public PShader {
 	public:
-		SolidRuleSet() : PShader(SOLID_COLOUR) {}
+		SolidShader() : PShader(SOLID_COLOUR) {}
 
 		void bindAdditionals() override {}
 
