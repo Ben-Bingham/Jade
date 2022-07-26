@@ -38,7 +38,7 @@ namespace Jade {
 
 		glCheckError();
 
-		m_ActiveScene->begin(*this);
+		m_ActiveScene->begin(/**this*/);
 	}
 
 	void Application::update() {
