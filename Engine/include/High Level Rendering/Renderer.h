@@ -19,10 +19,10 @@ namespace Jade {
 
 		void setMatrices(const glm::mat4& view, const glm::mat4& projection);
 
-		void addRuleSet(PShader* ruleSet) {
+		void addShader(PShader* ruleSet) {
 			for (PShader* rSet : m_RuleSets) {
 				if (rSet->ruleSet == ruleSet->ruleSet) {
-					LOG("There is alread a ruleset of that type attached to the renderer, the one you added probably wont be uses", WARNING);
+					LOG("There is alread a ruleset of that type attached to the renderer, the one you added probably wont be used", WARNING);
 					break;
 				}
 			}

@@ -7,14 +7,14 @@
 namespace Jade {
 	class RenderableObject;
 
-	enum RuleSet {
+	enum ShaderType {
 		SOLID_COLOUR,	// Solid shading
 		PHONG			// Phong shading
 	};
 
-	class PShader { //TODO change name to shader
+	class PShader {
 	public:
-		PShader(RuleSet rules);
+		PShader(ShaderType rules);
 
 		void bind() { 
 			m_Program.use();
@@ -27,7 +27,7 @@ namespace Jade {
 
 		void dispose() { m_Program.dispose(); }
 
-		RuleSet ruleSet;
+		ShaderType ruleSet;
 	private:
 		int m_ID;
 		ShaderProgram m_Program;

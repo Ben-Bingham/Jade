@@ -2,7 +2,7 @@
 #include "High Level Rendering/ShaderCreator.h"
 
 namespace Jade {
-	PShader::PShader(RuleSet rules)
+	PShader::PShader(ShaderType rules)
 		: m_Program(programInit()), m_ID(getNextID()), ruleSet(rules) {}
 
 	ShaderProgram PShader::programInit() {
