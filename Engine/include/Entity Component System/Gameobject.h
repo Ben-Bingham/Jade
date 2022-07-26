@@ -13,6 +13,11 @@ namespace Jade {
 			// Could also brute force it and try to cast each Component to the specified type
 		}
 
+
+		void begin();
+		void update();
+		void cleanup();
+
 	private:
 		std::vector<Component*> m_Components;
 		unsigned int m_ID;
@@ -20,24 +25,6 @@ namespace Jade {
 		unsigned int getNextID() {
 			staticID++;
 			return staticID;
-		}
-
-		void update() {
-			for (Component* component : m_Components) {
-				component->update();
-			}
-		}
-
-		void begin() {
-			for (Component* component : m_Components) {
-				component->begin();
-			}
-		}
-
-		void cleanup() {
-			for (Component* component : m_Components) {
-				component->cleanup();
-			}
 		}
 
 		static unsigned int staticID;
