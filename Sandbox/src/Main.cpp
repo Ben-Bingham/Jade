@@ -8,6 +8,7 @@
 #include "High Level Rendering/MaterialCreator.h"
 #include "High Level Rendering/LightCreator.h"
 #include "Engine Structure/Application.h"
+#include "Entity Component System/Gameobject.h"
 
 class Game : public Application {
 	float cameraSpeed = 0.4f;
@@ -178,6 +179,8 @@ class Game : public Application {
 		light.getTransform().scale = glm::vec3(0.2f);
 		addRenderable(&light);
 	}
+
+	Jade::Gameobject gb;
 
 	void Begin() override {
 		WINDOW.disableCursor();
