@@ -12,9 +12,9 @@ namespace Jade {
 		PHONG			// Phong shading
 	};
 
-	class RenderingRuleSet { //TODO change name to shader
+	class PShader { //TODO change name to shader
 	public:
-		RenderingRuleSet(RuleSet rules);
+		PShader(RuleSet rules);
 
 		void bind() { 
 			m_Program.use();

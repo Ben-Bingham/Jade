@@ -2,7 +2,7 @@
 #include <vector>
 #include <glm/glm.hpp>
 
-#include "High Level Rendering/Rule Sets/RenderingRuleSet.h"
+#include "High Level Rendering/PShaders/PShader.h"
 #include "Low Level Rendering/Rendering Objects/VertexAttributeObject.h"
 #include "Low Level Rendering/Rendering Objects/VertexBufferObject.h"
 #include "Low Level Rendering/Rendering Objects/ElementBufferObject.h"
@@ -30,11 +30,11 @@ namespace Jade {
 			init();
 		}
 
-		void render(const RenderingRuleSet& ruleSet);
+		void render(const PShader& ruleSet);
 
-		virtual void additionalRendering(const RenderingRuleSet& ruleSet) const = 0;
+		virtual void additionalRendering(const PShader& ruleSet) const = 0;
 
-		bool followsRuleSet(const RenderingRuleSet& ruleSet) {
+		bool followsRuleSet(const PShader& ruleSet) {
 			return ruleSet.ruleSet == m_RuleSet;
 		}
 

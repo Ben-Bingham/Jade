@@ -32,7 +32,7 @@ namespace Jade {
 			cleanup();
 		}
 
-		void addRuleset(RenderingRuleSet* ruleset) { //TODO remove
+		void addRuleset(PShader* ruleset) { //TODO remove
 			m_Renderer.addRuleSet(ruleset);
 		}
 

@@ -1,15 +1,15 @@
-#include "High Level Rendering/Rule Sets/RenderingRuleSet.h"
+#include "High Level Rendering/PShaders/PShader.h"
 #include "High Level Rendering/ShaderCreator.h"
 
 namespace Jade {
-	RenderingRuleSet::RenderingRuleSet(RuleSet rules) 
+	PShader::PShader(RuleSet rules)
 		: m_Program(programInit()), m_ID(getNextID()), ruleSet(rules) {}
 
-	ShaderProgram RenderingRuleSet::programInit() {
+	ShaderProgram PShader::programInit() {
 		ShaderCreator creator(this);
 		ShaderProgram program(creator.getFragmentShader(), creator.getVertexShader());
 		return program;
 	}
 
-	int RenderingRuleSet::ID = -1;
+	int PShader::ID = -1;
 }

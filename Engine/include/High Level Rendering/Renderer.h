@@ -3,7 +3,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtx/string_cast.hpp>
 
-#include "Rule Sets/RenderingRuleSet.h"
+#include "PShaders/PShader.h"
 #include "High Level Rendering/Renderable Objects/RenderableObject.h"
 #include "Core Systems/Logging/OpenGLErrors.h"
 
@@ -19,8 +19,8 @@ namespace Jade {
 
 		void setMatrices(const glm::mat4& view, const glm::mat4& projection);
 
-		void addRuleSet(RenderingRuleSet* ruleSet) {
-			for (RenderingRuleSet* rSet : m_RuleSets) {
+		void addRuleSet(PShader* ruleSet) {
+			for (PShader* rSet : m_RuleSets) {
 				if (rSet->ruleSet == ruleSet->ruleSet) {
 					LOG("There is alread a ruleset of that type attached to the renderer, the one you added probably wont be uses", WARNING);
 					break;
@@ -31,7 +31,7 @@ namespace Jade {
 		}
 
 		void setVector3f(const std::string name, const glm::vec3& vector) {
-			for (RenderingRuleSet* ruleSet : m_RuleSets) {
+			for (PShader* ruleSet : m_RuleSets) {
 				ruleSet->getProgram().use();
 				ruleSet->getProgram().setVector3f(name, vector);
 			}
@@ -44,13 +44,13 @@ namespace Jade {
 				}
 			}
 
-			for (RenderingRuleSet* ruleSet : m_RuleSets) {
+			for (PShader* ruleSet : m_RuleSets) {
 				ruleSet->dispose();
 			}
 		}
 
 	private:
-		std::vector<RenderingRuleSet*> m_RuleSets;
+		std::vector<PShader*> m_RuleSets;
 		std::vector<std::vector<RenderableObject*>> m_Renderables;
 		glm::mat4 m_View;
 		glm::mat4 m_Projection;

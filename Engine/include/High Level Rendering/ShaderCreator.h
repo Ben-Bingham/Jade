@@ -1,12 +1,12 @@
 #pragma once
 #include <vector>
 
-#include "Rule Sets/RenderingRuleSet.h"
+#include "PShaders/PShader.h"
 
 namespace Jade {
 	class ShaderCreator {
 	public:
-		ShaderCreator(RenderingRuleSet* ruleSet)
+		ShaderCreator(PShader* ruleSet)
 			: m_RuleSet(ruleSet), m_VertexShader(vertexShaderInit()), m_FragmentShader(fragmentShaderInit()) {}
 
 		VertexShader getVertexShader() { return m_VertexShader; }
@@ -18,7 +18,7 @@ namespace Jade {
 		}
 
 	private:
-		RenderingRuleSet* m_RuleSet;
+		PShader* m_RuleSet;
 
 		VertexShader m_VertexShader;
 		FragmentShader m_FragmentShader;

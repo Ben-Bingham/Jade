@@ -5,7 +5,7 @@
 #include "High Level Rendering/Renderable Objects/RenderableObject.h"
 
 namespace Jade {
-    void RenderableObject::render(const RenderingRuleSet& ruleSet) {
+    void RenderableObject::render(const PShader& ruleSet) {
         additionalRendering(ruleSet);
         m_Transform.calculateModelMatrix();
         ruleSet.getProgram().setMatrix4f("model", m_Transform.getMatrix());

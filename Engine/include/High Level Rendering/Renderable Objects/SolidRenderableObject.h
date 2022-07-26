@@ -12,7 +12,7 @@ namespace Jade {
 			: RenderableObject(SOLID_COLOUR, shape), m_ObjectColour(objectColour) {
 		}
 
-		void additionalRendering(const RenderingRuleSet& ruleSet) const override {
+		void additionalRendering(const PShader& ruleSet) const override {
 			ruleSet.getProgram().setVector4f("objectColour", m_ObjectColour.colour);
 		}
 

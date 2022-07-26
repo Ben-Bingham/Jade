@@ -2,13 +2,13 @@
 
 #include <vector>
 
-#include "RenderingRuleSet.h"
+#include "PShader.h"
 #include "Low Level Rendering/Shaders/ShaderStructs.h"
 
 namespace Jade {
-	class PhongRuleSet : public RenderingRuleSet{
+	class PhongRuleSet : public PShader {
 	public:
-		PhongRuleSet() : RenderingRuleSet(PHONG)  {}
+		PhongRuleSet() : PShader(PHONG)  {}
 
 		void bindAdditionals() override {
 			getProgram().setPointLights("pointLights", m_PointLights);

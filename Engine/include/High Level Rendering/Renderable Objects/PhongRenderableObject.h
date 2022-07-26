@@ -11,7 +11,7 @@ namespace Jade {
 		PhongRenderable(Material* material, Mesh mesh)
 			: RenderableObject(PHONG, mesh), m_Material(material) {}
 
-		void additionalRendering(const RenderingRuleSet& ruleSet) const override {
+		void additionalRendering(const PShader& ruleSet) const override {
 			Texture::activateUnit(0);
 			m_Material->diffuse.bind();
 			Texture::activateUnit(1);

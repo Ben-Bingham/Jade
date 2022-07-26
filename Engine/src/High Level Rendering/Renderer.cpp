@@ -3,7 +3,7 @@
 namespace Jade{
 	void Renderer::addRenderable(RenderableObject* renderable) {
 		int count = 0;
-		for (RenderingRuleSet* ruleSet : m_RuleSets) {
+		for (PShader* ruleSet : m_RuleSets) {
 			if (renderable->followsRuleSet(*ruleSet)) {
 				m_Renderables[count].push_back(renderable);
 				return;
@@ -15,7 +15,7 @@ namespace Jade{
 
 	void Renderer::render(glm::vec3 cameraPos) {
 		int count = 0;
-		for (RenderingRuleSet* ruleSet : m_RuleSets) {
+		for (PShader* ruleSet : m_RuleSets) {
 			ruleSet->bind();
 			ruleSet->getProgram().setVector3f("cameraPosition", cameraPos);
 			ruleSet->bindAdditionals();

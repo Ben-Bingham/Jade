@@ -1,7 +1,8 @@
 #include <glm/glm.hpp>
 
-#include "High Level Rendering/Rule Sets/SolidRenderingRuleSet.h"
-#include "High Level Rendering/Rule Sets/PhongRenderingRuleSet.h"
+#include "High Level Rendering/PShaders/PShader.h"
+#include "High Level Rendering/PShaders/PhongShader.h"
+#include "High Level Rendering/PShaders/SolidShader.h"
 #include "High Level Rendering/Renderable Objects/SolidRenderableObject.h"
 #include "High Level Rendering/Renderable Objects/PhongRenderableObject.h"
 #include "High Level Rendering/MaterialCreator.h"
