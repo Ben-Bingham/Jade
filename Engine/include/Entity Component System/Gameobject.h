@@ -8,9 +8,15 @@ namespace Jade {
 		Gameobject() : m_ID(getNextID()) {}
 
 		void addComponent(Component* component) { m_Components.push_back(component); }
-		Component* getComponent() {
-			//TODO maybe with some kind of ID system for components and key value pairs
-			// Could also brute force it and try to cast each Component to the specified type
+		template<typename T>
+		T* getComponent() {
+			for (Component* component : m_Components) {
+				T* desiredComponent = dynamic_cast<T*>(component);
+				if (desiredComponent != nullptr) {
+					return desiredComponent;
+				}
+			}
+			return nullptr;
 		}
 
 		void addChild(Gameobject* gameobject) { m_Children.push_back(gameobject); }
