@@ -16,7 +16,7 @@ namespace Jade {
 	extern Mouse MOUSE;
 	extern Camera CAMERA;
 
-	class Application {
+	class Application { //TODO make it so that the user can optionally attach a callback to the mouse moving or scrolling
 	public:
 		Application() {}
 
