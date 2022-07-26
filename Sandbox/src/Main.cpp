@@ -9,8 +9,6 @@
 #include "Engine Structure/Application.h"
 
 class Game : public Application {
-	Jade::Camera& camera = getCamera();
-
 	float cameraSpeed = 0.4f;
 	float mouseSensitivity = 0.1f;
 
@@ -44,31 +42,31 @@ class Game : public Application {
 		direction.y = sin(glm::radians(pitch));
 		direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
 
-		camera.front = glm::vec3(0.0f);
-		camera.front = glm::normalize(direction);
+		CAMERA.front = glm::vec3(0.0f);
+		CAMERA.front = glm::normalize(direction);
 
 		if (KEYBOARD.getKeyPressed(Jade::KEY_W)) { //TODO delta time
-			camera.getTransform().position += camera.front * cameraSpeed;
+			CAMERA.getTransform().position += CAMERA.front * cameraSpeed;
 		}
 
 		if (KEYBOARD.getKeyPressed(Jade::KEY_A)) {
-			camera.getTransform().position -= camera.right * cameraSpeed;
+			CAMERA.getTransform().position -= CAMERA.right * cameraSpeed;
 		}
 
 		if (KEYBOARD.getKeyPressed(Jade::KEY_S)) {
-			camera.getTransform().position -= camera.front * cameraSpeed;
+			CAMERA.getTransform().position -= CAMERA.front * cameraSpeed;
 		}
 
 		if (KEYBOARD.getKeyPressed(Jade::KEY_D)) {
-			camera.getTransform().position += camera.right * cameraSpeed;
+			CAMERA.getTransform().position += CAMERA.right * cameraSpeed;
 		}
 
 		if (KEYBOARD.getKeyPressed(Jade::KEY_SPACE)) {
-			camera.getTransform().position += glm::vec3(0.0f, 1.0f, 0.0f) * cameraSpeed;
+			CAMERA.getTransform().position += glm::vec3(0.0f, 1.0f, 0.0f) * cameraSpeed;
 		}
 
 		if (KEYBOARD.getKeyPressed(Jade::KEY_LEFT_SHIFT)) {
-			camera.getTransform().position -= glm::vec3(0.0f, 1.0f, 0.0f) * cameraSpeed;
+			CAMERA.getTransform().position -= glm::vec3(0.0f, 1.0f, 0.0f) * cameraSpeed;
 		}
 
 		int scrollOffset = MOUSE.getScrollOffset();
@@ -148,7 +146,7 @@ class Game : public Application {
 		}
 
 		for each (Jade::Mesh mesh in bike.getMeshes()) {
-			bikeRenderables.push_back(Jade::PhongRenderable(&bikeMaterials[mesh.getMaterialIndex()], mesh)); //TODO inificent making too many materials
+			bikeRenderables.push_back(Jade::PhongRenderable(&bikeMaterials[mesh.getMaterialIndex()], mesh));
 		}
 
 		std::vector<Jade::PhongRenderable>::iterator it2;

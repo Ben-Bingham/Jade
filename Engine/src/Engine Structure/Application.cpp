@@ -8,6 +8,7 @@ namespace Jade {
 	Window WINDOW(640, 480, "", false); //TODO make a getter that creates one than always returns the same one
 	Keyboard KEYBOARD(&WINDOW);
 	Mouse MOUSE;
+	Camera CAMERA(45.0f);
 
 	void Application::begin() {
 		Begin();
@@ -46,15 +47,15 @@ namespace Jade {
 		glClearColor(0.549f, 0.549f, 0.549f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		m_Camera.updateCameraVectors();
+		CAMERA.updateCameraVectors();
 
 		glm::mat4 view;
-		view = m_Camera.getViewMatrix();
+		view = CAMERA.getViewMatrix();
 
-		WINDOW.calculateProjectionMatrix(m_Camera.getFOV());
+		WINDOW.calculateProjectionMatrix(CAMERA.getFOV());
 
 		m_Renderer.setMatrices(view, WINDOW.getProjectionMatrix());
-		m_Renderer.render(m_Camera.getTransform().position);
+		m_Renderer.render(CAMERA.getTransform().position);
 	}
 
 	void Application::lateUpdate() {
@@ -87,7 +88,7 @@ namespace Jade {
 		WINDOW.setWidth((unsigned int)width);
 		WINDOW.setHeight((unsigned int)height);
 
-		WINDOW.calculateProjectionMatrix(45.0f); //TODO should not be hardcoded
+		WINDOW.calculateProjectionMatrix(CAMERA.getFOV());
 
 		glViewport(0, 0, WINDOW.getWidth(), WINDOW.getHeight());
 	}

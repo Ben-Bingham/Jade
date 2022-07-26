@@ -14,10 +14,11 @@ namespace Jade {
 	extern Window WINDOW;
 	extern Keyboard KEYBOARD;
 	extern Mouse MOUSE;
+	extern Camera CAMERA;
 
 	class Application {
 	public:
-		Application() : m_Camera(45.0f) {}
+		Application() {}
 
 		void start() {
 			glCheckError();
@@ -39,8 +40,6 @@ namespace Jade {
 			m_Renderer.addRenderable(renderable);
 		}
 
-		Camera& getCamera() { return m_Camera; }
-
 		virtual void Begin() {}
 		virtual void Update() {}
 		virtual void LateUpdate() {}
@@ -56,7 +55,6 @@ namespace Jade {
 
 		bool m_MouseHasMoved = false;
 
-		Camera m_Camera;
 		Renderer m_Renderer;
 		GLEW m_Glew;
 
@@ -78,4 +76,5 @@ namespace Jade {
 using Jade::KEYBOARD;
 using Jade::WINDOW;
 using Jade::MOUSE;
+using Jade::CAMERA;
 using Jade::Application;
