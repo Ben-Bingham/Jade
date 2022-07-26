@@ -34,7 +34,7 @@ namespace Jade {
 		}
 
 		void addRuleset(PShader* ruleset) { //TODO remove
-			m_Renderer.addRuleSet(ruleset);
+			m_Renderer.addShader(ruleset);
 		}
 
 		void addRenderable(RenderableObject* renderable) { //TODO remove
