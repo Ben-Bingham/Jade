@@ -10,6 +10,7 @@
 #include "Engine Structure/Application.h"
 #include "Entity Component System/Gameobject.h"
 #include "TestComponent.h"
+#include "Entity Component System/Components/PhongRenderingComponent.h"
 
 class Game : public Application {
 	float cameraSpeed = 0.4f;
@@ -181,9 +182,10 @@ class Game : public Application {
 		addRenderable(&light);
 	}
 
-	Jade::Scene level1;
-	Jade::Gameobject gameobject;
-	TestComponent testComponent;
+	Jade::Scene level1{};
+	Jade::Gameobject gameobject{};
+	TestComponent testComponent{};
+	Jade::PhongRenderingComponent renderingComponent{ &backpack };
 
 	void Begin() override {
 		WINDOW.disableCursor();
@@ -194,6 +196,7 @@ class Game : public Application {
 		setActiveScene(&level1);
 		level1.addGameobject(&gameobject);
 		gameobject.addComponent(&testComponent);
+		gameobject.addComponent(&renderingComponent);
 	}
 
 	void Update() override {
