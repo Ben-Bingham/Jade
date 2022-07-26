@@ -1,6 +1,8 @@
 #include "Entity Component System/Component.h"
 
 namespace Jade {
+	Component::~Component() {}
+
 	void Component::begin() {
 		Begin();
 	}

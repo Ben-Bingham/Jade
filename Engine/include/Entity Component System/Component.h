@@ -1,8 +1,10 @@
 #pragma once
+#include "Jade.h"
 
 namespace Jade {
 	class Component {
 	public:
+		Component() {}
 		Component(const Component&) = default;
 		Component(Component&&) = default;
 		Component& operator=(const Component&) = default;
@@ -16,8 +18,5 @@ namespace Jade {
 		void update();
 		void begin();
 		void cleanup();
-
-	private:
-
 	};
 }
