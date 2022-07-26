@@ -13,6 +13,7 @@ namespace Jade {
 			// Could also brute force it and try to cast each Component to the specified type
 		}
 
+		void addChild(Gameobject* gameobject) { m_Children.push_back(gameobject); }
 
 		void begin();
 		void update();
@@ -20,6 +21,8 @@ namespace Jade {
 
 	private:
 		std::vector<Component*> m_Components;
+		std::vector<Gameobject*> m_Children;
+
 		unsigned int m_ID;
 		
 		unsigned int getNextID() {
