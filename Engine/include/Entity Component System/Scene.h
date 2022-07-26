@@ -6,25 +6,33 @@
 namespace Jade {
 	class Application;
 
-	class Scene {
+	class Scene { //TODO move into engine structor folder
 	public:
 		Scene() {}
+		virtual ~Scene() = 0;
 
 		void addGameobject(Gameobject* gameobject) { m_Gameobjects.push_back(gameobject); }
 
-		void begin(Application& app);
+		void begin(/*Application& app*/);
+		void update();
+		void cleanup();
 
-		void update() {
-			for (Gameobject* gameobject : m_Gameobjects) {
-				gameobject->update();
+		void run() {
+			begin();
+			
+			while (isRunning) {
+				update();
+				break;
 			}
+
+			cleanup();
 		}
 
-		void cleanup() {
-			for (Gameobject* gameobject : m_Gameobjects) {
-				gameobject->cleanup();
-			}
+		void stop() {
+			isRunning = false;
 		}
+
+		bool isRunning{true};
 
 	private:
 		std::vector<Gameobject*> m_Gameobjects; //TODO if this is pointers that could really affect how reloading a scene would work
