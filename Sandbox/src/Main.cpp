@@ -11,7 +11,12 @@
 #include "Entity Component System/Gameobject.h"
 #include "TestComponent.h"
 #include "Entity Component System/Components/PhongRenderingComponent.h"
+#include "Engine Structure/Engine.h"
+#include "Level1.h"
+#include "Level2.h"
+#include "Level3.h"
 
+/*
 class Game : public Application {
 	float cameraSpeed = 0.4f;
 	float mouseSensitivity = 0.1f;
@@ -182,7 +187,6 @@ class Game : public Application {
 		addRenderable(&light);
 	}
 
-	Jade::Scene level1{};
 	Jade::Gameobject gameobject{};
 	TestComponent testComponent{};
 	Jade::PhongRenderingComponent renderingComponent{ &backpack };
@@ -207,12 +211,25 @@ class Game : public Application {
 		cameraMovement();
 	}
 };
+*/
 
 int main() {
-	Jade::Image pic{ "assets\\textures\\container2.png" };
+	Jade::Engine engine{};
+	engine.Start();
 
-	Game game{};
-	game.start();
+	Level1 lvl1{};
+	Level2 lvl2{};
+	Level3 lvl3{};
 
+	engine.loadScene(lvl1);
+
+	if (lvl1.playerScore > 5) {
+		engine.loadScene(lvl2);
+	}
+	else {
+		engine.loadScene(lvl3);
+	}
+
+	engine.End();
 	return 0;
 }
