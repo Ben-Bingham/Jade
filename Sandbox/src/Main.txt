@@ -10,7 +10,7 @@ Main.cpp:
 #include "cube.h"
 
 Jade::start() {
-	Jade::GameObject cube();
+	Jade::GameObject cube{};
 
 	cube.transform.x += 4; // Gameobjects only have a transform component at first
 
@@ -35,7 +35,7 @@ void cubeUpdateFunction(Jade::GameObject gameobject);
 cube.cpp:
 
 void cubeUpdateFunction(Jade::GameObject gameobject) {
-	if (Jade::KEY_HIT == Jade::W_KEY && JADE::KEYSTATUS == Jade::PRESSED) {
+	if (Jade::KEY_HIT == Jade::W_KEY && Jade::KEYSTATUS == Jade::PRESSED) {
 		Jade::Transform gbTransfomr = gameObject.getComponent<Jade::Transform>();
 		gbTransform.x += 3 * Jade::deltaTime;
 	}
