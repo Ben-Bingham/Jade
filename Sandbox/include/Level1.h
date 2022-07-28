@@ -32,6 +32,10 @@ public:
 		if (playerScore > 100) {
 			stop();
 		}
+
+		if (Jade::gKeyboard.getKeyPressed(Jade::KEY_ESCAPE)) {
+			Jade::gWindow.setWindowShouldClose();
+		}
 	}
 
 	void Cleanup() override {
