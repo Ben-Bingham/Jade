@@ -1,10 +1,14 @@
 #include "Entity Component System/Components/PhongRenderingComponent.h"
-#include "Engine Structure/Application.h"
+#include "Engine Structure/Engine.h"
 
 namespace Jade {
-	void PhongRenderingComponent::addRenderables(Application& app) {
-		for (PhongRenderable& renderable : m_Renderables) {
-			app.addRenderable(&renderable);
+	PhongRenderingComponent::PhongRenderingComponent(Model* model) {
+		for (const Jade::AssimpMaterial& material : model->getMaterials()) {
+			m_Materials.push_back(Jade::Material(material));
+		}
+
+		for each (Jade::Mesh mesh in model->getMeshes()) {
+			renderables.push_back(new PhongRenderable(&m_Materials[mesh.getMaterialIndex()], mesh)); //TODO delete
 		}
 	}
 }
