@@ -1,5 +1,5 @@
 #include "Engine Structure/Engine.h"
-#include "Entity Component System/Scene.h"
+#include "Engine Structure/Scene.h"
 
 namespace Jade {
 	Window gWindow{};
