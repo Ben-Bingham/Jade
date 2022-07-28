@@ -4,24 +4,18 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "High Level Rendering/Transform.h"
+#include "Engine Structure/Subsystems/Subsystem.h"
+#include "Entity Component System/Gameobject.h"
 
 namespace Jade {
-	enum MovementDirection {
-		FORWARD,
-		BACKWARD,
-		LEFT,
-		RIGHT,
-		UP,
-		DOWN
+	struct CameraInfo {
+		float* fov;
+		glm::vec3* position;
 	};
 
-	class Camera { //TODO make the camera class extend the future GameObject class
+	class Camera : public Gameobject {
 	public:
-		Camera(float fov = 45.0f, glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 worldUp = glm::vec3(0.0f, 1.0f, 0.0f))
-			: m_WorldUp(worldUp), front(glm::vec3(0.0f, 0.0f, -1.0f)), m_FOV(fov) {
-
-			updateCameraVectors();
-		}
+		Camera(float fov = 45.0f, glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 worldUp = glm::vec3(0.0f, 1.0f, 0.0f));
 
 		glm::mat4 getViewMatrix() { 
 			recalculateViewMatrix();
