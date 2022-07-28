@@ -5,12 +5,36 @@
 
 #include "Jade.h"
 
+#include "Engine Structure/Subsystems/Subsystem.h"
+
 namespace Jade {
-	class Window {
+	void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
+	void mousePositionCallback(GLFWwindow* window, double xpos, double ypos);
+	void mouseScrolWheelCallback(GLFWwindow* window, double xoffset, double yoffset);
+	void windowSizeCallBack(GLFWwindow* window, int width, int height);
+
+	class Window : public Subsystem {
 	public:
-		Window(int width, int height, std::string name, bool fullscreen);
+		Window();
 
 		~Window() { dispose(); }
+
+		void StartUp() override{
+			setMouseButtonCallback(mouseButtonCallback);
+			setMousePositionCallback(mousePositionCallback);
+			setScrollWheelCallback(mouseScrolWheelCallback);
+			setFrameBufferSizeCallback(windowSizeCallBack);
+		}
+
+		void ShutDown() override {
+
+		}
+
+		void update();
+
+		void lateUpdate() {
+			swapBuffers();
+		}
 
 		GLFWwindow* getWindow() const { return m_Window; }
 
@@ -53,7 +77,7 @@ namespace Jade {
 
 		void calculateProjectionMatrix(float FOV) {
 			m_ProjectionMatrix = glm::mat4(1.0);
-			m_ProjectionMatrix = glm::perspective(glm::radians(FOV), (float)((float)m_Width / (float)m_Height), 0.1f, 100.0f); //TODO
+			m_ProjectionMatrix = glm::perspective(glm::radians(FOV), (float)((float)m_Width / (float)m_Height), 0.1f, 100.0f);
 		}
 
 		glm::mat4 getProjectionMatrix() { return m_ProjectionMatrix; }

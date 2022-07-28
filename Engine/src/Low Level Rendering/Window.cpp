@@ -4,10 +4,12 @@
 #include "Jade.h"
 
 #include "Low Level Rendering/Window.h"
+#include "Engine Structure/Engine.h"
 
 namespace Jade {
-	Window::Window(int width, int height, std::string name, bool fullscreen)
-		: m_Width(width), m_Height(height), m_Name(name), m_ProjectionMatrix(1.0) {
+	Window::Window()
+		: m_Width(640), m_Height(480), m_Name("Jade Engine"), m_ProjectionMatrix(1.0) {
+		bool fullscreen = false;
 
 		if (!glfwInit()) {
 			LOG("GLFW failed to initilize.", Jade::ERROR);
@@ -22,10 +24,10 @@ namespace Jade {
 		const GLFWvidmode* mode = glfwGetVideoMode(glfwGetPrimaryMonitor());
 
 		if (fullscreen) {
-			m_Window = glfwCreateWindow(mode->width, mode->height, name.c_str(), glfwGetPrimaryMonitor(), NULL);
+			m_Window = glfwCreateWindow(mode->width, mode->height, m_Name.c_str(), glfwGetPrimaryMonitor(), NULL);
 		}
 		else {
-			m_Window = glfwCreateWindow(width, height, name.c_str(), NULL, NULL);
+			m_Window = glfwCreateWindow(m_Width, m_Height, m_Name.c_str(), NULL, NULL);
 		}
 
 		if (!m_Window) {
@@ -35,5 +37,31 @@ namespace Jade {
 
 		glfwMakeContextCurrent(m_Window);
 		glfwSwapInterval(1);
+	}
+
+	void Window::update() {
+		pollEvents();
+		calculateProjectionMatrix(gCamera.getFOV());
+	}
+
+	void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods) {
+		gMouse.setButton(Mouse::intToMouseButton(button), Mouse::intToMouseState(action));
+	}
+
+	void mousePositionCallback(GLFWwindow* window, double xpos, double ypos) {
+		gMouse.setPosition((unsigned int)xpos, (unsigned int)ypos);
+	}
+
+	void mouseScrolWheelCallback(GLFWwindow* window, double xoffset, double yoffset) {
+		gMouse.setScrollOffset((int)yoffset);
+	}
+
+	void windowSizeCallBack(GLFWwindow* window, int width, int height) {
+		gWindow.setWidth((unsigned int)width);
+		gWindow.setHeight((unsigned int)height);
+
+		gWindow.calculateProjectionMatrix(gCamera.getFOV());
+
+		glViewport(0, 0, gWindow.getWidth(), gWindow.getHeight());
 	}
 }
