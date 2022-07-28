@@ -1,16 +1,22 @@
 #pragma once
 
 #include <GL/glew.h>
+#include <GLFW/glfw3.h>
 
 #include "Jade.h"
 
+#include "Engine Structure/Subsystems/Subsystem.h"
+
 namespace Jade {
-	class GLEW {
+	class GLEW : public Subsystem {
 	public:
-		GLEW() {
-			if (glewInit() != GLEW_OK) {
-				LOG("GLEW failed to initilize.", Jade::ERROR);
-			}
-		}
+		GLEW() {}
+
+		void StartUp() override;
+
+		void ShutDown() override {}
 	};
+
+	void APIENTRY glDebugOutput(GLenum source, GLenum type, unsigned int id,
+		GLenum severity, GLsizei length, const char* message, const void* userParam);
 }
