@@ -7,14 +7,12 @@
 #include "High Level Rendering/Renderable Objects/PhongRenderableObject.h"
 #include "High Level Rendering/MaterialCreator.h"
 #include "High Level Rendering/LightCreator.h"
-#include "Engine Structure/Application.h"
 #include "Entity Component System/Gameobject.h"
 #include "TestComponent.h"
 #include "Entity Component System/Components/PhongRenderingComponent.h"
 #include "Engine Structure/Engine.h"
 #include "Level1.h"
-#include "Level2.h"
-#include "Level3.h"
+#include "Entity Component System/Components/FPSController.h"
 
 /*
 class Game : public Application {
@@ -215,21 +213,20 @@ class Game : public Application {
 
 int main() {
 	Jade::Engine engine{};
-	engine.Start();
+	engine.StartUp();
+
+	Jade::Camera camera;
+	engine.setCamera(camera);
+
+	Jade::FPSController fpsController;
+	camera.addComponent(&fpsController);
 
 	Level1 lvl1{};
-	Level2 lvl2{};
-	Level3 lvl3{};
+	lvl1.addGameobject(&camera);
 
-	engine.loadScene(lvl1);
+	engine.LoadScene(&lvl1);
+	engine.LoadScene(&lvl1);
 
-	if (lvl1.playerScore > 5) {
-		engine.loadScene(lvl2);
-	}
-	else {
-		engine.loadScene(lvl3);
-	}
-
-	engine.End();
+	engine.ShutDown();
 	return 0;
 }
