@@ -14,6 +14,7 @@ namespace Jade {
 	extern GLEW gGlew;
 	extern Camera gCamera;
 	extern Renderer gRenderer;
+	//TODO Event Subsystem
 
 	class Scene;
 
