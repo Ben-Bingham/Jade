@@ -17,3 +17,5 @@ Dependencies/assimp/*.lib
 *.JadeModel
 
 **/*Procedural*
+
+dOxygen/
