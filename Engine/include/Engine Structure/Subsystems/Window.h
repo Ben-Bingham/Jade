@@ -63,6 +63,10 @@ namespace Jade {
 			glfwSetKeyCallback(m_Window, callback);
 		}
 
+		void setCursorEntersCallback(void (*callback)(GLFWwindow* window, int entered)) {
+			glfwSetCursorEnterCallback(m_Window, callback);
+		}
+
 		void setWindowShouldClose() {
 			glfwSetWindowShouldClose(m_Window, true);
 		}

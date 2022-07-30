@@ -14,6 +14,7 @@ namespace Jade {
 	void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
 	void mousePositionCallback(GLFWwindow* window, double xpos, double ypos);
 	void mouseScrolWheelCallback(GLFWwindow* window, double xoffset, double yoffset);
+	void cursorEnterCallback(GLFWwindow* window, int entered);
 
 	class Mouse : public Subsystem {
 	public:
@@ -28,6 +29,8 @@ namespace Jade {
 		MouseButtonState button1{ BUTTON_RELEASED }; // Left
 		MouseButtonState button2{ BUTTON_RELEASED }; // Right
 		MouseButtonState button3{ BUTTON_RELEASED }; // Middle
+
+		bool hasMoved{ false };
 
 		void addScrollCallback(void (*callback)(int xoffset, int yoffset, void* data), void* data) {
 			scrollCallbacks.push_back(callback);

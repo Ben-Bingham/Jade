@@ -6,6 +6,7 @@ namespace Jade {
 		gWindow.setMouseButtonCallback(mouseButtonCallback);
 		gWindow.setMousePositionCallback(mousePositionCallback);
 		gWindow.setScrollWheelCallback(mouseScrolWheelCallback);
+		gWindow.setCursorEntersCallback(cursorEnterCallback);
 	}
 
 	void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods) {
@@ -28,6 +29,8 @@ namespace Jade {
 			count++;
 		}
 	}
+
+	void cursorEnterCallback(GLFWwindow* window, int entered) {}
 
 	MouseButtonState intToMouseState(int state) {
 		switch (state) {
