@@ -3,8 +3,8 @@
 #include "High Level Rendering/Renderer.h"
 #include "Low Level Rendering/Window.h"
 #include "High Level Rendering/Camera.h"
-#include "Core Systems/Human Interface Devices/Keyboard.h"
-#include "Core Systems/Human Interface Devices/Mouse.h"
+#include "Engine Structure/Subsystems/Keyboard.h"
+#include "Engine Structure/Subsystems/Mouse.h"
 #include "Low Level Rendering/GLEW.h"
 #include "Engine Structure/Subsystems/Time.h"
 

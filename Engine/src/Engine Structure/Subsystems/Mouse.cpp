@@ -1,4 +1,4 @@
-#include "Core Systems/Human Interface Devices/Mouse.h"
+#include "Engine Structure/Subsystems/Mouse.h"
 #include "Engine Structure/Engine.h"
 
 namespace Jade {
