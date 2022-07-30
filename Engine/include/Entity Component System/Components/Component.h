@@ -2,6 +2,8 @@
 #include "Jade.h"
 
 namespace Jade {
+	class Gameobject;
+
 	class Component {
 	public:
 		Component() {}
@@ -15,8 +17,15 @@ namespace Jade {
 		virtual void Begin() {}
 		virtual void Cleanup() {}
 
+		Gameobject* getGameobject() { return m_Gameobject; }
+
+		void setGameobject(Gameobject* gameobject) { m_Gameobject = gameobject; }
+
 		void update();
 		void begin();
 		void cleanup();
+
+	private:
+		Gameobject* m_Gameobject{ nullptr };
 	};
 }

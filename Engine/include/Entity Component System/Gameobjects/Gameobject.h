@@ -1,13 +1,19 @@
 #pragma once
 #include <vector>
 #include "Entity Component System/Components/Component.h"
+#include "Entity Component System/Components/TransformComponent.h"
 
 namespace Jade {
 	class Gameobject {
 	public:
-		Gameobject() : m_ID(getNextID()) {}
+		Gameobject() : m_ID(getNextID()) {
+			addComponent(new TransformComponent());
+		}
 
-		void addComponent(Component* component) { m_Components.push_back(component); }
+		void addComponent(Component* component) { 
+			component->setGameobject(this);
+			m_Components.push_back(component);
+		}
 		template<typename T>
 		T* getComponent() {
 			for (Component* component : m_Components) {
