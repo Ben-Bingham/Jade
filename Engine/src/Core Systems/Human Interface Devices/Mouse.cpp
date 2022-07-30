@@ -24,14 +24,9 @@ namespace Jade {
 	void mouseScrolWheelCallback(GLFWwindow* window, double xoffset, double yoffset) {
 		int count{ 0 };
 		for (void (*callback)(int xoffset, int yoffset, void* data) : gMouse.scrollCallbacks) {
-			callback(xoffset, yoffset, gMouse.scrollCallbacksData[count]);
+			callback((int)xoffset, (int)yoffset, gMouse.scrollCallbacksData[count]);
 			count++;
 		}
-	}
-
-	void mousePositionCallback(GLFWwindow* window, double xpos, double ypos) {
-		gMouse.xPosition = (unsigned int)xpos;
-		gMouse.yPosition = (unsigned int)ypos;
 	}
 
 	MouseButtonState intToMouseState(int state) {
