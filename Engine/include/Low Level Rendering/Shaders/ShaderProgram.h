@@ -74,7 +74,7 @@ namespace Jade {
 			setVector3f(structName + ".specular", directionalLight.specular);
 		}
 
-		void setDirectionalLights(const std::string& structName, std::vector<DirectionalLight>& lights) const { //TODO testing
+		void setDirectionalLights(const std::string& structName, std::vector<DirectionalLight>& lights) const {
 			setInt("numberOfDirectionalLights", (int)lights.size());
 
 			int count = 0;
