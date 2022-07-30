@@ -3,7 +3,7 @@
 
 #include "Jade.h"
 
-#include "Low Level Rendering/Window.h"
+#include "Engine Structure/Subsystems/Window.h"
 #include "Engine Structure/Engine.h"
 
 namespace Jade {

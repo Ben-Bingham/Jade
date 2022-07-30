@@ -1,11 +1,11 @@
 #pragma once
 #include "Subsystems/Subsystem.h"
 #include "High Level Rendering/Renderer.h"
-#include "Low Level Rendering/Window.h"
+#include "Engine Structure/Subsystems/Window.h"
 #include "High Level Rendering/Camera.h"
 #include "Engine Structure/Subsystems/Keyboard.h"
 #include "Engine Structure/Subsystems/Mouse.h"
-#include "Low Level Rendering/GLEW.h"
+#include "Engine Structure/Subsystems/GLEW.h"
 #include "Engine Structure/Subsystems/Time.h"
 
 namespace Jade {

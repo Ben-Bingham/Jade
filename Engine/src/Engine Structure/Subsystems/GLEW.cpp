@@ -1,4 +1,4 @@
-#include "Low Level Rendering/GLEW.h"
+#include "Engine Structure/Subsystems/GLEW.h"
 #include "Core Systems/Logging/OpenGLErrors.h"
 
 namespace Jade {
