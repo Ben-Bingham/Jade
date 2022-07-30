@@ -23,11 +23,9 @@ public:
 	bool keyReleased{ false };
 
 	void Update() override {
-		LOG(std::to_string(playerScore));
 		if (Jade::gKeyboard.KEY_ENTER) {
 			playerScore++;
 		}
-
 
 		if (playerScore > 100) {
 			stop();
