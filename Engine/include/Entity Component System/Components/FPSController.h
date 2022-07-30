@@ -3,6 +3,8 @@
 #include "Engine Structure/Engine.h"
 
 namespace Jade {
+	void scrollCallback(int xoffset, int yoffset, void* data);
+
 	class FPSController : public Component{
 	public:
 		FPSController() {}
@@ -20,11 +22,15 @@ namespace Jade {
 
 		bool mouseHasMoved = false;
 
+		void Begin() override {
+			gMouse.addScrollCallback(scrollCallback, (void*)this);
+		}
+
 		void Update() override {
-			float xOffset = (float)(gMouse.getXPosition() - lastX);
-			float yOffset = (float)(lastY - gMouse.getYPosition());
-			lastX = gMouse.getXPosition();
-			lastY = gMouse.getYPosition();
+			float xOffset = (float)(gMouse.xPosition - lastX);
+			float yOffset = (float)(lastY - gMouse.yPosition);
+			lastX = gMouse.xPosition;
+			lastY = gMouse.yPosition;
 
 			xOffset *= mouseSensitivity;
 			yOffset *= mouseSensitivity;
@@ -69,18 +75,16 @@ namespace Jade {
 				gCamera.getTransform().position -= glm::vec3(0.0f, 1.0f, 0.0f) * cameraSpeed;
 			}
 
-			int scrollOffset = gMouse.getScrollOffset();
-
-			if (scrollOffset != lastScrollOffset) {
-				cameraSpeed += scrollOffset * 0.01f;
-			}
-
-			if (cameraSpeed <= 0) {
-				cameraSpeed = 0.04f;
-			}
-
-			lastScrollOffset = scrollOffset;
 			gCamera.updateCameraVectors();
 		}
 	};
+
+	void scrollCallback(int xoffset, int yoffset, void* data) {
+		FPSController* controller = (FPSController*)data;
+		controller->cameraSpeed += yoffset * 0.01f; //TODO delta time
+
+		if (controller->cameraSpeed < 0) {
+			controller->cameraSpeed = 0;
+		}
+	}
 }
