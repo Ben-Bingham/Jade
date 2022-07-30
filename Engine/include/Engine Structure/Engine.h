@@ -6,8 +6,10 @@
 #include "Core Systems/Human Interface Devices/Keyboard.h"
 #include "Core Systems/Human Interface Devices/Mouse.h"
 #include "Low Level Rendering/GLEW.h"
+#include "Engine Structure/Subsystems/Time.h"
 
 namespace Jade {
+	extern Time gTime;
 	extern Window gWindow;
 	extern Keyboard gKeyboard;
 	extern Mouse gMouse;
@@ -25,6 +27,7 @@ namespace Jade {
 		void LoadScene(Scene* scene);
 
 		void StartUp() override {
+			gTime.StartUp();
 			gWindow.StartUp();
 			gKeyboard.StartUp();
 			gMouse.StartUp();
@@ -33,6 +36,7 @@ namespace Jade {
 		}
 
 		void ShutDown() override {
+			gTime.ShutDown();
 			gRenderer.ShutDown();
 			gGlew.ShutDown();
 			gMouse.ShutDown();

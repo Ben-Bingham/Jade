@@ -2,6 +2,7 @@
 #include "Engine Structure/Scene.h"
 
 namespace Jade {
+	Time gTime{};
 	Window gWindow{};
 	Keyboard gKeyboard{};
 	Mouse gMouse{};
@@ -19,6 +20,7 @@ namespace Jade {
 		m_ActiveScene->begin();
 
 		while (gWindow.getWindowOpen() && m_ActiveScene->isRunning) {
+			gTime.update();
 			gWindow.update();
 			gRenderer.update();
 
