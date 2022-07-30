@@ -3274,8 +3274,6 @@ namespace Catch {
             };
 
 #if defined(__OBJC__)
-            // Hack to fix Catch GH issue #1661. Could use id for generic Object support.
-            // use of const for Object pointers is very uncommon and under ARC it causes some kind of signature mismatch that breaks compilation
             template<>
             struct MatcherMethod<NSString*> {
                 virtual bool match(NSString* arg) const = 0;
@@ -4654,7 +4652,7 @@ namespace Catch {
             }
         };
 
-        // TODO: Ideally this would be also constrained against the various char types,
+        // Ideally this would be also constrained against the various char types,
         //       but I don't expect users to run into that in practice.
         template <typename T>
         typename std::enable_if<std::is_integral<T>::value && !std::is_same<T, bool>::value,
@@ -6514,7 +6512,7 @@ namespace Catch {
             // thanks @milleniumbug
             *reinterpret_cast<char volatile*>(p) = *reinterpret_cast<char const volatile*>(p);
         }
-        // TODO equivalent keep_memory()
+        // equivalent keep_memory()
 #pragma optimize("", on)
 
         namespace Detail {
@@ -17474,7 +17472,7 @@ namespace Catch {
 
     void XmlReporter::testGroupEnded(TestGroupStats const& testGroupStats) {
         StreamingReporterBase::testGroupEnded(testGroupStats);
-        // TODO: Check testGroupStats.aborting and act accordingly.
+        // Check testGroupStats.aborting and act accordingly.
         m_xml.scopedElement("OverallResults")
             .writeAttribute("successes", testGroupStats.totals.assertions.passed)
             .writeAttribute("failures", testGroupStats.totals.assertions.failed)
