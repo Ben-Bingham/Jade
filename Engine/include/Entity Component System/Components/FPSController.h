@@ -9,7 +9,7 @@ namespace Jade {
 	public:
 		FPSController() {}
 
-		float cameraSpeed = 0.4f;
+		float cameraSpeed = 10.0f;
 		float mouseSensitivity = 0.1f;
 
 		int lastX = gWindow.getWidth();
@@ -51,28 +51,30 @@ namespace Jade {
 			gCamera.front = glm::vec3(0.0f);
 			gCamera.front = glm::normalize(direction);
 
-			if (gKeyboard.KEY_W) { //TODO delta time
-				gCamera.getTransform().position += gCamera.front * cameraSpeed;
+			float velocity = cameraSpeed * (float)gTime.deltaTime;
+
+			if (gKeyboard.KEY_W) {
+				gCamera.getTransform().position += gCamera.front * velocity;
 			}
 
 			if (gKeyboard.KEY_A) {
-				gCamera.getTransform().position -= gCamera.right * cameraSpeed;
+				gCamera.getTransform().position -= gCamera.right * velocity;
 			}
 
 			if (gKeyboard.KEY_S) {
-				gCamera.getTransform().position -= gCamera.front * cameraSpeed;
+				gCamera.getTransform().position -= gCamera.front * velocity;
 			}
 
 			if (gKeyboard.KEY_D) {
-				gCamera.getTransform().position += gCamera.right * cameraSpeed;
+				gCamera.getTransform().position += gCamera.right * velocity;
 			}
 
 			if (gKeyboard.KEY_SPACE) {
-				gCamera.getTransform().position += glm::vec3(0.0f, 1.0f, 0.0f) * cameraSpeed;
+				gCamera.getTransform().position += glm::vec3(0.0f, 1.0f, 0.0f) * velocity;
 			}
 
 			if (gKeyboard.KEY_LEFT_SHIFT) {
-				gCamera.getTransform().position -= glm::vec3(0.0f, 1.0f, 0.0f) * cameraSpeed;
+				gCamera.getTransform().position -= glm::vec3(0.0f, 1.0f, 0.0f) * velocity;
 			}
 
 			gCamera.updateCameraVectors();
@@ -81,7 +83,7 @@ namespace Jade {
 
 	void scrollCallback(int xoffset, int yoffset, void* data) {
 		FPSController* controller = (FPSController*)data;
-		controller->cameraSpeed += yoffset * 0.01f; //TODO delta time
+		controller->cameraSpeed += yoffset * (float)gTime.deltaTime * 10;
 
 		if (controller->cameraSpeed < 0) {
 			controller->cameraSpeed = 0;
