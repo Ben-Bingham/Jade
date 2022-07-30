@@ -67,6 +67,10 @@ namespace Jade {
 			glfwSetMouseButtonCallback(m_Window, callback);
 		}
 
+		void setKeyCallback(void (*callback)(GLFWwindow* window, int key, int scancode, int action, int mods)) {
+			glfwSetKeyCallback(m_Window, callback);
+		}
+
 		void setWindowShouldClose() {
 			glfwSetWindowShouldClose(m_Window, true);
 		}
