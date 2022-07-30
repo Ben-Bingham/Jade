@@ -24,7 +24,7 @@ public:
 
 	void Update() override {
 		LOG(std::to_string(playerScore));
-		if (Jade::gKeyboard.getKeyPressed(Jade::KEY_ENTER)) {
+		if (Jade::gKeyboard.KEY_ENTER) {
 			playerScore++;
 		}
 
@@ -33,7 +33,7 @@ public:
 			stop();
 		}
 
-		if (Jade::gKeyboard.getKeyPressed(Jade::KEY_ESCAPE)) {
+		if (Jade::gKeyboard.KEY_ESCAPE) {
 			Jade::gWindow.setWindowShouldClose();
 		}
 	}

@@ -45,27 +45,27 @@ namespace Jade {
 			gCamera.front = glm::vec3(0.0f);
 			gCamera.front = glm::normalize(direction);
 
-			if (gKeyboard.getKeyPressed(Jade::KEY_W)) { //TODO delta time
+			if (gKeyboard.KEY_W) { //TODO delta time
 				gCamera.getTransform().position += gCamera.front * cameraSpeed;
 			}
 
-			if (gKeyboard.getKeyPressed(Jade::KEY_A)) {
+			if (gKeyboard.KEY_A) {
 				gCamera.getTransform().position -= gCamera.right * cameraSpeed;
 			}
 
-			if (gKeyboard.getKeyPressed(Jade::KEY_S)) {
+			if (gKeyboard.KEY_S) {
 				gCamera.getTransform().position -= gCamera.front * cameraSpeed;
 			}
 
-			if (gKeyboard.getKeyPressed(Jade::KEY_D)) {
+			if (gKeyboard.KEY_D) {
 				gCamera.getTransform().position += gCamera.right * cameraSpeed;
 			}
 
-			if (gKeyboard.getKeyPressed(Jade::KEY_SPACE)) {
+			if (gKeyboard.KEY_SPACE) {
 				gCamera.getTransform().position += glm::vec3(0.0f, 1.0f, 0.0f) * cameraSpeed;
 			}
 
-			if (gKeyboard.getKeyPressed(Jade::KEY_LEFT_SHIFT)) {
+			if (gKeyboard.KEY_LEFT_SHIFT) {
 				gCamera.getTransform().position -= glm::vec3(0.0f, 1.0f, 0.0f) * cameraSpeed;
 			}
 
