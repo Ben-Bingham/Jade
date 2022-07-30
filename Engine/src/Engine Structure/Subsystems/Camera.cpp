@@ -1,4 +1,4 @@
-#include "High Level Rendering/Camera.h"
+#include "Engine Structure/Subsystems/Camera.h"
 #include "Engine Structure/Engine.h"
 
 namespace Jade {

@@ -3,7 +3,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtx/string_cast.hpp>
 
-#include "PShaders/PShader.h"
+#include "High Level Rendering/PShaders/PShader.h"
 #include "High Level Rendering/Renderable Objects/RenderableObject.h"
 #include "Core Systems/Logging/OpenGLErrors.h"
 #include "Engine Structure/Subsystems/Subsystem.h"
