@@ -17,16 +17,22 @@ namespace Jade {
 
 		int lastScrollOffset = 0;
 
-		float yaw = 45.0f;
+		float yaw = -90.0f;
 		float pitch = 0.0f;
 
-		bool mouseHasMoved = false;
+		bool firstMouse = true;
 
 		void Begin() override {
 			gMouse.addScrollCallback(scrollCallback, (void*)this);
 		}
 
 		void Update() override {
+			if (firstMouse) {
+				lastX = gMouse.xPosition;
+				lastY = gMouse.yPosition;
+				firstMouse = false;
+			}
+
 			float xOffset = (float)(gMouse.xPosition - lastX);
 			float yOffset = (float)(lastY - gMouse.yPosition);
 			lastX = gMouse.xPosition;
