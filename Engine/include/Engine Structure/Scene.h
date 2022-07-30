@@ -1,6 +1,6 @@
 #pragma once
 #include <vector>
-#include "Entity Component System/Gameobject.h"
+#include "Entity Component System/Gameobjects/Gameobject.h"
 #include "Entity Component System/Components/PhongRenderingComponent.h"
 
 namespace Jade {

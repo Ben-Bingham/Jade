@@ -1,5 +1,5 @@
 #pragma once
-#include "Entity Component System/Component.h"
+#include "Component.h"
 #include "Entity Component System/Components/RenderComponent.h"
 #include "High Level Rendering/Renderable Objects/PhongRenderableObject.h"
 #include "High Level Rendering/PShaders/PhongShader.h"

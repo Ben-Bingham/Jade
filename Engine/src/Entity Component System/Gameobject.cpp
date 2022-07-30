@@ -1,4 +1,4 @@
-#include "Entity Component System/Gameobject.h"
+#include "Entity Component System/Gameobjects/Gameobject.h"
 
 namespace Jade {
 	unsigned int Gameobject::staticID = 0;

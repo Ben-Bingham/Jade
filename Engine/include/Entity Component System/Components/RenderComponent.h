@@ -2,7 +2,7 @@
 #include <vector>
 #include <glm/glm.hpp>
 
-#include "Entity Component System/Component.h"
+#include "Entity Component System/Components/Component.h"
 #include <High Level Rendering/Renderable Objects/RenderableObject.h>
 
 namespace Jade {

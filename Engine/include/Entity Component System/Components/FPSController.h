@@ -1,5 +1,5 @@
 #pragma once
-#include "Entity Component System/Component.h"
+#include "Entity Component System/Components/Component.h"
 #include "Engine Structure/Engine.h"
 
 namespace Jade {

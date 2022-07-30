@@ -5,7 +5,7 @@
 
 #include "High Level Rendering/Transform.h"
 #include "Engine Structure/Subsystems/Subsystem.h"
-#include "Entity Component System/Gameobject.h"
+#include "Entity Component System/Gameobjects/Gameobject.h"
 
 namespace Jade {
 	struct CameraInfo {

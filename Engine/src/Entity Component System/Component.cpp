@@ -1,4 +1,4 @@
-#include "Entity Component System/Component.h"
+#include "Entity Component System/Components/Component.h"
 
 namespace Jade {
 	Component::~Component() {}
