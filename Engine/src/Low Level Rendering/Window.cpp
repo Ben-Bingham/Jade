@@ -44,18 +44,6 @@ namespace Jade {
 		calculateProjectionMatrix(gCamera.getFOV());
 	}
 
-	void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods) {
-		gMouse.setButton(Mouse::intToMouseButton(button), Mouse::intToMouseState(action));
-	}
-
-	void mousePositionCallback(GLFWwindow* window, double xpos, double ypos) {
-		gMouse.setPosition((unsigned int)xpos, (unsigned int)ypos);
-	}
-
-	void mouseScrolWheelCallback(GLFWwindow* window, double xoffset, double yoffset) {
-		gMouse.setScrollOffset((int)yoffset);
-	}
-
 	void windowSizeCallBack(GLFWwindow* window, int width, int height) {
 		gWindow.setWidth((unsigned int)width);
 		gWindow.setHeight((unsigned int)height);

@@ -8,9 +8,6 @@
 #include "Engine Structure/Subsystems/Subsystem.h"
 
 namespace Jade {
-	void mouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
-	void mousePositionCallback(GLFWwindow* window, double xpos, double ypos);
-	void mouseScrolWheelCallback(GLFWwindow* window, double xoffset, double yoffset);
 	void windowSizeCallBack(GLFWwindow* window, int width, int height);
 
 	class Window : public Subsystem {
@@ -20,15 +17,10 @@ namespace Jade {
 		~Window() { dispose(); }
 
 		void StartUp() override{
-			setMouseButtonCallback(mouseButtonCallback);
-			setMousePositionCallback(mousePositionCallback);
-			setScrollWheelCallback(mouseScrolWheelCallback);
 			setFrameBufferSizeCallback(windowSizeCallBack);
 		}
 
-		void ShutDown() override {
-
-		}
+		void ShutDown() override {}
 
 		void update();
 
