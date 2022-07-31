@@ -19,6 +19,8 @@ namespace Jade {
 		m_ActiveScene = scene;
 		m_ActiveScene->begin();
 
+		gRenderer.loadScene(scene);
+
 		while (gWindow.getWindowOpen() && m_ActiveScene->isRunning) {
 			gTime.update();
 			gWindow.update();
