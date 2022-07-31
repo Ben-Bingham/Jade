@@ -5,6 +5,7 @@
 #include "Entity Component System/Gameobjects/Gameobject.h"
 #include "Entity Component System/Components/PhongRenderingComponent.h"
 #include "Entity Component System/Gameobjects/Lights/PointLight.h"
+#include "Entity Component System/Gameobjects/Lights/DirectionalLight.h"
 
 namespace Jade {
 	class Application;
@@ -20,6 +21,7 @@ namespace Jade {
 
 		void addGameobject(Gameobject* gameobject) { m_Gameobjects.push_back(gameobject); }
 		void addLight(const PointLight& light) { m_Lights.push_back(std::make_shared<PointLight>(light)); };
+		void addLight(const DirectionalLight& light) { m_Lights.push_back(std::make_shared<DirectionalLight>(light)); };
 
 		std::vector<std::shared_ptr<Light>> getLights() { return m_Lights; }
 
