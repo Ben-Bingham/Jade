@@ -16,7 +16,7 @@ namespace Jade {
 
 		glm::vec4 colour;
 
-		glm::vec3 toVec3() { return glm::vec3(colour.x, colour.y, colour.z); }
+		glm::vec3 toVec3() const { return glm::vec3(colour.x, colour.y, colour.z); }
 
 	private:
 		glm::vec4 initWith0to255(int r, int g, int b, int a) {
