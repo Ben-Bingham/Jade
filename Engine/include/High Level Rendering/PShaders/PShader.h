@@ -27,7 +27,23 @@ namespace Jade {
 
 		void dispose() { m_Program.dispose(); }
 
+		void addPointLight(const PointLight& light) {
+			pointLights.push_back(light);
+		}
+
+		void addDirectionalLight(const DirectionalLight& light) {
+			directionalLights.push_back(light);
+		}
+
+		void clearLights() {
+			pointLights.clear();
+			directionalLights.clear();
+		}
+
 		ShaderType ruleSet;
+
+		std::vector<PointLight> pointLights;
+		std::vector<DirectionalLight> directionalLights;
 	private:
 		int m_ID;
 		ShaderProgram m_Program;
@@ -40,5 +56,7 @@ namespace Jade {
 		}
 
 		ShaderProgram programInit();
+
+		
 	};
 }

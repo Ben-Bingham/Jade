@@ -11,20 +11,10 @@ namespace Jade {
 		PhongShader() : PShader(PHONG)  {}
 
 		void bindAdditionals() override {
-			getProgram().setPointLights("pointLights", m_PointLights);
-			getProgram().setDirectionalLights("directionalLights", m_DirectionalLights);
-		}
-
-		void addPointLight(const PointLight& light) {
-			m_PointLights.push_back(light);
-		}
-
-		void addDirectionalLight(const DirectionalLight& light) {
-			m_DirectionalLights.push_back(light);
+			getProgram().setPointLights("pointLights", pointLights);
+			getProgram().setDirectionalLights("directionalLights", directionalLights);
 		}
 
 	private:
-		std::vector<PointLight> m_PointLights;
-		std::vector<DirectionalLight> m_DirectionalLights;
 	};
 }
