@@ -48,8 +48,15 @@ namespace Jade {
 
 			for (std::shared_ptr<Light> light : scene->getLights()) {
 				PointLight* pointLight = dynamic_cast<PointLight*>(light.get());
+				DirectionalLight* directionalLight = dynamic_cast<DirectionalLight*>(light.get());
 				if (pointLight != nullptr) {
 					shader->addPointLight(*pointLight);
+				}
+				else if (directionalLight != nullptr) {
+					shader->addDirectionalLight(*directionalLight);
+				}
+				else {
+					LOG("Unknown type of light");
 				}
 			}
 		}
