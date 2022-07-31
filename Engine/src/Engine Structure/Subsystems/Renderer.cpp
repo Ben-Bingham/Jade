@@ -7,7 +7,7 @@
 namespace Jade {
 	void Renderer::addRenderable(std::shared_ptr<RenderableObject> renderable) {
 		int count = 0;
-		for (PShader* ruleSet : m_PShaders) {
+		for (std::shared_ptr<PShader> ruleSet : m_PShaders) {
 			if (renderable->followsRuleSet(*ruleSet)) {
 				m_Renderables[count].push_back(renderable);
 				return;
@@ -19,7 +19,7 @@ namespace Jade {
 
 	void Renderer::render() {
 		int count = 0;
-		for (PShader* ruleSet : m_PShaders) {
+		for (std::shared_ptr<PShader> ruleSet : m_PShaders) {
 			ruleSet->bind();
 			ruleSet->getProgram().setVector3f("cameraPosition", gCamera.getComponent<Transform>()->position);
 			ruleSet->bindAdditionals();
@@ -43,7 +43,7 @@ namespace Jade {
 	}
 
 	void Renderer::loadScene(Scene* scene) {
-		for (PShader* shader : m_PShaders) {
+		for (std::shared_ptr<PShader> shader : m_PShaders) {
 			shader->clearLights();
 
 			for (std::shared_ptr<Light> light : scene->getLights()) {

@@ -21,13 +21,9 @@ namespace Jade {
 			: m_View(glm::mat4(1.0f)), m_Projection(glm::mat4(1.0f)) {}
 
 		void StartUp() override {
-			PhongShader* phongShader = new PhongShader{};
+			addShader(PhongShader());
 
-			addShader(phongShader);
-
-			SolidShader* solidShader = new SolidShader{};
-
-			addShader(solidShader);
+			addShader(SolidShader());
 		}
 
 		void ShutDown() override {
@@ -37,9 +33,8 @@ namespace Jade {
 				}
 			}
 
-			for (PShader* shader : m_PShaders) {
+			for (std::shared_ptr<PShader> shader : m_PShaders) {
 				shader->dispose();
-				delete shader; //TODO
 			}
 		}
 
@@ -53,26 +48,30 @@ namespace Jade {
 
 		void setMatrices(const glm::mat4& view, const glm::mat4& projection);
 
-		void addShader(PShader* ruleSet) {
-			for (PShader* rSet : m_PShaders) {
-				if (rSet->ruleSet == ruleSet->ruleSet) {
+		void addShader(const PhongShader& shader) {
+			for (std::shared_ptr<PShader> rSet : m_PShaders) {
+				if (rSet->ruleSet == shader.ruleSet) {
 					LOG("There is alread a ruleset of that type attached to the renderer, the one you added probably wont be used", WARNING);
 					break;
 				}
 			}
-			m_PShaders.push_back(ruleSet);
+			m_PShaders.push_back(std::make_shared<PhongShader>(shader));
 			m_Renderables.resize(m_PShaders.size());
 		}
 
-		void setVector3f(const std::string name, const glm::vec3& vector) {
-			for (PShader* ruleSet : m_PShaders) {
-				ruleSet->getProgram().use();
-				ruleSet->getProgram().setVector3f(name, vector);
+		void addShader(const SolidShader& shader) {
+			for (std::shared_ptr<PShader> rSet : m_PShaders) {
+				if (rSet->ruleSet == shader.ruleSet) {
+					LOG("There is alread a ruleset of that type attached to the renderer, the one you added probably wont be used", WARNING);
+					break;
+				}
 			}
+			m_PShaders.push_back(std::make_shared<SolidShader>(shader));
+			m_Renderables.resize(m_PShaders.size());
 		}
 
 	private:
-		std::vector<PShader*> m_PShaders;
+		std::vector<std::shared_ptr<PShader>> m_PShaders;
 		std::vector<std::vector<std::shared_ptr<RenderableObject>>> m_Renderables;
 		glm::mat4 m_View;
 		glm::mat4 m_Projection;
