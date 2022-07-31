@@ -9,7 +9,7 @@
 namespace Jade {
 	class Application;
 
-	class PhongRenderingComponent : public RenderComponent { //TODO the name sucks
+	class PhongRenderingComponent : public RenderComponent {
 	public:
 		PhongRenderingComponent(Model* model);
 
@@ -17,6 +17,7 @@ namespace Jade {
 			Transform* transform = getGameobject()->getComponent<Transform>();
 			for (RenderableObject* renderable : renderables) {
 				renderable->setTransform(transform);
+				renderable->calculateModelMatrix();
 			}
 		}
 

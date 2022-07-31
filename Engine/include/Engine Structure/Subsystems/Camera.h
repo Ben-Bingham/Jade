@@ -21,7 +21,6 @@ namespace Jade {
 			return m_ViewMatrix;
 		}
 
-		Transform& getTransform() { return m_Transform; }
 		float getFOV() { return m_FOV; }
 
 		glm::vec3 front;
@@ -34,8 +33,6 @@ namespace Jade {
 		}
 
 	private:
-		Transform m_Transform;
-
 		float m_FOV;
 
 		glm::mat4 m_ViewMatrix;
@@ -43,7 +40,8 @@ namespace Jade {
 		glm::vec3 m_WorldUp;
 
 		void recalculateViewMatrix() {
-			m_ViewMatrix = glm::lookAt(m_Transform.position, m_Transform.position + front, up);
+			Transform* transform = getComponent<Transform>();
+			m_ViewMatrix = glm::lookAt(transform->position, transform->position + front, up);
 		}
 	};
 }

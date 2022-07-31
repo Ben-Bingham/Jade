@@ -27,6 +27,7 @@ namespace Jade {
 		}
 
 		void Update() override {
+			LOG(std::to_string(gMouse.xPosition));
 			if (firstMouse) {
 				lastX = gMouse.xPosition;
 				lastY = gMouse.yPosition;
@@ -60,27 +61,27 @@ namespace Jade {
 			float velocity = cameraSpeed * (float)gTime.deltaTime;
 
 			if (gKeyboard.KEY_W) {
-				gCamera.getTransform().position += gCamera.front * velocity;
+				gCamera.getComponent<Transform>()->position += gCamera.front * velocity;
 			}
 
 			if (gKeyboard.KEY_A) {
-				gCamera.getTransform().position -= gCamera.right * velocity;
+				gCamera.getComponent<Transform>()->position -= gCamera.right * velocity;
 			}
 
 			if (gKeyboard.KEY_S) {
-				gCamera.getTransform().position -= gCamera.front * velocity;
+				gCamera.getComponent<Transform>()->position -= gCamera.front * velocity;
 			}
 
 			if (gKeyboard.KEY_D) {
-				gCamera.getTransform().position += gCamera.right * velocity;
+				gCamera.getComponent<Transform>()->position += gCamera.right * velocity;
 			}
 
 			if (gKeyboard.KEY_SPACE) {
-				gCamera.getTransform().position += glm::vec3(0.0f, 1.0f, 0.0f) * velocity;
+				gCamera.getComponent<Transform>()->position += glm::vec3(0.0f, 1.0f, 0.0f) * velocity;
 			}
 
 			if (gKeyboard.KEY_LEFT_SHIFT) {
-				gCamera.getTransform().position -= glm::vec3(0.0f, 1.0f, 0.0f) * velocity;
+				gCamera.getComponent<Transform>()->position -= glm::vec3(0.0f, 1.0f, 0.0f) * velocity;
 			}
 
 			gCamera.updateCameraVectors();

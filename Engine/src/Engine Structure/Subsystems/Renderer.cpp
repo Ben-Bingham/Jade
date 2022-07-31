@@ -18,7 +18,7 @@ namespace Jade {
 		int count = 0;
 		for (PShader* ruleSet : m_PShaders) {
 			ruleSet->bind();
-			ruleSet->getProgram().setVector3f("cameraPosition", gCamera.getTransform().position);
+			ruleSet->getProgram().setVector3f("cameraPosition", gCamera.getComponent<Transform>()->position);
 			ruleSet->bindAdditionals();
 
 			ruleSet->getProgram().setMatrix4f("view", gCamera.getViewMatrix());
