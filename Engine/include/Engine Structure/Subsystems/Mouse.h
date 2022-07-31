@@ -37,8 +37,16 @@ namespace Jade {
 			scrollCallbacksData.push_back(data);
 		}
 
+		void addMousePositionCallback(void (*callback)(int xpos, int ypos, void* data), void* data) {
+			mousePositionCallbacks.push_back(callback);
+			mousePositionCallbackData.push_back(data);
+		}
+
 		std::vector<void (*)(int xoffset, int yoffset, void* data)> scrollCallbacks;
 		std::vector<void*> scrollCallbacksData;
+
+		std::vector<void (*)(int xpos, int ypos, void* data)> mousePositionCallbacks;
+		std::vector<void*> mousePositionCallbackData;
 	};
 
 	MouseButtonState intToMouseState(int state);

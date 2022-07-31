@@ -4,6 +4,7 @@
 
 namespace Jade {
 	void scrollCallback(int xoffset, int yoffset, void* data);
+	void mousePositionCallback(int xpos, int ypos, void* data);
 
 	class FPSController : public Component{
 	public:
@@ -24,40 +25,10 @@ namespace Jade {
 
 		void Begin() override {
 			gMouse.addScrollCallback(scrollCallback, (void*)this);
+			gMouse.addMousePositionCallback(mousePositionCallback, (void*)this);
 		}
 
 		void Update() override {
-			LOG(std::to_string(gMouse.xPosition));
-			if (firstMouse) {
-				lastX = gMouse.xPosition;
-				lastY = gMouse.yPosition;
-				firstMouse = false;
-			}
-
-			float xOffset = (float)(gMouse.xPosition - lastX);
-			float yOffset = (float)(lastY - gMouse.yPosition);
-			lastX = gMouse.xPosition;
-			lastY = gMouse.yPosition;
-
-			xOffset *= mouseSensitivity;
-			yOffset *= mouseSensitivity;
-
-			yaw += xOffset;
-			pitch += yOffset;
-
-			if (pitch > 89.0f)
-				pitch = 89.0f;
-			if (pitch < -89.0f)
-				pitch = -89.0f;
-
-			glm::vec3 direction;
-			direction.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-			direction.y = sin(glm::radians(pitch));
-			direction.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-
-			gCamera.front = glm::vec3(0.0f);
-			gCamera.front = glm::normalize(direction);
-
 			float velocity = cameraSpeed * (float)gTime.deltaTime;
 
 			if (gKeyboard.KEY_W) {
@@ -95,5 +66,38 @@ namespace Jade {
 		if (controller->cameraSpeed < 0) {
 			controller->cameraSpeed = 0;
 		}
+	}
+
+	void mousePositionCallback(int xPos, int yPos, void* data) {
+		FPSController* controller = (FPSController*)data;
+		if (controller->firstMouse) {
+			controller->lastX = gMouse.xPosition;
+			controller->lastY = gMouse.yPosition;
+			controller->firstMouse = false;
+		}
+
+		float xOffset = (float)(gMouse.xPosition - controller->lastX);
+		float yOffset = (float)(controller->lastY - gMouse.yPosition);
+		controller->lastX = gMouse.xPosition;
+		controller->lastY = gMouse.yPosition;
+
+		xOffset *= controller->mouseSensitivity;
+		yOffset *= controller->mouseSensitivity;
+
+		controller->yaw += xOffset;
+		controller->pitch += yOffset;
+
+		if (controller->pitch > 89.0f)
+			controller->pitch = 89.0f;
+		if (controller->pitch < -89.0f)
+			controller->pitch = -89.0f;
+
+		glm::vec3 direction;
+		direction.x = cos(glm::radians(controller->yaw)) * cos(glm::radians(controller->pitch));
+		direction.y = sin(glm::radians(controller->pitch));
+		direction.z = sin(glm::radians(controller->yaw)) * cos(glm::radians(controller->pitch));
+
+		gCamera.front = glm::vec3(0.0f);
+		gCamera.front = glm::normalize(direction);
 	}
 }

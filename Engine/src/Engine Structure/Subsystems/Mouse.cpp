@@ -20,6 +20,12 @@ namespace Jade {
 	void mousePositionCallback(GLFWwindow* window, double xpos, double ypos) {
 		gMouse.xPosition = (int)xpos;
 		gMouse.yPosition = (int)ypos;
+
+		int count{ 0 };
+		for (void (*callback)(int xpos, int ypos, void* data) : gMouse.mousePositionCallbacks) {
+			callback((int)xpos, (int)ypos, gMouse.mousePositionCallbackData[count]);
+			count++;
+		}
 	}
 
 	void mouseScrolWheelCallback(GLFWwindow* window, double xoffset, double yoffset) {
