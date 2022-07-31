@@ -2,7 +2,6 @@
 #include <vector>
 
 #include "Low Level Rendering/Shaders/ShaderProgram.h"
-#include "Low Level Rendering/Shaders/ShaderStructs.h"
 
 namespace Jade {
 	class RenderableObject;
@@ -56,7 +55,5 @@ namespace Jade {
 		}
 
 		ShaderProgram programInit();
-
-		
 	};
 }
