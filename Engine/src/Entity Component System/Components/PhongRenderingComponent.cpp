@@ -7,7 +7,7 @@ namespace Jade {
 			m_Materials.push_back(Jade::Material(material));
 		}
 
-		for each (Jade::Mesh mesh in model->getMeshes()) {
+		for (Jade::Mesh mesh : model->getMeshes()) {
 			renderables.push_back(new PhongRenderable(&m_Materials[mesh.getMaterialIndex()], mesh)); //TODO delete
 		}
 	}
