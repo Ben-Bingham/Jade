@@ -7,6 +7,7 @@ namespace Jade {
 	class Colour {
 	public:
 		Colour() : colour(0.0f, 0.0f, 0.0f, 1.0f) {}
+		Colour(float value) : colour(value, value, value, value) {}
 		Colour(glm::vec4 colour) : colour(colour) {}
 		explicit Colour(float r, float g, float b, float a = 1.0f) : colour(r, g, b, a) {}
 		explicit Colour(int r, int g, int b, int a = 255) : colour(initWith0to255(r, g, b, a)) {}
@@ -14,6 +15,8 @@ namespace Jade {
 		Colour(aiColor4D colour) : colour(colour.r, colour.g, colour.b, colour.a) {}
 
 		glm::vec4 colour;
+
+		glm::vec3 toVec3() { return glm::vec3(colour.x, colour.y, colour.z); }
 
 	private:
 		glm::vec4 initWith0to255(int r, int g, int b, int a) {
