@@ -10,7 +10,7 @@ namespace Jade {
 
 		glm::vec3 position{ 0.0f };
 		glm::vec3 scale{ 1.0f };
-		glm::quat rotation{ }; //TODO figure out how this works
+		glm::quat rotation{ };
 
 	private:
 	};
