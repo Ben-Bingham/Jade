@@ -14,8 +14,9 @@ namespace Jade {
 			component->setGameobject(this);
 			m_Components.push_back(component);
 		}
+
 		template<typename T>
-		T* getComponent() {
+		T* getComponent() const {
 			for (Component* component : m_Components) {
 				T* desiredComponent = dynamic_cast<T*>(component);
 				if (desiredComponent != nullptr) {
