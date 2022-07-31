@@ -10,6 +10,8 @@
 #include "High Level Rendering/PShaders/PhongShader.h"
 #include "High Level Rendering/PShaders/SolidShader.h"
 #include "High Level Rendering/LightCreator.h"
+#include "Engine Structure/Scene.h"
+#include "Entity Component System/Gameobjects/Lights/PointLight.h"
 
 namespace Jade {
 	class Engine;
@@ -21,8 +23,6 @@ namespace Jade {
 
 		void StartUp() override {
 			PhongShader* phongShader = new PhongShader{};
-			phongShader->addPointLight(LightCreator::DefaultPointLight()); //TODO remove
-			phongShader->addDirectionalLight(LightCreator::DefaultDirectionalLight()); //TODO remove
 
 			addShader(phongShader);
 
@@ -43,6 +43,8 @@ namespace Jade {
 				delete shader;
 			}
 		}
+
+		void loadScene(Scene* scene);
 
 		void update();
 

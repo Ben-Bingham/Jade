@@ -1,5 +1,8 @@
+#include <memory>
+
 #include "Engine Structure/Subsystems/Renderer.h"
 #include "Engine Structure/Engine.h"
+#include "Entity Component System/Gameobjects/Lights/PointLight.h"
 
 namespace Jade {
 	void Renderer::addRenderable(RenderableObject* renderable) {
@@ -39,8 +42,16 @@ namespace Jade {
 		render();
 	}
 
-	void Renderer::setMatrices(const glm::mat4& view, const glm::mat4& projection) {
-		m_View = view;
-		m_Projection = projection;
+	void Renderer::loadScene(Scene* scene) {
+		for (PShader* shader : m_PShaders) {
+			shader->clearLights();
+
+			for (std::shared_ptr<Light> light : scene->getLights()) {
+				PointLight* pointLight = dynamic_cast<PointLight*>(light.get());
+				if (pointLight != nullptr) {
+					shader->addPointLight(*pointLight);
+				}
+			}
+		}
 	}
 }
