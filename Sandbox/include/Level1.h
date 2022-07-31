@@ -14,13 +14,13 @@ public:
 
 	Jade::PhongRenderingComponent backpackRenderer{ &backpack };
 
-
 	void Begin() override {
 		testCube.addComponent(&backpackRenderer);
 		testCube.getComponent<Jade::Transform>()->position = glm::vec3(0.0f, 0.0f, -10.0f);
 		addGameobject(&testCube);
 
 		addLight(Jade::PointLight());
+		addLight(Jade::DirectionalLight());
 	}
 
 	bool keyHit{ false };
