@@ -210,6 +210,8 @@ class Game : public Application {
 };
 */
 
+//TODO a new branch where i try to replace all the raw pointers with smart pointers
+
 int main() {
 	Jade::Engine engine{};
 	engine.StartUp();

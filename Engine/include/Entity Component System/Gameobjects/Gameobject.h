@@ -1,13 +1,13 @@
 #pragma once
 #include <vector>
 #include "Entity Component System/Components/Component.h"
-#include "Entity Component System/Components/TransformComponent.h"
+#include "Entity Component System/Components/Transform.h"
 
 namespace Jade {
 	class Gameobject {
 	public:
 		Gameobject() : m_ID(getNextID()) {
-			addComponent(new TransformComponent());
+			addComponent(new Transform()); //TODO delete
 		}
 
 		void addComponent(Component* component) { 

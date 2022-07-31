@@ -1,6 +1,7 @@
 #pragma once
 #include "Engine Structure/Scene.h"
 #include "Engine Structure/Engine.h"
+#include "Entity Component System/Components/Transform.h"
 
 class Level1 : public Jade::Scene {
 public:
@@ -14,8 +15,8 @@ public:
 	Jade::PhongRenderingComponent backpackRenderer{ &backpack };
 
 	void Begin() override {
-		backpackRenderer.translate(glm::vec3(0, 0, -10));
 		testCube.addComponent(&backpackRenderer);
+		testCube.getComponent<Jade::Transform>()->position = glm::vec3(0.0f, 0.0f, -10.0f);
 		addGameobject(&testCube);
 	}
 
