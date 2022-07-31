@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Low Level Rendering/Shaders/ShaderStructs.h"
 #include "High Level Rendering/Material.h"
 
 namespace Jade {

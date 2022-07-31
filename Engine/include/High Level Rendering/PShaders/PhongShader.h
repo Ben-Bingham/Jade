@@ -3,7 +3,6 @@
 #include <vector>
 
 #include "PShader.h"
-#include "Low Level Rendering/Shaders/ShaderStructs.h"
 
 namespace Jade {
 	class PhongShader : public PShader {

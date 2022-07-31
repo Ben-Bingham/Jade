@@ -6,7 +6,6 @@
 #include "High Level Rendering/Renderable Objects/SolidRenderableObject.h"
 #include "High Level Rendering/Renderable Objects/PhongRenderableObject.h"
 #include "High Level Rendering/MaterialCreator.h"
-#include "High Level Rendering/LightCreator.h"
 #include "Entity Component System/GameObjects/Gameobject.h"
 #include "Entity Component System/Components/PhongRenderingComponent.h"
 #include "Engine Structure/Engine.h"
