@@ -5,7 +5,7 @@
 #include "Entity Component System/Gameobjects/Lights/PointLight.h"
 
 namespace Jade {
-	void Renderer::addRenderable(RenderableObject* renderable) {
+	void Renderer::addRenderable(std::shared_ptr<RenderableObject> renderable) {
 		int count = 0;
 		for (PShader* ruleSet : m_PShaders) {
 			if (renderable->followsRuleSet(*ruleSet)) {
@@ -27,7 +27,7 @@ namespace Jade {
 			ruleSet->getProgram().setMatrix4f("view", gCamera.getViewMatrix());
 			ruleSet->getProgram().setMatrix4f("projection", gWindow.getProjectionMatrix());
 
-			std::vector<RenderableObject*>::iterator it;
+			std::vector<std::shared_ptr<RenderableObject>>::iterator it;
 			for (it = m_Renderables[count].begin(); it != m_Renderables[count].end(); ++it) {
 				(*it)->render(*ruleSet);
 			}

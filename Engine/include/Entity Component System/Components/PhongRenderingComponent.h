@@ -15,7 +15,7 @@ namespace Jade {
 
 		void Begin() override {
 			Transform* transform = getGameobject()->getComponent<Transform>();
-			for (RenderableObject* renderable : renderables) {
+			for (std::shared_ptr<RenderableObject> renderable : renderables) {
 				renderable->setTransform(transform);
 				renderable->calculateModelMatrix();
 			}

@@ -11,7 +11,7 @@ namespace Jade {
 			gameobject->begin();
 			RenderComponent* desiredComponent = gameobject->getComponent<RenderComponent>();
 			if (desiredComponent != nullptr) {
-				for (RenderableObject* renderable : desiredComponent->renderables) {
+				for (std::shared_ptr<RenderableObject> renderable : desiredComponent->renderables) {
 					gRenderer.addRenderable(renderable);
 				}
 			}

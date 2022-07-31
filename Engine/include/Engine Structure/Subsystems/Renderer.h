@@ -31,15 +31,15 @@ namespace Jade {
 		}
 
 		void ShutDown() override {
-			for (std::vector<RenderableObject*> renderableVector : m_Renderables) {
-				for (RenderableObject* renderable : renderableVector) {
+			for (std::vector<std::shared_ptr<RenderableObject>> renderableVector : m_Renderables) {
+				for (std::shared_ptr<RenderableObject> renderable : renderableVector) {
 					renderable->dispose();
 				}
 			}
 
 			for (PShader* shader : m_PShaders) {
 				shader->dispose();
-				delete shader;
+				delete shader; //TODO
 			}
 		}
 
@@ -47,7 +47,7 @@ namespace Jade {
 
 		void update();
 
-		void addRenderable(RenderableObject* renderable);
+		void addRenderable(std::shared_ptr<RenderableObject> renderable);
 
 		void render();
 
@@ -73,7 +73,7 @@ namespace Jade {
 
 	private:
 		std::vector<PShader*> m_PShaders;
-		std::vector<std::vector<RenderableObject*>> m_Renderables;
+		std::vector<std::vector<std::shared_ptr<RenderableObject>>> m_Renderables;
 		glm::mat4 m_View;
 		glm::mat4 m_Projection;
 	};

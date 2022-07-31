@@ -8,7 +8,7 @@ namespace Jade {
 		}
 
 		for (Jade::Mesh mesh : model->getMeshes()) {
-			renderables.push_back(new PhongRenderable(&m_Materials[mesh.getMaterialIndex()], mesh)); //TODO delete
+			renderables.push_back(std::make_shared<PhongRenderable>(&m_Materials[mesh.getMaterialIndex()], mesh));
 		}
 	}
 }

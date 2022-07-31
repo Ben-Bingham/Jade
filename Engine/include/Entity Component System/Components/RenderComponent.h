@@ -10,6 +10,6 @@ namespace Jade {
 	public:
 		virtual ~RenderComponent() = 0;
 
-		std::vector<RenderableObject*> renderables;
+		std::vector<std::shared_ptr<RenderableObject>> renderables;
 	};
 }
