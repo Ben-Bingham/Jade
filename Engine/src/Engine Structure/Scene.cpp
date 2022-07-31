@@ -4,10 +4,10 @@
 namespace Jade {
 	Scene::~Scene() {}
 
-	void Scene::begin(/*Application& app*/) {
+	void Scene::begin() {
 		Begin();
 
-		for (Gameobject* gameobject : m_Gameobjects) {
+		for (std::shared_ptr<Gameobject> gameobject : m_Gameobjects) {
 			gameobject->begin();
 			RenderComponent* desiredComponent = gameobject->getComponent<RenderComponent>();
 			if (desiredComponent != nullptr) {
@@ -20,14 +20,14 @@ namespace Jade {
 
 	void Scene::update() {
 		Update();
-		for (Gameobject* gameobject : m_Gameobjects) {
+		for (std::shared_ptr<Gameobject> gameobject : m_Gameobjects) {
 			gameobject->update();			
 		}
 	}
 
 	void Scene::cleanup() {
 		Cleanup();
-		for (Gameobject* gameobject : m_Gameobjects) {
+		for (std::shared_ptr<Gameobject> gameobject : m_Gameobjects) {
 			gameobject->cleanup();
 		}
 	}

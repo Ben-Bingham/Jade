@@ -19,7 +19,7 @@ namespace Jade {
 		Scene& operator=(Scene&&) = default;
 		virtual ~Scene() = 0;
 
-		void addGameobject(Gameobject* gameobject) { m_Gameobjects.push_back(gameobject); }
+		void addGameobject(const Gameobject& gameobject) { m_Gameobjects.push_back(std::make_shared<Gameobject>(gameobject)); }
 		void addLight(const PointLight& light) { m_Lights.push_back(std::make_shared<PointLight>(light)); };
 		void addLight(const DirectionalLight& light) { m_Lights.push_back(std::make_shared<DirectionalLight>(light)); };
 
@@ -40,7 +40,7 @@ namespace Jade {
 		bool isRunning{true};
 
 	private:
-		std::vector<Gameobject*> m_Gameobjects;
+		std::vector<std::shared_ptr<Gameobject>> m_Gameobjects;
 		std::vector<std::shared_ptr<Light>> m_Lights;
 	};
 }
