@@ -7,10 +7,10 @@
 
 #include "VertexShader.h"
 #include "FragmentShader.h"
-#include "ShaderStructs.h"
 #include "Low Level Rendering/Rendering Objects/Texture.h"
 #include "High Level Rendering/Material.h"
 #include "Entity Component System/Gameobjects/Lights/PointLight.h"
+#include "Entity Component System/Gameobjects/Lights/DirectionalLight.h"
 
 namespace Jade {
 	class ShaderProgram {
@@ -40,7 +40,7 @@ namespace Jade {
 			glUniform4fv(glGetUniformLocation(m_Program, variableName.c_str()), 1, &vector[0]);
 		}
 
-		void setPointLight(const std::string& structName, PointLight& light) const {
+		void setPointLight(const std::string& structName, const PointLight& light) const {
 			setVector3f(structName + ".position", light.getComponent<Transform>()->position);
 
 			setFloat(structName + ".constant", light.constant);
@@ -70,9 +70,9 @@ namespace Jade {
 
 		void setDirectionalLight(const std::string& structName, const DirectionalLight& directionalLight) const {
 			setVector3f(structName + ".direction", directionalLight.direction);
-			setVector3f(structName + ".ambient", directionalLight.ambient);
-			setVector3f(structName + ".diffuse", directionalLight.diffuse);
-			setVector3f(structName + ".specular", directionalLight.specular);
+			setVector3f(structName + ".ambient", directionalLight.ambient.toVec3());
+			setVector3f(structName + ".diffuse", directionalLight.diffuse.toVec3());
+			setVector3f(structName + ".specular", directionalLight.specular.toVec3());
 		}
 
 		void setDirectionalLights(const std::string& structName, std::vector<DirectionalLight>& lights) const {
