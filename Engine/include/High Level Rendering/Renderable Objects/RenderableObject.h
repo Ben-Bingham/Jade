@@ -6,8 +6,8 @@
 #include "Low Level Rendering/Rendering Objects/VertexAttributeObject.h"
 #include "Low Level Rendering/Rendering Objects/VertexBufferObject.h"
 #include "Low Level Rendering/Rendering Objects/ElementBufferObject.h"
-#include "High Level Rendering/Transform.h"
 #include "Core Systems/Resource Pipeline/Model.h"
+#include "Entity Component System/Components/Transform.h"
 
 namespace Jade {
 	enum Shape {
@@ -39,9 +39,17 @@ namespace Jade {
 		}
 
 		VertexAttributeObject getVAO() { return m_VAO; }
-		Transform& getTransform() { return m_Transform; }
+
+		void setTransform(Transform* transform) { m_Transform = transform; };
 
 		void dispose() { m_VAO.dispose(); }
+
+		void calculateModelMatrix() {
+			m_ModelMatrix = glm::mat4(1.0f);
+			m_ModelMatrix = glm::mat4_cast(m_Transform->rotation);
+			m_ModelMatrix = glm::translate(m_ModelMatrix, m_Transform->position);
+			m_ModelMatrix = glm::scale(m_ModelMatrix, m_Transform->scale);
+		}
 
 	private:
 		Shape m_Shape;
@@ -49,9 +57,10 @@ namespace Jade {
 		VertexAttributeObject m_VAO;
 		VertexBufferObject m_VBO;
 		ElementBufferObject m_EBO;
-		Transform m_Transform;
+		Transform* m_Transform{ nullptr };
 		ShaderType m_RuleSet;
 		int m_NumberOfIndicies;
+		glm::mat4 m_ModelMatrix{ 1.0f };
 
 		void init() {
 			VertexAttributePointer positionData(3, GL_FLOAT, POSITION);
