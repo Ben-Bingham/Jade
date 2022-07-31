@@ -253,9 +253,8 @@ namespace Jade {
 	}
 
 	void Model::loadTextures(const aiScene* scene) {
-
 		unsigned int numberOfDiffuse = 0;
-		unsigned int numberOfSpecular = 0; //TODO normal
+		unsigned int numberOfSpecular = 0;
 		for (unsigned int i = 0; i < scene->mNumMaterials; i++) {
 			aiMaterial* mat = scene->mMaterials[i];
 
