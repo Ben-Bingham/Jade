@@ -21,7 +21,5 @@ namespace Jade {
 		Colour ambient{};
 		Colour diffuse{};
 		Colour specular{};
-
-	private:
 	};
 }
