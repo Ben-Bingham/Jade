@@ -7,8 +7,8 @@
 namespace Jade {
     void RenderableObject::render(const PShader& ruleSet) {
         additionalRendering(ruleSet);
-        m_Transform.calculateModelMatrix();
-        ruleSet.getProgram().setMatrix4f("model", m_Transform.getMatrix());
+        calculateModelMatrix();
+        ruleSet.getProgram().setMatrix4f("model", m_ModelMatrix);
         m_VAO.bind();
         glDrawElements(GL_TRIANGLES, m_NumberOfIndicies, GL_UNSIGNED_INT, 0);
     }
