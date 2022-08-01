@@ -2,6 +2,7 @@
 #include "Engine Structure/Scene.h"
 #include "Engine Structure/Engine.h"
 #include "Entity Component System/Components/Transform.h"
+#include "Entity Component System/Components/SolidRenderingComponent.h"
 
 class Level1 : public Jade::Scene {
 public:
@@ -13,6 +14,8 @@ public:
 
 	Jade::PhongRenderingComponent backpackRenderer{ &backpack };
 	Jade::PhongRenderingComponent defaultd{ Jade::PYRAMID, Jade::MaterialCreator::DefaultMaterial() };
+
+	Jade::SolidRenderingComponent solid{ Jade::CUBE, Jade::Colour{ 0, 0, 0 } };
 
 	void Begin() override {
 		Jade::Gameobject testCube{};
@@ -26,6 +29,10 @@ public:
 		Jade::Gameobject testPyramid{};
 		testPyramid.addComponent(defaultd);
 		addGameobject(testPyramid);
+
+		Jade::Gameobject testCube2{};
+		testCube2.addComponent(solid);
+		addGameobject(testCube2);
 	}
 
 	bool keyHit{ false };
