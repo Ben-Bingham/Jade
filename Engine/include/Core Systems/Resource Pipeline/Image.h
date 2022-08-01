@@ -42,8 +42,10 @@ namespace Jade {
 				m_Content[i + 1] = g;
 				m_Content[i + 2] = b;
 			}
+			std::string fileName = path.c_str();
+			fileName += ".png";
 
-			stbi_write_png(path.c_str(), width, height, 3, &m_Content[0], width * 3);
+			stbi_write_png(fileName.c_str(), width, height, 3, &m_Content[0], width * 3);
 		}
 
 		std::vector<unsigned char> getContent() const { return m_Content; }
