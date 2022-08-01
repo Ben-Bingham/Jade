@@ -12,6 +12,7 @@ public:
 	Jade::Model backpack{ "assets\\models\\backpack\\backpack.obj", true };
 
 	Jade::PhongRenderingComponent backpackRenderer{ &backpack };
+	Jade::PhongRenderingComponent defaultd{ Jade::PYRAMID, Jade::MaterialCreator::DefaultMaterial() };
 
 	void Begin() override {
 		Jade::Gameobject testCube{};
@@ -21,6 +22,10 @@ public:
 
 		addLight(Jade::PointLight{});
 		addLight(Jade::DirectionalLight{});
+
+		Jade::Gameobject testPyramid{};
+		testPyramid.addComponent(defaultd);
+		addGameobject(testPyramid);
 	}
 
 	bool keyHit{ false };
