@@ -15,14 +15,12 @@ public:
 
 	void Begin() override {
 		Jade::Gameobject testCube{};
-		testCube.addComponent(std::make_shared<Jade::PhongRenderingComponent>(backpackRenderer));
+		testCube.addComponent(backpackRenderer);
 		testCube.getComponent<Jade::Transform>()->position = glm::vec3(0.0f, 0.0f, -10.0f);
-		//addGameobject(std::make_shared<Jade::Gameobject>(testCube));
 		addGameobject(testCube);
 
-		Jade::PointLight light{};
-		addLight(light);
-		addLight(Jade::DirectionalLight());
+		addLight(Jade::PointLight{});
+		addLight(Jade::DirectionalLight{});
 	}
 
 	bool keyHit{ false };
