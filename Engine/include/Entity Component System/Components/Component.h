@@ -17,15 +17,15 @@ namespace Jade {
 		virtual void Begin() {}
 		virtual void Cleanup() {}
 
-		Gameobject* getGameobject() { return m_Gameobject; }
+		Gameobject getGameobject();
 
-		void setGameobject(Gameobject* gameobject) { m_Gameobject = gameobject; }
+		void setGameobject(const Gameobject& gameobject) { m_Gameobject = std::make_shared<Gameobject>(gameobject); }
 
 		void update();
 		void begin();
 		void cleanup();
 
 	private:
-		Gameobject* m_Gameobject{ nullptr };
+		std::shared_ptr<Gameobject> m_Gameobject{};
 	};
 }

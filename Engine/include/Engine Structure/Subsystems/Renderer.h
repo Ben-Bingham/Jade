@@ -38,7 +38,7 @@ namespace Jade {
 			}
 		}
 
-		void loadScene(Scene* scene);
+		void loadScene(std::shared_ptr<Scene> scene);
 
 		void update();
 

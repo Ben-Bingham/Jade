@@ -42,7 +42,7 @@ namespace Jade {
 		render();
 	}
 
-	void Renderer::loadScene(Scene* scene) {
+	void Renderer::loadScene(std::shared_ptr<Scene> scene) {
 		for (std::shared_ptr<PShader> shader : m_PShaders) {
 			shader->clearLights();
 

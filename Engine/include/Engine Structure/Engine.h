@@ -18,13 +18,32 @@ namespace Jade {
 	extern Renderer gRenderer;
 	//TODO Event Subsystem
 
-	class Scene;
-
 	class Engine : public Subsystem {
 	public:
 		Engine() {}
 
-		void LoadScene(Scene* scene);
+		template<typename T>
+		void LoadScene(T& scene) {
+			if (m_ActiveScene != nullptr) {
+				m_ActiveScene->stop();
+				m_ActiveScene->cleanup();
+			}
+
+			m_ActiveScene = std::make_unique<T>(scene);
+			m_ActiveScene->begin();
+
+			gRenderer.loadScene(m_ActiveScene);
+
+			while (gWindow.getWindowOpen() && m_ActiveScene->isRunning) {
+				gTime.update();
+				gWindow.update();
+				gRenderer.update();
+
+				m_ActiveScene->update();
+
+				gWindow.lateUpdate();
+			}
+		}
 
 		void StartUp() override {
 			gTime.StartUp();
@@ -49,6 +68,6 @@ namespace Jade {
 		}
 
 	private:
-		Scene* m_ActiveScene{ nullptr };
+		std::shared_ptr<Scene> m_ActiveScene;
 	};
 }

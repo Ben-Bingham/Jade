@@ -4,7 +4,7 @@ namespace Jade {
 	unsigned int Gameobject::staticID = 0;
 
 	void Gameobject::begin() {
-		for (Component* component : m_Components) {
+		for (std::shared_ptr<Component> component : m_Components) {
 			component->begin();
 		}
 
@@ -14,7 +14,7 @@ namespace Jade {
 	}
 
 	void Gameobject::update() {
-		for (Component* component : m_Components) {
+		for (std::shared_ptr<Component> component : m_Components) {
 			component->update();
 		}
 
@@ -24,7 +24,7 @@ namespace Jade {
 	}
 
 	void Gameobject::cleanup() {
-		for (Component* component : m_Components) {
+		for (std::shared_ptr<Component> component : m_Components) {
 			component->cleanup();
 		}
 

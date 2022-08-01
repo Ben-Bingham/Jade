@@ -10,16 +10,18 @@ public:
 	unsigned int playerScore{ 0 };
 
 	Jade::Model backpack{ "assets\\models\\backpack\\backpack.obj", true };
-	Jade::Gameobject testCube{};
 
 	Jade::PhongRenderingComponent backpackRenderer{ &backpack };
 
 	void Begin() override {
-		testCube.addComponent(&backpackRenderer);
+		Jade::Gameobject testCube{};
+		testCube.addComponent(std::make_shared<Jade::PhongRenderingComponent>(backpackRenderer));
 		testCube.getComponent<Jade::Transform>()->position = glm::vec3(0.0f, 0.0f, -10.0f);
+		//addGameobject(std::make_shared<Jade::Gameobject>(testCube));
 		addGameobject(testCube);
 
-		addLight(Jade::PointLight());
+		Jade::PointLight light{};
+		addLight(light);
 		addLight(Jade::DirectionalLight());
 	}
 
@@ -38,10 +40,5 @@ public:
 		if (Jade::gKeyboard.KEY_ESCAPE) {
 			Jade::gWindow.setWindowShouldClose();
 		}
-	}
-
-	void Cleanup() override {
-		playerScore = 0;
-		isRunning = true;
 	}
 };

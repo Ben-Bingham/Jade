@@ -7,18 +7,18 @@ namespace Jade {
 	class Gameobject {
 	public:
 		Gameobject() : m_ID(getNextID()) {
-			addComponent(new Transform()); //TODO delete
+			addComponent(std::make_shared<Transform>());
 		}
 
-		void addComponent(Component* component) { 
-			component->setGameobject(this);
+		void addComponent(std::shared_ptr<Component> component) { 
+			component->setGameobject(*this);
 			m_Components.push_back(component);
 		}
 
 		template<typename T>
 		T* getComponent() const {
-			for (Component* component : m_Components) {
-				T* desiredComponent = dynamic_cast<T*>(component);
+			for (std::shared_ptr<Component> component : m_Components) {
+				T* desiredComponent = dynamic_cast<T*>(component.get());
 				if (desiredComponent != nullptr) {
 					return desiredComponent;
 				}
@@ -33,7 +33,7 @@ namespace Jade {
 		void cleanup();
 
 	private:
-		std::vector<Component*> m_Components;
+		std::vector<std::shared_ptr<Component>> m_Components;
 		std::vector<Gameobject*> m_Children;
 
 		unsigned int m_ID;

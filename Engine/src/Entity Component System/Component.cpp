@@ -1,4 +1,5 @@
 #include "Entity Component System/Components/Component.h"
+#include "Entity Component System/Gameobjects/Gameobject.h"
 
 namespace Jade {
 	Component::~Component() {}
@@ -14,4 +15,6 @@ namespace Jade {
 	void Component::cleanup() {
 		Cleanup();
 	}
+
+	Gameobject Component::getGameobject() { return *m_Gameobject; }
 }

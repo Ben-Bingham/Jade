@@ -14,7 +14,7 @@ namespace Jade {
 		PhongRenderingComponent(Model* model);
 
 		void Begin() override {
-			Transform* transform = getGameobject()->getComponent<Transform>();
+			Transform* transform = getGameobject().getComponent<Transform>();
 			for (std::shared_ptr<RenderableObject> renderable : renderables) {
 				renderable->setTransform(transform);
 				renderable->calculateModelMatrix();
