@@ -7,12 +7,13 @@ namespace Jade {
 	class Gameobject {
 	public:
 		Gameobject() : m_ID(getNextID()) {
-			addComponent(std::make_shared<Transform>());
+			addComponent(Transform{});
 		}
 
-		void addComponent(std::shared_ptr<Component> component) { 
-			component->setGameobject(*this);
-			m_Components.push_back(component);
+		template<typename T>
+		void addComponent(T& component) { 
+			component.setGameobject(*this);
+			m_Components.push_back(std::make_shared<T>(component));
 		}
 
 		template<typename T>
@@ -26,7 +27,7 @@ namespace Jade {
 			return nullptr;
 		}
 
-		void addChild(Gameobject* gameobject) { m_Children.push_back(gameobject); }
+		void addChild(const Gameobject& gameobject) { m_Children.push_back(std::make_shared<Gameobject>(gameobject)); }
 
 		void begin();
 		void update();
@@ -34,7 +35,7 @@ namespace Jade {
 
 	private:
 		std::vector<std::shared_ptr<Component>> m_Components;
-		std::vector<Gameobject*> m_Children;
+		std::vector<std::shared_ptr<Gameobject>> m_Children; //TODO testing
 
 		unsigned int m_ID;
 		

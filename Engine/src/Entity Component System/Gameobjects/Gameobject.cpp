@@ -8,7 +8,7 @@ namespace Jade {
 			component->begin();
 		}
 
-		for (Gameobject* child : m_Children) {
+		for (std::shared_ptr<Gameobject> child : m_Children) {
 			child->begin();
 		}
 	}
@@ -18,7 +18,7 @@ namespace Jade {
 			component->update();
 		}
 
-		for (Gameobject* child : m_Children) {
+		for (std::shared_ptr<Gameobject> child : m_Children) {
 			child->update();
 		}
 	}
@@ -28,7 +28,7 @@ namespace Jade {
 			component->cleanup();
 		}
 
-		for (Gameobject* child : m_Children) {
+		for (std::shared_ptr<Gameobject> child : m_Children) {
 			child->cleanup();
 		}
 	}

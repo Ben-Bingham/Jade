@@ -20,7 +20,7 @@ int main() {
 	engine.setCamera(camera);
 
 	Jade::FPSController fpsController;
-	camera.addComponent(std::make_unique<Jade::FPSController>(fpsController));
+	camera.addComponent(fpsController);
 
 	Level1 lvl1{};
 	lvl1.addGameobject(camera);
