@@ -20,6 +20,7 @@ namespace Jade {
 	void Renderer::render() {
 		int count = 0;
 		for (std::shared_ptr<PShader> ruleSet : m_PShaders) {
+
 			ruleSet->bind();
 			ruleSet->getProgram().setVector3f("cameraPosition", gCamera.getComponent<Transform>()->position);
 			ruleSet->bindAdditionals();
