@@ -6,6 +6,8 @@
 #include "Entity Component System/Components/PhongRenderingComponent.h"
 #include "Entity Component System/Gameobjects/Lights/PointLight.h"
 #include "Entity Component System/Gameobjects/Lights/DirectionalLight.h"
+#include "High Level Rendering/MaterialCreator.h"
+#include "Entity Component System/Components/SolidRenderingComponent.h"
 
 namespace Jade {
 	class Application;
