@@ -11,4 +11,10 @@ namespace Jade {
 			renderables.push_back(std::make_shared<PhongRenderable>(&m_Materials[mesh.getMaterialIndex()], mesh));
 		}
 	}
+
+	PhongRenderingComponent::PhongRenderingComponent(Shape shape, const Material& material) {
+		m_Materials.push_back(material);
+
+		renderables.push_back(std::make_shared<PhongRenderable>(&m_Materials[0], shape));
+	}
 }

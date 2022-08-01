@@ -12,6 +12,7 @@ namespace Jade {
 	class PhongRenderingComponent : public RenderComponent {
 	public:
 		PhongRenderingComponent(Model* model);
+		PhongRenderingComponent(Shape shape, const Material& material);
 
 		void Begin() override {
 			Transform* transform = getGameobject().getComponent<Transform>();
