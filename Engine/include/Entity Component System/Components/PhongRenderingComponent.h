@@ -23,6 +23,6 @@ namespace Jade {
 		}
 
 	private:
-		std::vector<Material> m_Materials;
+		std::vector<std::shared_ptr<Material>> m_Materials;
 	};
 }
