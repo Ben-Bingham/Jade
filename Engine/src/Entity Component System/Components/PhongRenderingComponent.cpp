@@ -1,4 +1,4 @@
-#include "Entity Component System/Components/PhongRenderingComponent.h"
+#include "Entity Component System/Components/Rendering Components/PhongRenderingComponent.h"
 #include "Engine Structure/Engine.h"
 
 namespace Jade {

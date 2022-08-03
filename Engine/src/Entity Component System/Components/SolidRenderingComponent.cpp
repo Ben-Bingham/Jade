@@ -1,4 +1,4 @@
-#include "Entity Component System/Components/SolidRenderingComponent.h"
+#include "Entity Component System/Components/Rendering Components/SolidRenderingComponent.h"
 #include "Engine Structure/Engine.h"
 
 namespace Jade {

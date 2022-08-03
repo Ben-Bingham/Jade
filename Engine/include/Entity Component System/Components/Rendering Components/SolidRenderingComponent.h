@@ -1,5 +1,5 @@
 #pragma once
-#include "Entity Component System/Components/RenderComponent.h"
+#include "Entity Component System/Components/Rendering Components/RenderComponent.h"
 
 namespace Jade {
 	class SolidRenderingComponent : public RenderComponent {

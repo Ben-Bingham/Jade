@@ -31,8 +31,4 @@ public:
 
 		addGameobject(backpackObject);
 	}
-
-	void Update() override {
-
-	}
 };
