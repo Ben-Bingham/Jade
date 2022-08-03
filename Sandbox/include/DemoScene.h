@@ -2,6 +2,8 @@
 
 #include "Engine Structure/Scene.h"
 
+#include "Entity Component System/Components/FPSController.h"
+
 class DemoScene : public Jade::Scene {
 public:
 	void Begin() override {
@@ -24,12 +26,20 @@ public:
 
 		addGameobject(demoCube);
 		addGameobject(lightBox);
-		addLight(light);
-		addLight(Jade::DirectionalLight{});
+		addGameobject(light);
+		addGameobject(Jade::DirectionalLight{});
 
 		Jade::Gameobject backpackObject{};
 		backpackObject.addComponent(Jade::PhongRenderingComponent{ backpack });
 
 		addGameobject(backpackObject);
+
+		Jade::Camera camera;
+		Jade::Engine::setCamera(camera);
+
+		Jade::FPSController fpsController;
+		camera.addComponent(fpsController);
+
+		addGameobject(camera);
 	}
 };

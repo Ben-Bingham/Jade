@@ -22,6 +22,9 @@ namespace Jade {
 		virtual ~Scene() = 0;
 
 		void addGameobject(const Gameobject& gameobject) { m_Gameobjects.push_back(std::make_shared<Gameobject>(gameobject)); }
+		void addGameobject(const PointLight& light) { addLight(light); }
+		void addGameobject(const DirectionalLight& light) { addLight(light); }
+
 		void addLight(const PointLight& light) { 
 			m_Lights.push_back(std::make_shared<PointLight>(light));
 			for (std::shared_ptr<Gameobject> gb : m_Gameobjects) {

@@ -61,7 +61,7 @@ namespace Jade {
 			gWindow.ShutDown();
 		}
 
-		void setCamera(const Camera& camera) {
+		static void setCamera(const Camera& camera) {
 			gCamera = camera;
 		}
 
