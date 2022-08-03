@@ -41,7 +41,7 @@ namespace Jade {
 
 	class Model {
 	public:
-		Model(const std::string& path, bool flipTextures);
+		Model(const std::string& path, bool flipTextures = false);
 
 		std::vector<Mesh> getMeshes() { return m_Meshes; }
 		std::vector<AssimpMaterial> getMaterials() { return m_Materials; }
