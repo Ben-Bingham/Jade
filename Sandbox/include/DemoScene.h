@@ -4,6 +4,7 @@
 
 class DemoScene : public Jade::Scene {
 public:
+	Jade::Model backpack{ "assets\\models\\backpack\\backpack.obj", false };
 
 	void Begin() override {
 		Jade::Gameobject demoCube{};
@@ -24,5 +25,14 @@ public:
 		addGameobject(demoCube);
 		addGameobject(lightBox);
 		addLight(light);
+
+		Jade::Gameobject backpackObject{};
+		backpackObject.addComponent(Jade::PhongRenderingComponent{ &backpack });
+
+		addGameobject(backpackObject);
+	}
+
+	void Update() override {
+
 	}
 };
