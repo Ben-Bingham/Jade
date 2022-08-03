@@ -4,14 +4,16 @@
 
 class DemoScene : public Jade::Scene {
 public:
-	Jade::Gameobject demoCube{};
-	Jade::Gameobject lightBox{};
-	Jade::PointLight light{};
-
-	Jade::PhongRenderingComponent demoCubeRenderingComponent{ Jade::CUBE, Jade::MaterialCreator::DefaultMaterial() };
-	Jade::SolidRenderingComponent lightBoxRenderingComponent{ Jade::CUBE, Jade::Colour(255, 255, 255) };
 
 	void Begin() override {
+		Jade::Gameobject demoCube{};
+		Jade::Gameobject lightBox{};
+		Jade::PointLight light{};
+
+		Jade::PhongRenderingComponent demoCubeRenderingComponent{ Jade::CUBE, Jade::MaterialCreator::DefaultMaterial() };
+
+		Jade::SolidRenderingComponent lightBoxRenderingComponent{ Jade::CUBE, Jade::Colour(255, 255, 255) };
+
 		demoCube.addComponent(demoCubeRenderingComponent);
 		lightBox.addComponent(lightBoxRenderingComponent);
 

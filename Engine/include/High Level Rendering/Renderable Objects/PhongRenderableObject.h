@@ -5,10 +5,10 @@
 namespace Jade {
 	class PhongRenderable : public RenderableObject {
 	public:
-		PhongRenderable(Material* material, Shape shape = CUBE)
+		PhongRenderable(std::shared_ptr<Material> material, Shape shape = CUBE)
 			: RenderableObject(PHONG, shape), m_Material(material) {}
 
-		PhongRenderable(Material* material, Mesh mesh)
+		PhongRenderable(std::shared_ptr<Material> material, Mesh mesh)
 			: RenderableObject(PHONG, mesh), m_Material(material) {}
 
 		void additionalRendering(const PShader& ruleSet) const override {
@@ -20,6 +20,6 @@ namespace Jade {
 		}
 
 	private:
-		Material* m_Material;
+		std::shared_ptr<Material> m_Material;
 	};
 }
