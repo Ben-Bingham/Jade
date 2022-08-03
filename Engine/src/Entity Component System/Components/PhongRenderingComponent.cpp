@@ -2,12 +2,12 @@
 #include "Engine Structure/Engine.h"
 
 namespace Jade {
-	PhongRenderingComponent::PhongRenderingComponent(Model* model) {
-		for (const Jade::AssimpMaterial& material : model->getMaterials()) {
+	PhongRenderingComponent::PhongRenderingComponent(Model& model) {
+		for (const Jade::AssimpMaterial& material : model.getMaterials()) {
 			m_Materials.push_back(std::make_shared<Material>(material));
 		}
 
-		for (Jade::Mesh mesh : model->getMeshes()) {
+		for (Jade::Mesh mesh : model.getMeshes()) {
 			renderables.push_back(std::make_shared<PhongRenderable>(m_Materials[mesh.getMaterialIndex()], mesh));
 		}
 	}

@@ -11,7 +11,7 @@ namespace Jade {
 
 	class PhongRenderingComponent : public RenderComponent {
 	public:
-		PhongRenderingComponent(Model* model);
+		PhongRenderingComponent(Model& model);
 		PhongRenderingComponent(Shape shape, const Material& material);
 
 		void Begin() override {
