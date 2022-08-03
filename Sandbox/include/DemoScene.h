@@ -25,6 +25,7 @@ public:
 		addGameobject(demoCube);
 		addGameobject(lightBox);
 		addLight(light);
+		addLight(Jade::DirectionalLight{});
 
 		Jade::Gameobject backpackObject{};
 		backpackObject.addComponent(Jade::PhongRenderingComponent{ backpack });

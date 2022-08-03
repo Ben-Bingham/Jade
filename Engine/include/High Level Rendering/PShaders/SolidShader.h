@@ -8,7 +8,5 @@ namespace Jade {
 		SolidShader() : PShader(SOLID_COLOUR) {}
 
 		void bindAdditionals() override {}
-
-	private:
 	};
 }

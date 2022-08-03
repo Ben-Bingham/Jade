@@ -22,8 +22,25 @@ namespace Jade {
 		virtual ~Scene() = 0;
 
 		void addGameobject(const Gameobject& gameobject) { m_Gameobjects.push_back(std::make_shared<Gameobject>(gameobject)); }
-		void addLight(const PointLight& light) { m_Lights.push_back(std::make_shared<PointLight>(light)); };
-		void addLight(const DirectionalLight& light) { m_Lights.push_back(std::make_shared<DirectionalLight>(light)); };
+		void addLight(const PointLight& light) { 
+			m_Lights.push_back(std::make_shared<PointLight>(light));
+			for (std::shared_ptr<Gameobject> gb : m_Gameobjects) {
+				RenderComponent* renderComp = gb->getComponent<RenderComponent>();
+				if (renderComp != nullptr) {
+					renderComp->shader->addPointLight(light);
+				}
+			}
+		};
+
+		void addLight(const DirectionalLight& light) { 
+			m_Lights.push_back(std::make_shared<DirectionalLight>(light));
+			for (std::shared_ptr<Gameobject> gb : m_Gameobjects) {
+				RenderComponent* renderComp = gb->getComponent<RenderComponent>();
+				if (renderComp != nullptr) {
+					renderComp->shader->addDirectionalLight(light);
+				}
+			}
+		};
 
 		std::vector<std::shared_ptr<Light>> getLights() { return m_Lights; }
 
@@ -34,6 +51,15 @@ namespace Jade {
 		virtual void Begin() {}
 		virtual void Update() {}
 		virtual void Cleanup() {}
+
+		void render() {
+			for (std::shared_ptr<Gameobject> gb : m_Gameobjects) {
+				RenderComponent* renderComp = gb->getComponent<RenderComponent>();
+				if (renderComp != nullptr) {
+					renderComp->render();
+				}
+			}
+		}
 
 		void stop() {
 			isRunning = false;

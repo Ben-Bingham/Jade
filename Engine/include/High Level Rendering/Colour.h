@@ -18,6 +18,14 @@ namespace Jade {
 
 		glm::vec3 toVec3() const { return glm::vec3(colour.x, colour.y, colour.z); }
 
+		bool operator==(const Colour& other) const {
+			return colour == other.colour;
+		}
+
+		bool operator!=(const Colour& other) const {
+			return !operator==(other);
+		}
+
 	private:
 		glm::vec4 initWith0to255(int r, int g, int b, int a) {
 			float oneOverTwoFifyFive = 1.0f / 255.0f;
