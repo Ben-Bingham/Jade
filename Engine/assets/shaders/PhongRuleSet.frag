@@ -29,8 +29,8 @@ struct DirectionalLight {
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
 vec3 CalcDirLight(DirectionalLight light, vec3 normal, vec3 viewDir);
 
-#define MAX_POINT_LIGHTS 10 //TODO make bigger
-#define MAX_DIRECTIONAL_LIGHTS 10
+#define MAX_POINT_LIGHTS 16
+#define MAX_DIRECTIONAL_LIGHTS 16
 
 out vec4 FragColor;
 
@@ -72,8 +72,8 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 cameraPosi
     vec3 diffuse = light.diffuse * diff * texture(material.diffuse, textureCordinates).rgb;  
 
 	vec3 viewDir = normalize(cameraPosition - fragmentPosition);
-	vec3 reflectDir = reflect(-lightDir, norm);
-	float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
+	vec3 halfwayDir = normalize(lightDir + viewDir);
+	float spec = pow(max(dot(normal, halfwayDir), 0.0), material.shininess);
 	vec3 specular = light.specular * (spec * texture(material.specular, textureCordinates).rgb);
 
 	float Distance = length(light.position - fragPos);
@@ -91,8 +91,8 @@ vec3 CalcDirLight(DirectionalLight light, vec3 normal, vec3 viewDir) {
 
     float diff = max(dot(normal, lightDir), 0.0);
 
-    vec3 reflectDir = reflect(-lightDir, normal);
-    float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
+	vec3 halfwayDir = normalize(lightDir + viewDir);
+    float spec = pow(max(dot(normal, halfwayDir), 0.0), material.shininess);
 
 	vec3 ambient = light.ambient * texture(material.diffuse, textureCordinates).rgb;
     vec3 diffuse = light.diffuse * diff * texture(material.diffuse, textureCordinates).rgb;  
