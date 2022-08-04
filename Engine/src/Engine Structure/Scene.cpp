@@ -16,7 +16,7 @@ namespace Jade {
 				std::vector<PointLight> pointLights;
 				std::vector<DirectionalLight> dirLights;
 				for (std::shared_ptr<Light> light : m_Lights) {
-					Light* lightPtr = light.get();
+					Light* lightPtr = light.get(); //TODO
 
 					PointLight* pointLight = dynamic_cast<PointLight*>(lightPtr);
 					DirectionalLight* dirLight = dynamic_cast<DirectionalLight*>(lightPtr);
@@ -49,10 +49,13 @@ namespace Jade {
 	void Scene::update() {
 		Update();
 		for (std::shared_ptr<Gameobject> gameobject : m_Gameobjects) {
-			gameobject->update();			
-		}
+			gameobject->update();	
 
-		render();
+			render(gameobject);
+			for (std::shared_ptr<Gameobject> gb : gameobject->getChildren()) {
+				render(gb);
+			}
+		}
 	}
 
 	void Scene::cleanup() {

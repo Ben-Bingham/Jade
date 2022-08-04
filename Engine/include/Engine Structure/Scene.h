@@ -55,12 +55,10 @@ namespace Jade {
 		virtual void Update() {}
 		virtual void Cleanup() {}
 
-		void render() {
-			for (std::shared_ptr<Gameobject> gb : m_Gameobjects) {
-				RenderComponent* renderComp = gb->getComponent<RenderComponent>();
-				if (renderComp != nullptr) {
-					renderComp->render();
-				}
+		void render(const std::shared_ptr<Gameobject> gb) {
+			RenderComponent* renderComp = gb->getComponent<RenderComponent>();
+			if (renderComp != nullptr) {
+				renderComp->render();
 			}
 		}
 

@@ -12,8 +12,8 @@ namespace Jade {
 
 		template<typename T>
 		void addComponent(T& component) { 
-			component.setGameobject(*this);
 			m_Components.push_back(std::make_shared<T>(component));
+			m_Components[m_Components.size() - 1]->setGameobject(*this);
 		}
 
 		template<typename T>
@@ -28,6 +28,8 @@ namespace Jade {
 		}
 
 		void addChild(const Gameobject& gameobject) { m_Children.push_back(std::make_shared<Gameobject>(gameobject)); }
+
+		std::vector<std::shared_ptr<Gameobject>> getChildren() { return m_Children; }
 
 		void begin();
 		void update();
