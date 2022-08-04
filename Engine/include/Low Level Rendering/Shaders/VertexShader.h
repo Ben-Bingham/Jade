@@ -1,7 +1,7 @@
 #pragma once
 #include <GL/glew.h>
 
-#include "Jade.h"
+#include "Log.h"
 
 #include "Core Systems/Resource Pipeline/TextFile.h"
 #include "Shader.h"

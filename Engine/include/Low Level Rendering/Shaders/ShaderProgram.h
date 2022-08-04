@@ -3,7 +3,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "Jade.h"
+#include "Log.h"
 
 #include "VertexShader.h"
 #include "FragmentShader.h"

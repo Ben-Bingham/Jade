@@ -1,5 +1,5 @@
 #pragma once
-#include "Jade.h"
+#include "Log.h"
 
 namespace Jade {
 	class Gameobject;

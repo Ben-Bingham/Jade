@@ -2,7 +2,7 @@
 #include <iostream>
 #include <fstream>
 
-#include "Jade.h"
+#include "Log.h"
 
 namespace Jade {
 	class TextFile {

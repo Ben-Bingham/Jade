@@ -1,6 +1,6 @@
 #include <GL/glew.h>
 
-#include "Jade.h"
+#include "Log.h"
 
 #include "Core Systems/Resource Pipeline/Image.h"
 #include "Low Level Rendering/Rendering Objects/Texture.h"

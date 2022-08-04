@@ -2,7 +2,7 @@
 #include <sstream>
 #include <vector>
 
-#include "Jade.h"
+#include "Log.h"
 
 #include "stb_image.h"
 #include "stb_image_write.h"

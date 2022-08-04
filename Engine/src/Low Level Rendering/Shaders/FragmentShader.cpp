@@ -1,6 +1,6 @@
 #include <GL/glew.h>
 
-#include "Jade.h"
+#include "Log.h"
 
 #include "Low Level Rendering/Shaders/FragmentShader.h"
 

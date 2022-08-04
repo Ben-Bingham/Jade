@@ -1,3 +1,3 @@
-#include "Jade.h"
+#include "Log.h"
 
 Jade::Log LOGGER(Jade::INFO, false);

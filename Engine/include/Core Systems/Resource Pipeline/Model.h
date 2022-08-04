@@ -5,7 +5,7 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
-#include "Jade.h"
+#include "Log.h"
 
 #include "Mesh.h"
 

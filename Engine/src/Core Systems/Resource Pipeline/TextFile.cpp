@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 
-#include "Jade.h"
+#include "Log.h"
 
 #include "Core Systems/Resource Pipeline/TextFile.h"
 

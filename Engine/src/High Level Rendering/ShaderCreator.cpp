@@ -1,4 +1,4 @@
-#include "Jade.h"
+#include "Log.h"
 
 #include "High Level Rendering/ShaderCreator.h"
 #include "Core Systems/Resource Pipeline/TextFile.h"

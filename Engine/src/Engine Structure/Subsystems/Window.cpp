@@ -1,7 +1,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-#include "Jade.h"
+#include "Log.h"
 
 #include "Engine Structure/Subsystems/Window.h"
 #include "Engine Structure/Engine.h"
