@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Engine Structure/Scene.h"
 #include "Jade.h"
 
 #include "Entity Component System/Components/FPSController.h"
@@ -41,5 +40,11 @@ public:
 		camera.addComponent(fpsController);
 
 		addGameobject(camera);
+	}
+
+	void Update() override{
+		if (Jade::gKeyboard.KEY_ESCAPE) {
+			stop();
+		}
 	}
 };
