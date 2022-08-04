@@ -7,6 +7,7 @@
 #include "Engine Structure/Subsystems/Mouse.h"
 #include "Engine Structure/Subsystems/GLEW.h"
 #include "Engine Structure/Subsystems/Time.h"
+#include "Scene.h"
 
 namespace Jade {
 	extern Time gTime;
