@@ -2,7 +2,7 @@
 
 #include <GL/glew.h>
 
-#include "Log.h"
+#include "Core Systems/Logging/Log.h"
 
 #include "Core Systems/Resource Pipeline/Image.h"
 

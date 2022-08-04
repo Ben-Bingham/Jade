@@ -1,4 +1,4 @@
-#include "Log.h"
+#include "Core Systems/Logging/Log.h"
 
 #include "High Level Rendering/ShaderCreator.h"
 #include "Core Systems/Resource Pipeline/TextFile.h"

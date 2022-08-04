@@ -3,7 +3,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "Log.h"
+#include "Core Systems/Logging/Log.h"
 
 #include "VertexShader.h"
 #include "FragmentShader.h"

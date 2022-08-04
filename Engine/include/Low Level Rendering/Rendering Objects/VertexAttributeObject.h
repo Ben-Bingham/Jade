@@ -3,7 +3,7 @@
 #include <vector>
 #include <iostream>
 
-#include "Log.h"
+#include "Core Systems/Logging/Log.h"
 
 namespace Jade {
 	enum AttributeNames {

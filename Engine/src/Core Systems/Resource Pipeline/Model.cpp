@@ -3,7 +3,7 @@
 #include <sstream>
 #include <iostream>
 
-#include "Log.h"
+#include "Core Systems/Logging/Log.h"
 
 #include "Core Systems/Resource Pipeline/Model.h"
 #include "Core Systems/Resource Pipeline/TextFile.h"

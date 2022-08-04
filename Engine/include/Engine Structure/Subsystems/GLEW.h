@@ -3,7 +3,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-#include "Log.h"
+#include "Core Systems/Logging/Log.h"
 
 #include "Engine Structure/Subsystems/Subsystem.h"
 

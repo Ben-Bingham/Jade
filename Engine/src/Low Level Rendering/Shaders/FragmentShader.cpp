@@ -1,6 +1,6 @@
 #include <GL/glew.h>
 
-#include "Log.h"
+#include "Core Systems/Logging/Log.h"
 
 #include "Low Level Rendering/Shaders/FragmentShader.h"
 

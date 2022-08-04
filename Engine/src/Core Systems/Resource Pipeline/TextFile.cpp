@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 
-#include "Log.h"
+#include "Core Systems/Logging/Log.h"
 
 #include "Core Systems/Resource Pipeline/TextFile.h"
 

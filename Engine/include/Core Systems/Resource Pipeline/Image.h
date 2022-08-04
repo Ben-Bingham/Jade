@@ -2,7 +2,7 @@
 #include <sstream>
 #include <vector>
 
-#include "Log.h"
+#include "Core Systems/Logging/Log.h"
 
 #include "stb_image.h"
 #include "stb_image_write.h"

@@ -5,7 +5,7 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
-#include "Log.h"
+#include "Core Systems/Logging/Log.h"
 
 #include "Mesh.h"
 

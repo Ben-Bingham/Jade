@@ -12,5 +12,5 @@
 #include "Engine Structure/Engine.h"
 #include "Entity Component System/Gameobjects/Gameobject.h"
 #include "Engine Structure/Scene.h"
-#include "Log.h"
+#include "Core Systems/Logging/Log.h"
 #include "Entity Component System/Components/Component.h"
