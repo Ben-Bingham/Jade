@@ -9,6 +9,10 @@ namespace Jade {
 			return Material(makeTextureFromColour(Colour(0, 66, 42)), makeTextureFromColour(Colour(255, 255, 255)), 32.0f);
 		}
 
+		static Material SpecifiedMaterial(Colour Diffuse, Colour Specular = Colour{255, 255, 255}) {
+			return Material(makeTextureFromColour(Diffuse), makeTextureFromColour(Specular), 32.0f);
+		}
+
 	private:
 		static unsigned int getNextProceduralID() { proceduralImageID++; return proceduralImageID; }
 
