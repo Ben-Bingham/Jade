@@ -17,7 +17,6 @@ namespace Jade {
 
 	void keyCallback(GLFWwindow* window, int key, int scancode, int action, int mods) {
 		switch (key) {
-		default:
 		case GLFW_KEY_SPACE:			gKeyboard.KEY_SPACE = GLFWToState(action); break;
 		case GLFW_KEY_APOSTROPHE:		gKeyboard.KEY_APOSTROPHE = GLFWToState(action); break;
 		case GLFW_KEY_COMMA:			gKeyboard.KEY_COMMA = GLFWToState(action); break;
@@ -120,6 +119,8 @@ namespace Jade {
 		case GLFW_KEY_RIGHT_SHIFT:		gKeyboard.KEY_RIGHT_SHIFT = GLFWToState(action); break;
 		case GLFW_KEY_RIGHT_CONTROL:	gKeyboard.KEY_RIGHT_CONTROL = GLFWToState(action); break;
 		case GLFW_KEY_RIGHT_ALT:		gKeyboard.KEY_RIGHT_ALT = GLFWToState(action); break;
+		default:
+		case GLFW_KEY_UNKNOWN:			gKeyboard.KEY_UNKNOWN = GLFWToState(action); break;
 		}
 	}
 }

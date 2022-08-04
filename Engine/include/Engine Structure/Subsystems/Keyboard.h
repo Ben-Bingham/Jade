@@ -122,6 +122,7 @@ namespace Jade{
 		KeyState KEY_RIGHT_SHIFT{ KEY_RELEASED };
 		KeyState KEY_RIGHT_CONTROL{ KEY_RELEASED };
 		KeyState KEY_RIGHT_ALT{ KEY_RELEASED };
+		KeyState KEY_UNKNOWN{ KEY_RELEASED };
 	};
 
 	KeyState GLFWToState(int action);
