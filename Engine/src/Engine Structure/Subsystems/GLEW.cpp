@@ -14,6 +14,8 @@ namespace Jade {
 
 		glEnable(GL_DEPTH_TEST);
 
+		//glEnable(GL_MULTISAMPLE);
+
 		int flags;
 		glGetIntegerv(GL_CONTEXT_FLAGS, &flags);
 
