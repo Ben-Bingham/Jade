@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Engine Structure/Scene.h"
+#include "Jade.h"
 
 #include "Entity Component System/Components/FPSController.h"
 
@@ -20,9 +21,8 @@ public:
 		demoCube.addComponent(demoCubeRenderingComponent);
 		lightBox.addComponent(lightBoxRenderingComponent);
 
-		lightBox.getComponent<Jade::Transform>()->position = glm::vec3(2.0f, 4.0f, -2.0f);
-		lightBox.getComponent<Jade::Transform>()->scale = glm::vec3(0.2f);
-		light.getComponent<Jade::Transform>()->position = glm::vec3(1.0f, 2.0f, -1.0f);
+		lightBox.getComponent<Jade::Transform>()->Translate(2.0f, 4.0f, -2.0f).Scale(0.2f);
+		light.getComponent<Jade::Transform>()->Translate(1.0f, 2.0f, -1.0f);
 
 		addGameobject(demoCube);
 		addGameobject(lightBox);
