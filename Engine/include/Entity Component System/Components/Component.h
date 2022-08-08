@@ -19,7 +19,7 @@ namespace Jade {
 
 		Gameobject getGameobject();
 
-		void setGameobject(const Gameobject& gameobject) { m_Gameobject = std::make_shared<Gameobject>(gameobject); }
+		void setGameobject(std::shared_ptr<Gameobject> gameobject) { m_Gameobject = gameobject; }
 
 		void update();
 		void begin();

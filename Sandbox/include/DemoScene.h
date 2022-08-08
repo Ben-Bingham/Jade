@@ -6,31 +6,37 @@
 
 class DemoScene : public Jade::Scene {
 public:
+	Jade::DirectionalLight dirLight{};
+
 	void Begin() override {
 		Jade::Model backpack{ "assets\\models\\backpack\\backpack.obj", false };
 
-		Jade::Gameobject demoCube{};
+		//Jade::Gameobject demoCube{};
 		//Jade::Gameobject lightBox{};
-		Jade::PointLight light{};
+		//Jade::PointLight light{};
 
-		Jade::PhongRenderingComponent demoCubeRenderingComponent{ Jade::CUBE, Jade::MaterialCreator::DefaultMaterial() };
+		//Jade::PhongRenderingComponent demoCubeRenderingComponent{ Jade::CUBE, Jade::MaterialCreator::DefaultMaterial() };
 
-		Jade::SolidRenderingComponent lightBoxRenderingComponent{ Jade::CUBE, Jade::Colour(255, 255, 255) };
+		//Jade::SolidRenderingComponent lightBoxRenderingComponent{ Jade::CUBE, Jade::Colour(255, 255, 255) };
 
-		demoCube.addComponent(demoCubeRenderingComponent);
+		//demoCube.addComponent(demoCubeRenderingComponent);
 		//lightBox.addComponent(lightBoxRenderingComponent);
 
 		//lightBox.getComponent<Jade::Transform>()->Translate(2.0f, 4.0f, -2.0f).Scale(0.2f);
-		light.getComponent<Jade::Transform>()->Translate(1.0f, 2.0f, -1.0f);
+		//light.getComponent<Jade::Transform>()->Translate(1.0f, 2.0f, -1.0f);
 
-		addGameobject(demoCube);
+		//addGameobject(demoCube);
 		//addGameobject(lightBox);
 		//addGameobject(light);
-		addGameobject(Jade::DirectionalLight{});
+		dirLight.getComponent<Jade::Transform>()->Translate(-2.0f, 4.0f, -1.0f);
+		//dirLight.direction = glm::vec3{-0.5, -0.5, -0.5};
+		dirLight.diffuse = Jade::Colour(1.0f, 1.0f, 1.0f);
+		dirLight.ambient = Jade::Colour(0.1f, 0.1f, 0.1f);
+		dirLight.specular = Jade::Colour(0.2f, 0.2f, 0.2f);
+		addGameobject(dirLight);
 
 		Jade::Gameobject backpackObject{};
 		backpackObject.addComponent(Jade::PhongRenderingComponent{ backpack });
-
 		backpackObject.getComponent<Jade::Transform>()->Translate(5, 0, 0);
 		addGameobject(backpackObject);
 
@@ -42,28 +48,74 @@ public:
 
 		addGameobject(camera);
 
-		Jade::Gameobject floor{};
-		floor.addComponent(Jade::PhongRenderingComponent{ Jade::CUBE, Jade::MaterialCreator::SpecifiedMaterial(Jade::Colour{ 153, 121, 63} ) });
-		floor.getComponent<Jade::Transform>()->Scale(100, 0, 100).Translate(0, -5, 0);
-		addGameobject(floor);
-
 		Jade::Image container2{ "assets\\textures\\container2.png" };
-		Jade::Image container2_Specular{ "assets\\textures\\container2_specular.png" }; 
+		Jade::Image container2_Specular{ "assets\\textures\\container2_specular.png" };
+
+		Jade::Gameobject cube1{};
+		Jade::Material mat(container2, container2_Specular, 32.0f);
+		Jade::PhongRenderingComponent phong { 
+			Jade::CUBE, mat
+		};
+		cube1.addComponent(phong);
+		cube1.getComponent<Jade::Transform>()->Translate(0.0f, -4, 0.0).Scale(100, 0, 100);
+		addGameobject(cube1);
 
 		Jade::Gameobject cube2{};
 		cube2.addComponent(Jade::PhongRenderingComponent{ Jade::CUBE, Jade::Material(container2, container2_Specular, 32.0f) });
-		cube2.getComponent<Jade::Transform>()->Translate(10, 1, 3).Rotate(glm::vec3(0.5, 0.5, 0.5), 33.0f);
+		cube2.getComponent<Jade::Transform>()->Translate(0.0f, 1.5f, 0.0).Scale(0.5f);
 		addGameobject(cube2);
 
 		Jade::Gameobject cube3{};
 		cube3.addComponent(Jade::PhongRenderingComponent{ Jade::CUBE, Jade::Material(container2, container2_Specular, 32.0f) });
-		cube3.getComponent<Jade::Transform>()->Translate(4, 4, -6).Rotate(glm::vec3(0.1, 0.9, 4), 90.0f);
+		cube3.getComponent<Jade::Transform>()->Translate(2.0f, 0.0f, 1.0).Scale(0.5f);
 		addGameobject(cube3);
+
+		Jade::Gameobject cube4{};
+		cube4.addComponent(Jade::PhongRenderingComponent{ Jade::CUBE, Jade::Material(container2, container2_Specular, 32.0f) });
+		cube4.getComponent<Jade::Transform>()->Translate(-1.0f, 0.0f, 2.0).Rotate(glm::vec3(1.0, 0.0, 1.0), 60.0f).Scale(0.25);
+		addGameobject(cube4);
+
+		Jade::Gameobject cube5{};
+		cube5.addComponent(Jade::PhongRenderingComponent{ Jade::CUBE, Jade::Material(container2, container2_Specular, 32.0f) });
+		cube5.getComponent<Jade::Transform>()->Translate(0, -3, 0);
+		addGameobject(cube5);
 	}
 
-	void Update() override{
+	void Update() override {
+		//LOG(glm::to_string(Jade::gCamera.getComponent<Jade::Transform>()->position));
+
 		if (Jade::gKeyboard.KEY_ESCAPE) {
 			stop();
 		}
+
+		float velocity = 10.0f * (float)Jade::gTime.deltaTime;
+
+		glm::vec3 right = glm::normalize(glm::cross(dirLight.direction, glm::vec3{ 0, 1, 0 }));
+
+		if (Jade::gKeyboard.KEY_UP) {
+			dirLight.getComponent<Jade::Transform>()->position += dirLight.direction * velocity;
+		}
+
+		if (Jade::gKeyboard.KEY_LEFT) {
+			dirLight.getComponent<Jade::Transform>()->position += right * velocity;
+		}
+
+		if (Jade::gKeyboard.KEY_DOWN) {
+			dirLight.getComponent<Jade::Transform>()->position -= dirLight.direction * velocity;
+		}
+
+		if (Jade::gKeyboard.KEY_RIGHT) {
+			dirLight.getComponent<Jade::Transform>()->position -= right * velocity;
+		}
+
+		if (Jade::gKeyboard.KEY_O) {
+			dirLight.getComponent<Jade::Transform>()->position += glm::vec3{ 0, 1, 0 } * velocity;
+		}
+
+		if (Jade::gKeyboard.KEY_L) {
+			dirLight.getComponent<Jade::Transform>()->position -= glm::vec3{ 0, 1, 0 } * velocity;
+		}
+
+		//LOG(glm::to_string(dirLight.getComponent<Jade::Transform>()->position));
 	}
 };

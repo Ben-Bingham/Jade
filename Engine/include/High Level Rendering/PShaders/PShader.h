@@ -8,7 +8,8 @@ namespace Jade {
 
 	enum ShaderType {
 		SOLID_COLOUR,	// Solid shading
-		PHONG			// Phong shading
+		PHONG,			// Phong shading
+		SHADOW_MAP		// Shading for making depth maps
 	};
 
 	class PShader {

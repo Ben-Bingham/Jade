@@ -48,14 +48,24 @@ namespace Jade {
 		std::vector<std::shared_ptr<Light>> getLights() { return m_Lights; }
 
 		void begin();
+		void applyAllLights(Gameobject& gb);
 		void update();
+		void renderScene();
+		void renderShadowMap(DirectionalLight& dirLight);
 		void cleanup();
 
 		virtual void Begin() {}
 		virtual void Update() {}
 		virtual void Cleanup() {}
 
-		void render(const std::shared_ptr<Gameobject> gb) {
+		void renderRenderComponent(const std::shared_ptr<Gameobject> gb, std::shared_ptr<PShader> shader) {
+			RenderComponent* renderComp = gb->getComponent<RenderComponent>();
+			if (renderComp != nullptr) {
+				renderComp->render(shader);
+			}
+		}
+
+		void renderRenderComponent(const std::shared_ptr<Gameobject> gb) { //TODO remove
 			RenderComponent* renderComp = gb->getComponent<RenderComponent>();
 			if (renderComp != nullptr) {
 				renderComp->render();
@@ -71,5 +81,8 @@ namespace Jade {
 	private:
 		std::vector<std::shared_ptr<Gameobject>> m_Gameobjects;
 		std::vector<std::shared_ptr<Light>> m_Lights;
+
+		std::shared_ptr<PShader> depthShader{ nullptr };
+		std::shared_ptr<PShader> standardShader{ nullptr }; //TODO
 	};
 }

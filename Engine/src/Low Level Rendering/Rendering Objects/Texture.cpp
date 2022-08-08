@@ -33,4 +33,22 @@ namespace Jade {
 		
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
+
+	Texture::Texture(int imageFormat, int width, int height, int wrapMode, int filter, bool mipmaps) 
+		: m_Image{initBlankImage(imageFormat, width, height)} {
+		glGenTextures(1, &m_Texture);
+
+		bind();
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrapMode);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrapMode);
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filter);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filter);
+
+		glTexImage2D(GL_TEXTURE_2D, 0, imageFormat, width, height, 0, imageFormat, GL_UNSIGNED_BYTE, NULL);
+		if (mipmaps) {
+			glGenerateMipmap(GL_TEXTURE_2D);
+		}
+	}
 }

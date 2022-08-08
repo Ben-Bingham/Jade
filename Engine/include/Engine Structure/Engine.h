@@ -36,7 +36,6 @@ namespace Jade {
 			while (gWindow.getWindowOpen() && m_ActiveScene->isRunning) {
 				gTime.update();
 				gWindow.update();
-				gRenderer.update(); // Clears the screen
 
 				m_ActiveScene->update();
 

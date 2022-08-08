@@ -26,5 +26,12 @@ namespace Jade {
 		Transform& Rotate(glm::vec4& vector);
 		Transform& Rotate(float x, float y, float z, float w);
 		Transform& Rotate(glm::vec3& vector, float angle);
+
+	private:
+		float minOf1(float val) {
+			if (val == 0.0f) {
+				return 1.0f;
+			}
+		}
 	};
 }

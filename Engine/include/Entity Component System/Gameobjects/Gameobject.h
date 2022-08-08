@@ -13,7 +13,7 @@ namespace Jade {
 		template<typename T>
 		void addComponent(T& component) { 
 			m_Components.push_back(std::make_shared<T>(component));
-			m_Components[m_Components.size() - 1]->setGameobject(*this);
+			m_Components[m_Components.size() - 1]->setGameobject(std::make_shared<Gameobject>(*this));
 		}
 
 		template<typename T>

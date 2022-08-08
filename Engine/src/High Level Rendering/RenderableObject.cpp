@@ -7,13 +7,16 @@
 namespace Jade {
     void RenderableObject::render(const PShader& shader) {
         additionalRendering(shader);
-
-        calculateModelMatrix();
-        shader.getProgram().setMatrix4f("model", m_ModelMatrix);
         
         m_VAO.bind();
         glDrawElements(GL_TRIANGLES, m_NumberOfIndicies, GL_UNSIGNED_INT, 0);
     }
+
+    void RenderableObject::render(const PShader& shader, ShaderProgram program) {
+        m_VAO.bind();
+        glDrawElements(GL_TRIANGLES, m_NumberOfIndicies, GL_UNSIGNED_INT, 0);
+    }
+
 
     std::vector<Vertex> cubeVerticies = {
         Vertex{ glm::vec3(-0.5f, -0.5f,  0.5f), glm::vec3(0.0f,  0.0f,  1.0f), glm::vec2(0.0f, 0.0f) },

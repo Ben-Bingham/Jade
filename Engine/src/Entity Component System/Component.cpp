@@ -16,5 +16,7 @@ namespace Jade {
 		Cleanup();
 	}
 
-	Gameobject Component::getGameobject() { return *m_Gameobject; }
+	Gameobject Component::getGameobject() {
+		return *m_Gameobject; 
+	}
 }

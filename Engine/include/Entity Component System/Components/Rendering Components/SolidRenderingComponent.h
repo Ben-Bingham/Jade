@@ -7,13 +7,8 @@ namespace Jade {
 	public:
 		SolidRenderingComponent(Shape shape, Colour colour);
 
-		void Begin() override {
+		void BeginRenderComponent() override {
 
-			Transform* transform = getGameobject().getComponent<Transform>(); //TODO
-			for (std::shared_ptr<RenderableObject> renderable : renderables) {
-				renderable->setTransform(transform);
-				renderable->calculateModelMatrix();
-			}
 		}
 	};
 }

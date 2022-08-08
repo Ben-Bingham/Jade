@@ -26,6 +26,7 @@ namespace Jade {
 	}
 
 	Transform& Transform::Scale(const glm::vec3& vector) {
+		glm::vec3 vec{ minOf1(vector.x), minOf1(vector.y), minOf1(vector.z) };
 		scale *= vector;
 
 		std::vector<std::shared_ptr<Gameobject>> children = getGameobject().getChildren();
@@ -40,11 +41,11 @@ namespace Jade {
 	}
 
 	Transform& Transform::Scale(float x, float y, float z) {
-		return Scale(glm::vec3(x, y, z));
+		return Scale(glm::vec3(minOf1(x), minOf1(y), minOf1(z)));
 	}
 
 	Transform& Transform::Scale(float scaler) {
-		return Scale(scaler, scaler, scaler);
+		return Scale(minOf1(scaler), minOf1(scaler), minOf1(scaler));
 	}
 
 	Transform& Transform::Rotate(const glm::quat& quat) {

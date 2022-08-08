@@ -30,7 +30,8 @@ namespace Jade {
 			init();
 		}
 
-		void render(const PShader& ruleSet);
+		void render(const PShader& shader);
+		void render(const PShader& ruleSet, ShaderProgram shader);
 
 		virtual void additionalRendering(const PShader& ruleSet) const = 0;
 
@@ -40,16 +41,7 @@ namespace Jade {
 
 		VertexAttributeObject getVAO() { return m_VAO; }
 
-		void setTransform(Transform* transform) { m_Transform = transform; };
-
 		void dispose() { m_VAO.dispose(); }
-
-		void calculateModelMatrix() {
-			m_ModelMatrix = glm::mat4(1.0f);
-			m_ModelMatrix = glm::mat4_cast(m_Transform->rotation);
-			m_ModelMatrix = glm::translate(m_ModelMatrix, m_Transform->position);
-			m_ModelMatrix = glm::scale(m_ModelMatrix, m_Transform->scale);
-		}
 
 	private:
 		Shape m_Shape;
@@ -57,7 +49,6 @@ namespace Jade {
 		VertexAttributeObject m_VAO;
 		VertexBufferObject m_VBO;
 		ElementBufferObject m_EBO;
-		Transform* m_Transform{ nullptr };
 		ShaderType m_RuleSet;
 		int m_NumberOfIndicies;
 		glm::mat4 m_ModelMatrix{ 1.0f };

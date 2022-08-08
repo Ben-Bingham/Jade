@@ -23,6 +23,10 @@ namespace Jade {
 	}
 
 	void PhongRenderingComponent::Render() {
-		shader->getProgram().setVector3f("cameraPosition", gCamera.getComponent<Transform>()->position);
+
+	}
+
+	void PhongRenderingComponent::Render(ShaderProgram program) {
+
 	}
 }
