@@ -7,6 +7,6 @@ namespace Jade {
 	public:
 		SolidShader() : PShader(SOLID_COLOUR) {}
 
-		void bindAdditionals() override {}
+		void bindAdditionals() override{}
 	};
 }

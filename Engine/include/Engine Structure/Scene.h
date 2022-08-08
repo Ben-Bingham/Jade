@@ -25,25 +25,8 @@ namespace Jade {
 		void addGameobject(const PointLight& light) { addLight(light); }
 		void addGameobject(const DirectionalLight& light) { addLight(light); }
 
-		void addLight(const PointLight& light) { 
-			m_Lights.push_back(std::make_shared<PointLight>(light));
-			for (std::shared_ptr<Gameobject> gb : m_Gameobjects) {
-				RenderComponent* renderComp = gb->getComponent<RenderComponent>();
-				if (renderComp != nullptr) {
-					renderComp->shader->addPointLight(light);
-				}
-			}
-		};
-
-		void addLight(const DirectionalLight& light) { 
-			m_Lights.push_back(std::make_shared<DirectionalLight>(light));
-			for (std::shared_ptr<Gameobject> gb : m_Gameobjects) {
-				RenderComponent* renderComp = gb->getComponent<RenderComponent>();
-				if (renderComp != nullptr) {
-					renderComp->shader->addDirectionalLight(light);
-				}
-			}
-		};
+		void addLight(const PointLight& light) { m_Lights.push_back(std::make_shared<PointLight>(light)); };
+		void addLight(const DirectionalLight& light) { m_Lights.push_back(std::make_shared<DirectionalLight>(light)); };
 
 		std::vector<std::shared_ptr<Light>> getLights() { return m_Lights; }
 
@@ -58,31 +41,20 @@ namespace Jade {
 		virtual void Update() {}
 		virtual void Cleanup() {}
 
-		void renderRenderComponent(const std::shared_ptr<Gameobject> gb, std::shared_ptr<PShader> shader) {
-			RenderComponent* renderComp = gb->getComponent<RenderComponent>();
-			if (renderComp != nullptr) {
-				renderComp->render(shader);
-			}
-		}
+		// This function will automatically render the object with whatever shader is giving
+		void renderRenderComponent(const std::shared_ptr<Gameobject> gb, std::shared_ptr<PShader> shader);
+		// This function will automatically choose which shader to use for the givin object
+		void renderRenderComponent(const std::shared_ptr<Gameobject> gb);
 
-		void renderRenderComponent(const std::shared_ptr<Gameobject> gb) { //TODO remove
-			RenderComponent* renderComp = gb->getComponent<RenderComponent>();
-			if (renderComp != nullptr) {
-				renderComp->render();
-			}
-		}
-
-		void stop() {
-			isRunning = false;
-		}
-
-		bool isRunning{true};
+		void stop() { isRunning = false; }
+		bool isRunning{ true };
 
 	private:
 		std::vector<std::shared_ptr<Gameobject>> m_Gameobjects;
 		std::vector<std::shared_ptr<Light>> m_Lights;
 
 		std::shared_ptr<PShader> depthShader{ nullptr };
-		std::shared_ptr<PShader> standardShader{ nullptr }; //TODO
+		std::shared_ptr<PShader> standardShader{ nullptr };
+		std::shared_ptr<PShader> solidShader{ nullptr };
 	};
 }

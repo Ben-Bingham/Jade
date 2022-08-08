@@ -16,8 +16,9 @@ namespace Jade {
 		Texture::activateUnit(2);
 		directionalLights[0].shadowMap.bind();
 
-		directionalLights[0].makeLightSpaceMatrix();
 		getProgram().setVector3f("cameraPosition", gCamera.getComponent<Transform>()->position);
-		getProgram().setMatrix4f("lightSpaceMatrix", directionalLights[0].lightSpaceMatrix);
+
+		directionalLights[0].makeLightSpaceMatrix();
+		getProgram().setMatrix4f("lightSpaceMatrix", directionalLights[0].lightSpaceMatrix); //TODO a lot of these uniforms can be moved to the scene class
 	}
 }

@@ -13,12 +13,6 @@ namespace Jade {
 		PhongRenderingComponent(Model& model);
 		PhongRenderingComponent(Shape shape, const Material& material);
 
-		void BeginRenderComponent() override {
-		}
-
-		void Render() override;
-		void Render(ShaderProgram program) override;
-
 	private:
 		std::vector<std::shared_ptr<Material>> m_Materials;
 	};

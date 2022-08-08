@@ -7,6 +7,7 @@
 class DemoScene : public Jade::Scene {
 public:
 	Jade::DirectionalLight dirLight{};
+	Jade::Gameobject lightBox{};
 
 	void Begin() override {
 		Jade::Model backpack{ "assets\\models\\backpack\\backpack.obj", false };
@@ -29,6 +30,7 @@ public:
 		//addGameobject(lightBox);
 		//addGameobject(light);
 		dirLight.getComponent<Jade::Transform>()->Translate(-2.0f, 4.0f, -1.0f);
+		//dirLight.direction = glm::normalize(glm::vec3(-1, -1, 0));
 		//dirLight.direction = glm::vec3{-0.5, -0.5, -0.5};
 		dirLight.diffuse = Jade::Colour(1.0f, 1.0f, 1.0f);
 		dirLight.ambient = Jade::Colour(0.1f, 0.1f, 0.1f);
@@ -79,43 +81,47 @@ public:
 		cube5.addComponent(Jade::PhongRenderingComponent{ Jade::CUBE, Jade::Material(container2, container2_Specular, 32.0f) });
 		cube5.getComponent<Jade::Transform>()->Translate(0, -3, 0);
 		addGameobject(cube5);
+
+		lightBox.addComponent(Jade::SolidRenderingComponent{ Jade::CUBE, Jade::Colour(43, 234, 52) });
+		lightBox.getComponent<Jade::Transform>()->Translate(-2.0f, 4.0f, -1.0f);
+		addGameobject(lightBox);
 	}
 
 	void Update() override {
-		//LOG(glm::to_string(Jade::gCamera.getComponent<Jade::Transform>()->position));
-
 		if (Jade::gKeyboard.KEY_ESCAPE) {
 			stop();
 		}
 
 		float velocity = 10.0f * (float)Jade::gTime.deltaTime;
 
-		glm::vec3 right = glm::normalize(glm::cross(dirLight.direction, glm::vec3{ 0, 1, 0 }));
-
 		if (Jade::gKeyboard.KEY_UP) {
-			dirLight.getComponent<Jade::Transform>()->position += dirLight.direction * velocity;
+			dirLight.getComponent<Jade::Transform>()->position -= glm::vec3{ 0, 0, 1 } *velocity;
+			lightBox.getComponent<Jade::Transform>()->position -= glm::vec3{ 0, 0, 1 } * velocity;
 		}
 
 		if (Jade::gKeyboard.KEY_LEFT) {
-			dirLight.getComponent<Jade::Transform>()->position += right * velocity;
+			dirLight.getComponent<Jade::Transform>()->position -= glm::vec3{ 1, 0, 0 } * velocity;
+			lightBox.getComponent<Jade::Transform>()->position -= glm::vec3{ 1, 0, 0 } * velocity;
 		}
 
 		if (Jade::gKeyboard.KEY_DOWN) {
-			dirLight.getComponent<Jade::Transform>()->position -= dirLight.direction * velocity;
+			dirLight.getComponent<Jade::Transform>()->position += glm::vec3{ 0, 0, 1 } * velocity;
+			lightBox.getComponent<Jade::Transform>()->position += glm::vec3{ 0, 0, 1 } * velocity;
 		}
 
 		if (Jade::gKeyboard.KEY_RIGHT) {
-			dirLight.getComponent<Jade::Transform>()->position -= right * velocity;
+			dirLight.getComponent<Jade::Transform>()->position += glm::vec3{ 1, 0, 0 } * velocity;
+			lightBox.getComponent<Jade::Transform>()->position += glm::vec3{ 1, 0, 0 } * velocity;
 		}
 
 		if (Jade::gKeyboard.KEY_O) {
 			dirLight.getComponent<Jade::Transform>()->position += glm::vec3{ 0, 1, 0 } * velocity;
+			lightBox.getComponent<Jade::Transform>()->position += glm::vec3{ 0, 1, 0 } * velocity;
 		}
 
 		if (Jade::gKeyboard.KEY_L) {
 			dirLight.getComponent<Jade::Transform>()->position -= glm::vec3{ 0, 1, 0 } * velocity;
+			lightBox.getComponent<Jade::Transform>()->position -= glm::vec3{ 0, 1, 0 } * velocity;
 		}
-
-		//LOG(glm::to_string(dirLight.getComponent<Jade::Transform>()->position));
 	}
 };

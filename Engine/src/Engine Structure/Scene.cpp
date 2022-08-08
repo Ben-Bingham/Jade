@@ -12,6 +12,8 @@ namespace Jade {
 		Begin();
 
 		depthShader = std::make_shared<ShadowMapShader>();
+		standardShader = std::make_shared<PhongShader>();
+		solidShader = std::make_shared<SolidShader>();
 
 		for (std::shared_ptr<Gameobject> gameobject : m_Gameobjects) {
 			applyAllLights(*gameobject);
@@ -44,16 +46,22 @@ namespace Jade {
 			}
 
 			for (PointLight pointLight : pointLights) {
-				if (std::find(renderComp->shader->pointLights.begin(), renderComp->shader->pointLights.end(), pointLight) == renderComp->shader->pointLights.end()) { // the vector does not contain the light
-					renderComp->shader->addPointLight(pointLight);
+				if (std::find(depthShader->pointLights.begin(), depthShader->pointLights.end(), pointLight) == depthShader->pointLights.end()) { // the vector does not contain the light
 					depthShader->addPointLight(pointLight);
+				}
+
+				if (std::find(standardShader->pointLights.begin(), standardShader->pointLights.end(), pointLight) == standardShader->pointLights.end()) { // the vector does not contain the light
+					standardShader->addPointLight(pointLight);
 				}
 			}
 
 			for (DirectionalLight dirLight : dirLights) {
-				if (std::find(renderComp->shader->directionalLights.begin(), renderComp->shader->directionalLights.end(), dirLight) == renderComp->shader->directionalLights.end()) { // the vector does not contain the light
-					renderComp->shader->addDirectionalLight(dirLight);
+				if (std::find(depthShader->directionalLights.begin(), depthShader->directionalLights.end(), dirLight) == depthShader->directionalLights.end()) { // the vector does not contain the light
 					depthShader->addDirectionalLight(dirLight);
+				}
+
+				if (std::find(standardShader->directionalLights.begin(), standardShader->directionalLights.end(), dirLight) == standardShader->directionalLights.end()) { // the vector does not contain the light
+					standardShader->addDirectionalLight(dirLight);
 				}
 			}
 		}
@@ -102,6 +110,27 @@ namespace Jade {
 			for (std::shared_ptr<Gameobject> gb : gameobject->getChildren()) {
 				renderRenderComponent(gb, depthShader);
 			}
+		}
+	}
+
+	void Scene::renderRenderComponent(const std::shared_ptr<Gameobject> gb) {
+		RenderComponent* renderComp = gb->getComponent<RenderComponent>();
+		if (renderComp != nullptr) {
+			SolidRenderingComponent* solidRenderComp = dynamic_cast<SolidRenderingComponent*>(renderComp);
+			PhongRenderingComponent* phongRenderComp = dynamic_cast<PhongRenderingComponent*>(renderComp);
+			if (solidRenderComp != nullptr) {
+				solidRenderComp->render(solidShader);
+			}
+			else if (phongRenderComp != nullptr) {
+				phongRenderComp->render(standardShader);
+			}
+		}
+	}
+
+	void Scene::renderRenderComponent(const std::shared_ptr<Gameobject> gb, std::shared_ptr<PShader> shader) {
+		RenderComponent* renderComp = gb->getComponent<RenderComponent>();
+		if (renderComp != nullptr) {
+			renderComp->render(shader);
 		}
 	}
 

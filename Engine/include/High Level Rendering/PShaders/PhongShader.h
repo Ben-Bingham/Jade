@@ -7,7 +7,7 @@
 namespace Jade {
 	class PhongShader : public PShader {
 	public:
-		PhongShader() : PShader(PHONG)  {}
+		PhongShader() : PShader(PHONG) {}
 
 		void bindAdditionals() override;
 	};

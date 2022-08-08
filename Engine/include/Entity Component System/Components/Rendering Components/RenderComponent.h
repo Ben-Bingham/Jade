@@ -19,15 +19,9 @@ namespace Jade {
 
 		virtual void BeginRenderComponent() {}
 
-		void render(std::shared_ptr<PShader> shader); //TODO rmove maybe?
-		void render(); // TODO remove maybe?
-		void render(ShaderProgram program); //TODO remove maybe?
-
-		virtual void Render() {}
-		virtual void Render(ShaderProgram program) {}
+		void render(std::shared_ptr<PShader> shader);
 
 		std::vector<std::shared_ptr<RenderableObject>> renderables;
-		std::shared_ptr<PShader> shader;
 
 	private:
 		glm::mat4 m_ModelMatrix{ 1.0f };

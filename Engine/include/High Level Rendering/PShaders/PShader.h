@@ -20,6 +20,7 @@ namespace Jade {
 			m_Program.use();
 		}
 
+		// Should bind anything that is specific to the shader
 		virtual void bindAdditionals() = 0;
 
 		int getID() const { return m_ID; }
@@ -42,8 +43,8 @@ namespace Jade {
 
 		ShaderType ruleSet;
 
-		std::vector<PointLight> pointLights;
-		std::vector<DirectionalLight> directionalLights;
+		std::vector<PointLight> pointLights; //TODO remove
+		std::vector<DirectionalLight> directionalLights; //TODO remove
 	private:
 		int m_ID;
 		ShaderProgram m_Program;

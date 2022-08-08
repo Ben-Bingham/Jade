@@ -31,8 +31,8 @@ namespace Jade {
 		}
 
 		void render(const PShader& shader);
-		void render(const PShader& ruleSet, ShaderProgram shader);
 
+		// Should bind anything that is specific to the renderable object, like materials
 		virtual void additionalRendering(const PShader& ruleSet) const = 0;
 
 		bool followsRuleSet(const PShader& ruleSet) {

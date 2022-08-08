@@ -6,9 +6,5 @@ namespace Jade {
 	class SolidRenderingComponent : public RenderComponent {
 	public:
 		SolidRenderingComponent(Shape shape, Colour colour);
-
-		void BeginRenderComponent() override {
-
-		}
 	};
 }
