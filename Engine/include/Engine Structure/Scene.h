@@ -8,13 +8,15 @@
 #include "Entity Component System/Gameobjects/Lights/DirectionalLight.h"
 #include "High Level Rendering/MaterialCreator.h"
 #include "Entity Component System/Components/Rendering Components/SolidRenderingComponent.h"
+#include "High Level Rendering/Renderable Objects/SkyboxRenderableObject.h"
 
 namespace Jade {
 	class Application;
 
 	class Scene {
 	public:
-		Scene() {}
+		Scene() : skybox(initSkybox()) {}
+
 		Scene(const Scene&) = default;
 		Scene(Scene&&) = default;
 		Scene& operator=(const Scene&) = default;
@@ -34,6 +36,7 @@ namespace Jade {
 		void applyAllLights(Gameobject& gb);
 		void update();
 		void renderScene();
+		void renderSkybox();
 		void renderShadowMap(DirectionalLight& dirLight);
 		void cleanup();
 
@@ -50,11 +53,33 @@ namespace Jade {
 		bool isRunning{ true };
 
 	private:
+		SkyboxRenderableObject initSkybox() {
+			std::vector<std::string> imagePaths{
+				"assets\\textures\\Sky skybox\\right.jpg",
+				"assets\\textures\\Sky skybox\\left.jpg",
+				"assets\\textures\\Sky skybox\\top.jpg",
+				"assets\\textures\\Sky skybox\\bottom.jpg",
+				"assets\\textures\\Sky skybox\\front.jpg",
+				"assets\\textures\\Sky skybox\\back.jpg"
+			};
+
+			std::vector<Image> images;
+
+			for (std::string imagePath : imagePaths) {
+				images.push_back(Image(imagePath, false));
+			}
+
+			return SkyboxRenderableObject{ images };
+		}
+
+		SkyboxRenderableObject skybox;
+
 		std::vector<std::shared_ptr<Gameobject>> m_Gameobjects;
 		std::vector<std::shared_ptr<Light>> m_Lights;
 
 		std::shared_ptr<PShader> depthShader{ nullptr };
 		std::shared_ptr<PShader> standardShader{ nullptr };
 		std::shared_ptr<PShader> solidShader{ nullptr };
+		std::shared_ptr<PShader> skyboxShader{ nullptr };
 	};
 }

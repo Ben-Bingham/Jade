@@ -35,6 +35,9 @@ namespace Jade {
 		// Should bind anything that is specific to the renderable object, like materials
 		virtual void additionalRendering(const PShader& ruleSet) const = 0;
 
+		// Should cleanup anything bounded that is specific to the renderable object, like materials
+		virtual void additionalRenderingCleanup(const PShader& ruleSet) const {};
+
 		bool followsRuleSet(const PShader& ruleSet) {
 			return ruleSet.ruleSet == m_RuleSet;
 		}

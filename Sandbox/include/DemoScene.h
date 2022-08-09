@@ -32,27 +32,27 @@ public:
 
 		Jade::Gameobject cube1{};
 		cube1.addComponent(Jade::PhongRenderingComponent{ Jade::CUBE, Jade::Material(container2, container2_Specular, 32.0f) });
-		cube1.getComponent<Jade::Transform>()->Translate(0.0f, -4, 0.0).Scale(100, 0, 100);
+		cube1.getComponent<Jade::Transform>()->Translate(0.0f, -4, 0.0).Scale(30, 0, 30);
 		addGameobject(cube1);
 
 		Jade::Gameobject wall1{};
 		wall1.addComponent(Jade::PhongRenderingComponent{ Jade::CUBE, Jade::Material(container2, container2_Specular, 32.0f) });
-		wall1.getComponent<Jade::Transform>()->Scale(100, 0, 100).Rotate(glm::vec3(0, 0, 1), 90.0f).Translate(0, 15, 0);
+		wall1.getComponent<Jade::Transform>()->Scale(30, 0, 30).Rotate(glm::vec3(0, 0, 1), 90.0f).Translate(11, 15, 0);
 		addGameobject(wall1);
 
 		Jade::Gameobject wall2{};
 		wall2.addComponent(Jade::PhongRenderingComponent{ Jade::CUBE, Jade::Material(container2, container2_Specular, 32.0f) });
-		wall2.getComponent<Jade::Transform>()->Scale(100, 0, 100).Rotate(glm::vec3(0, 0, 1), -90.0f).Translate(0, 15, 0);
+		wall2.getComponent<Jade::Transform>()->Scale(30, 0, 30).Rotate(glm::vec3(0, 0, 1), -90.0f).Translate(-11, 15, 0);
 		addGameobject(wall2);
 
 		Jade::Gameobject wall3{};
 		wall3.addComponent(Jade::PhongRenderingComponent{ Jade::CUBE, Jade::Material(container2, container2_Specular, 32.0f) });
-		wall3.getComponent<Jade::Transform>()->Scale(100, 0, 100).Rotate(glm::vec3(1, 0, 0), 90.0f).Translate(0, 15, 0);
+		wall3.getComponent<Jade::Transform>()->Scale(30, 0, 30).Rotate(glm::vec3(1, 0, 0), 90.0f).Translate(0, 15, -11);
 		addGameobject(wall3);
 
 		Jade::Gameobject wall4{};
 		wall4.addComponent(Jade::PhongRenderingComponent{ Jade::CUBE, Jade::Material(container2, container2_Specular, 32.0f) });
-		wall4.getComponent<Jade::Transform>()->Scale(100, 0, 100).Rotate(glm::vec3(1, 0, 0), -90.0f).Translate(0, 15, 0);
+		wall4.getComponent<Jade::Transform>()->Scale(30, 0, 30).Rotate(glm::vec3(1, 0, 0), -90.0f).Translate(0, 15, 11);
 		addGameobject(wall4);
 
 		Jade::Gameobject cube2{};

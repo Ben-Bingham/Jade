@@ -12,6 +12,7 @@ namespace Jade {
 		case SOLID_COLOUR: vertexShaderPath += "SolidRuleSet.vert"; break;
 		case PHONG: vertexShaderPath += "PhongRuleSet.vert"; break;
 		case SHADOW_MAP: vertexShaderPath += "DepthShader.vert"; break;
+		case SKYBOX: vertexShaderPath += "SkyboxShader.vert"; break;
 		}
 
 		TextFile vertexShaderFile(vertexShaderPath);
@@ -27,6 +28,7 @@ namespace Jade {
 		case SOLID_COLOUR: fragmentShaderPath += "SolidRuleSet.frag"; break;
 		case PHONG: fragmentShaderPath += "PhongRuleSet.frag"; break;
 		case SHADOW_MAP: fragmentShaderPath += "DepthShader.frag"; break;
+		case SKYBOX: fragmentShaderPath += "SkyboxShader.frag"; break;
 		}
 
 		TextFile fragmentShaderFile(fragmentShaderPath);

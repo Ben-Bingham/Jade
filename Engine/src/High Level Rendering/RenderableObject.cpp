@@ -10,6 +10,7 @@ namespace Jade {
         
         m_VAO.bind();
         glDrawElements(GL_TRIANGLES, m_NumberOfIndicies, GL_UNSIGNED_INT, 0);
+        additionalRenderingCleanup(shader);
     }
 
     std::vector<Vertex> cubeVerticies = {

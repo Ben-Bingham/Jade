@@ -24,6 +24,8 @@ namespace Jade {
 			glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
 		}
 
+		void dispose() { glDeleteTextures(1, &m_Texture); }
+
 	private:
 		Image initBlankImage(int format, int width, int height) {
 			int bytesPerPixel{ 0 };

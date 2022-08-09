@@ -4,6 +4,8 @@
 #include "Engine Structure/Engine.h"
 #include "Entity Component System/Gameobjects/Lights/Light.h"
 #include "High Level Rendering/PShaders/ShadowMapShader.h"
+#include "High Level Rendering/PShaders/SkyboxShader.h"
+#include "High Level Rendering/Renderable Objects/SkyboxRenderableObject.h"
 
 namespace Jade {
 	Scene::~Scene() {}
@@ -14,7 +16,8 @@ namespace Jade {
 		depthShader = std::make_shared<ShadowMapShader>();
 		standardShader = std::make_shared<PhongShader>();
 		solidShader = std::make_shared<SolidShader>();
-
+		skyboxShader = std::make_shared<SkyboxShader>();
+		
 		for (std::shared_ptr<Gameobject> gameobject : m_Gameobjects) {
 			applyAllLights(*gameobject);
 
@@ -91,6 +94,13 @@ namespace Jade {
 				renderRenderComponent(gb);
 			}
 		}
+
+		renderSkybox();
+	}
+
+	void Scene::renderSkybox() {
+		skyboxShader->bind();
+		skybox.render(*skyboxShader);
 	}
 
 	void Scene::renderShadowMap(DirectionalLight& dirLight) {
@@ -119,9 +129,11 @@ namespace Jade {
 			SolidRenderingComponent* solidRenderComp = dynamic_cast<SolidRenderingComponent*>(renderComp);
 			PhongRenderingComponent* phongRenderComp = dynamic_cast<PhongRenderingComponent*>(renderComp);
 			if (solidRenderComp != nullptr) {
+				solidShader->bind();
 				solidRenderComp->render(solidShader);
 			}
 			else if (phongRenderComp != nullptr) {
+				standardShader->bind();
 				phongRenderComp->render(standardShader);
 			}
 		}
@@ -130,6 +142,7 @@ namespace Jade {
 	void Scene::renderRenderComponent(const std::shared_ptr<Gameobject> gb, std::shared_ptr<PShader> shader) {
 		RenderComponent* renderComp = gb->getComponent<RenderComponent>();
 		if (renderComp != nullptr) {
+			shader->bind();
 			renderComp->render(shader);
 		}
 	}
