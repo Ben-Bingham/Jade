@@ -40,8 +40,6 @@ namespace Jade {
 			glDeleteFramebuffers(1, &m_FBO);
 		}
 
-		unsigned int getFBO() { return m_FBO; } //TODO remove
-
 	private:
 		unsigned int m_FBO;
 	};

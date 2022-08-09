@@ -73,4 +73,11 @@ namespace Jade {
 		);
 		return *this;
 	}
+
+	Transform& Transform::FaceDirection(const glm::vec3& direction) { //TODO
+		glm::mat4 lookAtMatrix = glm::lookAt(position, direction - position, glm::vec3(0, 1, 0));
+		rotation = glm::toQuat(lookAtMatrix);
+
+		return *this;
+	}
 }

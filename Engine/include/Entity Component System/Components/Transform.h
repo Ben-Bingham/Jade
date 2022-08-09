@@ -1,6 +1,7 @@
 #pragma once
 #include <glm/glm.hpp>
 #include <glm/gtc/quaternion.hpp>
+#include <glm/gtx/quaternion.hpp>
 
 #include "Entity Component System/Components/Component.h"
 
@@ -13,7 +14,7 @@ namespace Jade {
 
 		glm::vec3 position{ 0.0f };
 		glm::vec3 scale{ 1.0f };
-		glm::quat rotation{ 0.0f, 0.0f, 0.0f, 0.0f};
+		glm::quat rotation{ 0.0f, 0.0f, 0.0f, 0.0f };
 
 		Transform& Translate(const glm::vec3& vector);
 		Transform& Translate(float x, float y, float z);
@@ -27,11 +28,14 @@ namespace Jade {
 		Transform& Rotate(float x, float y, float z, float w);
 		Transform& Rotate(glm::vec3& vector, float angle);
 
+		Transform& FaceDirection(const glm::vec3& direction);
+
 	private:
 		float minOf1(float val) {
 			if (val == 0.0f) {
 				return 1.0f;
 			}
+			return val;
 		}
 	};
 }
