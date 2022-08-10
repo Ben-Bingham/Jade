@@ -41,6 +41,9 @@ in vec2 textureCordinates;
 in vec4 fragmentPositionInLightSpace;
 
 uniform sampler2D shadowMap; //TODO make an array
+uniform samplerCube pointShadowMap; //TODO make an array
+
+uniform float farPlane;
 
 uniform vec3 cameraPosition;
 uniform Material material;
@@ -51,7 +54,7 @@ uniform PointLight pointLights[MAX_POINT_LIGHTS];
 uniform int numberOfDirectionalLights;
 uniform DirectionalLight directionalLights[MAX_DIRECTIONAL_LIGHTS];
 
-float shadowCalculation(vec4 fragPosInLight, vec3 lightDir) {
+float directionalShadowCalculation(vec4 fragPosInLight, vec3 lightDir) {
 	vec3 projCords = fragPosInLight.xyz / fragPosInLight.w;
 
 	projCords = projCords * 0.5 + 0.5;
@@ -72,6 +75,38 @@ float shadowCalculation(vec4 fragPosInLight, vec3 lightDir) {
 	if (projCords.z > 1.0) {
 		shadow = 0.0;
 	}
+
+	return shadow;
+}
+
+vec3 sampleOffsetDirections[20] = vec3[]
+(
+   vec3( 1,  1,  1), vec3( 1, -1,  1), vec3(-1, -1,  1), vec3(-1,  1,  1), 
+   vec3( 1,  1, -1), vec3( 1, -1, -1), vec3(-1, -1, -1), vec3(-1,  1, -1),
+   vec3( 1,  1,  0), vec3( 1, -1,  0), vec3(-1, -1,  0), vec3(-1,  1,  0),
+   vec3( 1,  0,  1), vec3(-1,  0,  1), vec3( 1,  0, -1), vec3(-1,  0, -1),
+   vec3( 0,  1,  1), vec3( 0, -1,  1), vec3( 0, -1, -1), vec3( 0,  1, -1)
+);   
+
+float pointShadowCalculation(vec3 fragPos, PointLight light) {
+	vec3 fragToLight = fragPos - light.position;
+	float currentDepth = length(fragToLight);
+
+	float shadow = 0.0;
+	float bias = 0.05;
+	float samples = 20.0;
+	float viewDistance = length(cameraPosition - fragPos);
+	float diskRadius = (1.0 + (viewDistance / farPlane)) / 25.0;
+	float offset = 0.1;
+
+	for (int i = 0; i < samples; ++i) {
+		float closestDepth = texture(pointShadowMap, fragToLight + sampleOffsetDirections[i] * diskRadius).r;
+		closestDepth *= farPlane;
+		if (currentDepth - bias > closestDepth) {
+			shadow += 1.0;
+		}
+	}
+	shadow /= float(samples);
 
 	return shadow;
 }
@@ -111,8 +146,12 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 cameraPosi
 	ambient *= attenuation;
 	diffuse *= attenuation;
 	specular *= attenuation;
+	
+	float shadow = pointShadowCalculation(fragmentPosition, light);
 
-	return (ambient + diffuse + specular);
+	vec3 lighting = (light.ambient + (1.0 - shadow) * ((diff * light.diffuse) + (spec * light.specular)))* diffuse;
+
+	return lighting;
 }
 
 vec3 CalcDirLight(DirectionalLight light, vec3 normal, vec3 viewDir) {
@@ -127,7 +166,7 @@ vec3 CalcDirLight(DirectionalLight light, vec3 normal, vec3 viewDir) {
     vec3 diffuse = light.diffuse * texture(material.diffuse, textureCordinates).rgb;  
     vec3 specular = light.specular * texture(material.specular, textureCordinates).rgb;
 
-	float shadow = shadowCalculation(fragmentPositionInLightSpace, lightDir);
+	float shadow = directionalShadowCalculation(fragmentPositionInLightSpace, lightDir);
 
 	vec3 color = texture(material.diffuse, textureCordinates).rgb;
 	vec3 lightAmb = 0.3 * light.ambient;

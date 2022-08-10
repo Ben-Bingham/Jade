@@ -11,7 +11,8 @@ namespace Jade {
 		default:
 		case SOLID_COLOUR: vertexShaderPath += "SolidRuleSet.vert"; break;
 		case PHONG: vertexShaderPath += "PhongRuleSet.vert"; break;
-		case SHADOW_MAP: vertexShaderPath += "DepthShader.vert"; break;
+		case DIRECTIONAL_SHADOW_MAP: vertexShaderPath += "DirectionalDepthShader.vert"; break;
+		case POINT_SHADOW_MAP: vertexShaderPath += "PointDepthShader.vert"; break;
 		case SKYBOX: vertexShaderPath += "SkyboxShader.vert"; break;
 		}
 
@@ -27,12 +28,26 @@ namespace Jade {
 		default:
 		case SOLID_COLOUR: fragmentShaderPath += "SolidRuleSet.frag"; break;
 		case PHONG: fragmentShaderPath += "PhongRuleSet.frag"; break;
-		case SHADOW_MAP: fragmentShaderPath += "DepthShader.frag"; break;
+		case DIRECTIONAL_SHADOW_MAP: fragmentShaderPath += "DirectionalDepthShader.frag"; break;
+		case POINT_SHADOW_MAP: fragmentShaderPath += "PointDepthShader.frag"; break;
 		case SKYBOX: fragmentShaderPath += "SkyboxShader.frag"; break;
 		}
 
 		TextFile fragmentShaderFile(fragmentShaderPath);
 
 		return FragmentShader(fragmentShaderFile);
+	}
+
+	GeometryShader ShaderCreator::geometryShaderInit() {
+		std::string geometryShaderPath = "..\\Engine\\assets\\shaders\\";
+
+		switch (m_RuleSet->ruleSet) {
+		default:
+		case POINT_SHADOW_MAP: geometryShaderPath += "PointDepthShader.geom"; break;
+		}
+
+		TextFile geometryShaderFile(geometryShaderPath);
+
+		return GeometryShader(geometryShaderFile);
 	}
 }

@@ -11,11 +11,13 @@
 #include "High Level Rendering/Material.h"
 #include "Entity Component System/Gameobjects/Lights/PointLight.h"
 #include "Entity Component System/Gameobjects/Lights/DirectionalLight.h"
+#include "Low Level Rendering/Shaders/GeometryShader.h"
 
 namespace Jade {
 	class ShaderProgram {
 	public:
 		ShaderProgram(FragmentShader& fragmentShader, VertexShader& vertexShader);
+		ShaderProgram(FragmentShader& fragmentShader, VertexShader& vertexShader, GeometryShader& geometryShader);
 
 		void use() { glUseProgram(m_Program); }
 		void dispose() { glDeleteProgram(m_Program); }
@@ -30,6 +32,18 @@ namespace Jade {
 
 		void setMatrix4f(const std::string& variableName, const glm::mat4& matrix) const {
 			glUniformMatrix4fv(glGetUniformLocation(m_Program, variableName.c_str()), 1, GL_FALSE, glm::value_ptr(matrix));
+		}
+
+		void setMatrix4fs(const std::string& arrayName, const std::vector<glm::mat4>& matricies) const {
+			int count = 0;
+			for (glm::mat4 matrix : matricies) {
+				std::string uniformName = arrayName;
+				uniformName += "[";
+				uniformName += std::to_string(count);
+				uniformName += "]";
+				glUniformMatrix4fv(glGetUniformLocation(m_Program, uniformName.c_str()), 1, GL_FALSE, glm::value_ptr(matrix));
+				++count;
+			}
 		}
 
 		void setVector3f(const std::string& variableName, const glm::vec3& vector) const {

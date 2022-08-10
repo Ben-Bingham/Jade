@@ -2,13 +2,13 @@
 
 #include "Core Systems/Logging/Log.h"
 
-#include "Low Level Rendering/Shaders/VertexShader.h"
+#include "Low Level Rendering/Shaders/GeometryShader.h"
 
 #include "Core Systems/Resource Pipeline/TextFile.h"
 
 namespace Jade {
-	VertexShader::VertexShader(const Jade::TextFile& shaderSourceFile)
-		: Shader(glCreateShader(GL_VERTEX_SHADER), shaderSourceFile) {
+	GeometryShader::GeometryShader(const Jade::TextFile& shaderSourceFile)
+		: Shader(glCreateShader(GL_GEOMETRY_SHADER), shaderSourceFile) {
 
 		std::string shaderSource = getShaderSourceFile().getContent();
 		const char* charShaderSource = shaderSource.c_str();
@@ -21,7 +21,7 @@ namespace Jade {
 		glGetShaderiv(getShader(), GL_COMPILE_STATUS, &success);
 		if (!success) {
 			glGetShaderInfoLog(getShader(), 512, NULL, infoLog);
-			LOG("Vertex shader failed to compile", Jade::ERROR);
+			LOG("Geometry shader failed to compile", Jade::ERROR);
 			LOG(infoLog, Jade::ERROR);
 		}
 	}

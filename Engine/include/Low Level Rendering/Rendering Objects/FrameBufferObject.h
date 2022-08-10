@@ -5,15 +5,13 @@
 
 #include "Core Systems/Logging/Log.h"
 #include "Low Level Rendering/Rendering Objects/Texture.h"
+#include "Low Level Rendering/Rendering Objects/Cubemap.h"
+#include "Core Systems/Logging/OpenGLErrors.h"
 
 namespace Jade {
 	class FrameBufferObject {
 	public:
 		FrameBufferObject(Texture depthComponent) {
-			init(depthComponent);
-		}
-
-		void init(Texture depthComponent) {
 			glGenFramebuffers(1, &m_FBO);
 
 			bind();
@@ -26,6 +24,27 @@ namespace Jade {
 				LOG("Framebuffer failed to be created", ERROR);
 				unbind();
 			}
+		}
+
+		FrameBufferObject(Cubemap depthComponent) {
+			glCheckError();
+			glGenFramebuffers(1, &m_FBO);
+			glCheckError();
+
+			bind();
+			glCheckError();
+
+			glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, depthComponent.getCubemap(), 0);
+			glDrawBuffer(GL_NONE);
+			glReadBuffer(GL_NONE);
+			glCheckError();
+
+			if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+				LOG("Framebuffer failed to be created", ERROR);
+				unbind();
+			}
+			glCheckError();
+
 		}
 
 		void bind() const {

@@ -7,10 +7,11 @@ namespace Jade {
 	class RenderableObject;
 
 	enum ShaderType {
-		SOLID_COLOUR,	// Solid shading
-		PHONG,			// Phong shading
-		SHADOW_MAP,		// Shading for making depth maps
-		SKYBOX			// Shader for rendering skyboxes
+		SOLID_COLOUR,
+		PHONG,
+		DIRECTIONAL_SHADOW_MAP,
+		POINT_SHADOW_MAP,
+		SKYBOX
 	};
 
 	class PShader {

@@ -5,9 +5,9 @@
 #include "PShader.h"
 
 namespace Jade {
-	class ShadowMapShader : public PShader {
+	class DirectionalShadowMapShader : public PShader {
 	public:
-		ShadowMapShader() : PShader(SHADOW_MAP) {}
+		DirectionalShadowMapShader() : PShader(DIRECTIONAL_SHADOW_MAP) {}
 
 		void bindAdditionals() override {
 			directionalLights[0].makeLightSpaceMatrix();

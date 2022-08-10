@@ -6,8 +6,11 @@
 
 namespace Jade {
     void RenderableObject::render(const PShader& shader) {
+        glCheckError();
+
         additionalRendering(shader);
-        
+        glCheckError();
+
         m_VAO.bind();
         glDrawElements(GL_TRIANGLES, m_NumberOfIndicies, GL_UNSIGNED_INT, 0);
         additionalRenderingCleanup(shader);

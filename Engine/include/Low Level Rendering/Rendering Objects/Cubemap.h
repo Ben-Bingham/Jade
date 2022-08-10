@@ -5,6 +5,7 @@
 #include <GL/glew.h>
 
 #include "Core Systems/Resource Pipeline/Image.h"
+#include "Core Systems/Logging/OpenGLErrors.h"
 
 namespace Jade {
 	class Cubemap {
@@ -47,11 +48,34 @@ namespace Jade {
 			glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 		}
 
+		Cubemap(int imageWidths, int imageHeights, int imageFormat) : m_Images() {
+			glCheckError();
+
+			glGenTextures(1, &m_Cubemap);
+			glCheckError();
+
+			bind();
+			for (int count = 0; count < 6; ++count) {
+				glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + count, 0, imageFormat, imageWidths, imageHeights, 0, imageFormat, GL_FLOAT, NULL);
+			}
+			glCheckError();
+
+			glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+			glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+			glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+			glCheckError();
+
+		}
+
 		void bind() const { glBindTexture(GL_TEXTURE_CUBE_MAP, m_Cubemap); }
 
 		static void unbind() { glBindTexture(GL_TEXTURE_CUBE_MAP, 0); }
 
 		void dispose() { glDeleteTextures(1, &m_Cubemap); }
+
+		unsigned int getCubemap() const { return m_Cubemap; }
 
 	private:
 		unsigned int m_Cubemap;

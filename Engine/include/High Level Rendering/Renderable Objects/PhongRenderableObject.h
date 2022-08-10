@@ -17,6 +17,7 @@ namespace Jade {
 			Texture::activateUnit(1);
 			m_Material->specular.bind();
 			ruleSet.getProgram().setMaterial("material", *m_Material);
+			glCheckError();
 		}
 
 	private:

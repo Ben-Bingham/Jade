@@ -7,8 +7,10 @@ namespace Jade {
 
 	ShaderProgram PShader::programInit() {
 		ShaderCreator creator(this);
-		ShaderProgram program(creator.getFragmentShader(), creator.getVertexShader());
-		return program;
+		if (ruleSet == POINT_SHADOW_MAP) {
+			return ShaderProgram(creator.getFragmentShader(), creator.getVertexShader(), creator.getGeometryShader());
+		}
+		return ShaderProgram(creator.getFragmentShader(), creator.getVertexShader());
 	}
 
 	int PShader::ID = -1;

@@ -22,5 +22,13 @@ namespace Jade {
 			directionalLights[0].makeLightSpaceMatrix();
 			getProgram().setMatrix4f("lightSpaceMatrix", directionalLights[0].lightSpaceMatrix); //TODO a lot of these uniforms can be moved to the scene class
 		}
+
+		if (pointLights.size() != 0) {
+			getProgram().setInt("pointShadowMap", 3);
+			Texture::activateUnit(3);
+			pointLights[0].shadowMap.bind();
+
+			getProgram().setFloat("farPlane", pointLights[0].farPlane);
+		}
 	}
 }

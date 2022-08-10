@@ -38,6 +38,7 @@ namespace Jade {
 		void renderScene();
 		void renderSkybox();
 		void renderShadowMap(DirectionalLight& dirLight);
+		void renderShadowMap(PointLight& pointLight);
 		void cleanup();
 
 		virtual void Begin() {}
@@ -77,7 +78,8 @@ namespace Jade {
 		std::vector<std::shared_ptr<Gameobject>> m_Gameobjects;
 		std::vector<std::shared_ptr<Light>> m_Lights;
 
-		std::shared_ptr<PShader> depthShader{ nullptr };
+		std::shared_ptr<PShader> directionalShadowShader{ nullptr }; //TODO make these global or static
+		std::shared_ptr<PShader> pointShadowShader{ nullptr };
 		std::shared_ptr<PShader> standardShader{ nullptr };
 		std::shared_ptr<PShader> solidShader{ nullptr };
 		std::shared_ptr<PShader> skyboxShader{ nullptr };
