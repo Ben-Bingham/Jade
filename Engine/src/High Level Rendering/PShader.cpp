@@ -2,16 +2,31 @@
 #include "High Level Rendering/ShaderCreator.h"
 
 namespace Jade {
-	PShader::PShader(ShaderType rules)
-		: m_Program(programInit()), m_ID(getNextID()), ruleSet(rules) {}
+	ShaderProgram PShader::programInit(std::string vertexShaderPath, std::string fragmentShaderPath) {
+		VertexShader vertexShader{ TextFile{vertexShaderPath} };
+		FragmentShader fragmentShader{ TextFile{fragmentShaderPath} };
 
-	ShaderProgram PShader::programInit() {
+		m_Program = ShaderProgram{ vertexShader, fragmentShader };
+	}
+
+	ShaderProgram PShader::programInit(std::string vertexShaderPath, std::string geometryShaderPath, std::string fragmentShaderPath) {
+		VertexShader vertexShader{ TextFile{vertexShaderPath} };
+		GeometryShader geometryShader{ TextFile{geometryShaderPath} };
+		FragmentShader fragmentShader{ TextFile{fragmentShaderPath} };
+
+		return ShaderProgram{ vertexShader, geometryShader, fragmentShader };
+	}
+
+	/*PShader::PShader(ShaderType rules)
+		: m_Program(programInit()), m_ID(getNextID()), ruleSet(rules) {}*/
+
+	/*ShaderProgram PShader::programInit() {
 		ShaderCreator creator(this);
 		if (ruleSet == POINT_SHADOW_MAP) {
 			return ShaderProgram(creator.getFragmentShader(), creator.getVertexShader(), creator.getGeometryShader());
 		}
 		return ShaderProgram(creator.getFragmentShader(), creator.getVertexShader());
-	}
+	}*/
 
-	int PShader::ID = -1;
+	//int PShader::ID = -1;
 }

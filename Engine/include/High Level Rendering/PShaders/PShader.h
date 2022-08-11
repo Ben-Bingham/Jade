@@ -16,7 +16,13 @@ namespace Jade {
 
 	class PShader {
 	public:
-		PShader(ShaderType rules);
+		//PShader(ShaderType rules);
+
+		PShader(std::string vertexShaderPath, std::string fragmentShaderPath) 
+			: m_Program(programInit(vertexShaderPath, fragmentShaderPath)) {}
+
+		PShader(std::string vertexShaderPath, std::string geometryShaderPath, std::string fragmentShaderPath) 
+			: m_Program(programInit(vertexShaderPath, geometryShaderPath, fragmentShaderPath)) {}
 
 		void bind() { 
 			m_Program.use();
@@ -25,10 +31,13 @@ namespace Jade {
 		// Should bind anything that is specific to the shader
 		virtual void bindAdditionals() = 0;
 
-		int getID() const { return m_ID; }
+		//int getID() const { return m_ID; }
 		ShaderProgram getProgram() const { return m_Program; }
 
-		void dispose() { m_Program.dispose(); }
+		void dispose() { 
+			m_Program.dispose();
+			//TODO dispose shgaders
+		}
 
 		void addPointLight(const PointLight& light) {
 			pointLights.push_back(light);
@@ -48,16 +57,19 @@ namespace Jade {
 		std::vector<PointLight> pointLights; //TODO remove
 		std::vector<DirectionalLight> directionalLights; //TODO remove
 	private:
-		int m_ID;
+		//int m_ID;
 		ShaderProgram m_Program;
 
-		static int ID;
+		ShaderProgram programInit(std::string vertexShaderPath, std::string fragmentShaderPath);
+		ShaderProgram programInit(std::string vertexShaderPath, std::string geometryShaderPath, std::string fragmentShaderPath);
+
+	/*	static int ID;
 
 		static int getNextID() {
 			ID++;
 			return ID;
-		}
+		}*/
 
-		ShaderProgram programInit();
+		//ShaderProgram programInit();
 	};
 }
