@@ -4,8 +4,8 @@
 namespace Jade {
 	class SkyboxShader : public PShader {
 	public:
-		SkyboxShader() : PShader(SKYBOX) {}
+		SkyboxShader() : PShader("..\\Engine\\assets\\shaders\\SkyboxShader.vert", "..\\Engine\\assets\\shaders\\SkyboxShader.frag") {}
 
-		void bindAdditionals() override {}
+		void uploadUniforms() override {}
 	};
 }

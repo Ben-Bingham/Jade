@@ -33,12 +33,13 @@ namespace Jade {
 		std::vector<std::shared_ptr<Light>> getLights() { return m_Lights; }
 
 		void begin();
-		void applyAllLights(Gameobject& gb);
+		//void applyAllLights(Gameobject& gb);
 		void update();
-		void renderScene();
-		void renderSkybox();
-		void renderShadowMap(DirectionalLight& dirLight);
-		void renderShadowMap(PointLight& pointLight);
+		//void renderScene();
+		//void renderSkybox();
+		//void renderShadowMap(DirectionalLight& dirLight);
+		//void renderShadowMap(PointLight& pointLight);
+		std::vector<std::shared_ptr<RenderableObject>> getRenderableObjects(const Gameobject& gameobject);
 		void cleanup();
 
 		virtual void Begin() {}
@@ -46,9 +47,9 @@ namespace Jade {
 		virtual void Cleanup() {}
 
 		// This function will automatically render the object with whatever shader is giving
-		void renderRenderComponent(const std::shared_ptr<Gameobject> gb, std::shared_ptr<PShader> shader);
+		//void renderRenderComponent(const std::shared_ptr<Gameobject> gb, std::shared_ptr<PShader> shader);
 		// This function will automatically choose which shader to use for the givin object
-		void renderRenderComponent(const std::shared_ptr<Gameobject> gb);
+		//void renderRenderComponent(const std::shared_ptr<Gameobject> gb);
 
 		void stop() { isRunning = false; }
 		bool isRunning{ true };

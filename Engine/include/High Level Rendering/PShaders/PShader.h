@@ -6,7 +6,7 @@
 namespace Jade {
 	class RenderableObject;
 
-	enum ShaderType {
+	enum ShaderType { //TODO remove
 		SOLID_COLOUR,
 		PHONG,
 		DIRECTIONAL_SHADOW_MAP,
@@ -29,7 +29,8 @@ namespace Jade {
 		}
 
 		// Should bind anything that is specific to the shader
-		virtual void bindAdditionals() = 0;
+		//virtual void bindAdditionals() = 0;
+		virtual void uploadUniforms() = 0; //TODO What paremeter needs to be passed in?
 
 		//int getID() const { return m_ID; }
 		ShaderProgram getProgram() const { return m_Program; }
@@ -39,7 +40,7 @@ namespace Jade {
 			//TODO dispose shgaders
 		}
 
-		void addPointLight(const PointLight& light) {
+	/*	void addPointLight(const PointLight& light) {
 			pointLights.push_back(light);
 		}
 
@@ -50,12 +51,12 @@ namespace Jade {
 		void clearLights() {
 			pointLights.clear();
 			directionalLights.clear();
-		}
+		}*/
 
-		ShaderType ruleSet;
+		//ShaderType ruleSet; //TODO remove
 
-		std::vector<PointLight> pointLights; //TODO remove
-		std::vector<DirectionalLight> directionalLights; //TODO remove
+		//std::vector<PointLight> pointLights; //TODO remove
+		//std::vector<DirectionalLight> directionalLights; //TODO remove
 	private:
 		//int m_ID;
 		ShaderProgram m_Program;

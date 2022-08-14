@@ -6,7 +6,7 @@
 #include "Core Systems/Logging/OpenGLErrors.h"
 
 namespace Jade {
-	ShaderProgram::ShaderProgram(VertexShader& vertexShader, FragmentShader& fragmentShader) {
+	ShaderProgram::ShaderProgram(VertexShader vertexShader, FragmentShader fragmentShader) {
 		m_Shaders.push_back(&fragmentShader);
 		m_Shaders.push_back(&vertexShader);
 
@@ -34,7 +34,7 @@ namespace Jade {
 		}
 	}
 
-	ShaderProgram::ShaderProgram(VertexShader& vertexShader, GeometryShader& geometryShader, FragmentShader& fragmentShader) {
+	ShaderProgram::ShaderProgram(VertexShader vertexShader, GeometryShader geometryShader, FragmentShader fragmentShader) {
 		m_Shaders.push_back(&fragmentShader);
 		m_Shaders.push_back(&vertexShader);
 		m_Shaders.push_back(&geometryShader);

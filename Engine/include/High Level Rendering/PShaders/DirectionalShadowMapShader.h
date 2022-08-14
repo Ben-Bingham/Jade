@@ -7,11 +7,21 @@
 namespace Jade {
 	class DirectionalShadowMapShader : public PShader {
 	public:
-		DirectionalShadowMapShader() : PShader(DIRECTIONAL_SHADOW_MAP) {}
+		DirectionalShadowMapShader() 
+			: PShader("..\\Engine\\assets\\shaders\\DirectionalDepthShader.vert", "..\\Engine\\assets\\shaders\\DirectionalDepthShader.frag") {}
 
-		void bindAdditionals() override {
-			directionalLights[0].makeLightSpaceMatrix();
-			getProgram().setMatrix4f("lightSpaceMatrix", directionalLights[0].lightSpaceMatrix);
+		void uploadUniforms() override {
+			bind();
+
+			if (dirLight != nullptr) {
+				dirLight->makeLightSpaceMatrix();
+				getProgram().setMatrix4f("lightSpaceMatrix", dirLight->lightSpaceMatrix);
+			}	
 		}
+
+		void setLight(const DirectionalLight& light) { dirLight = std::make_shared<DirectionalLight>(light); }
+
+	private:
+		std::shared_ptr<DirectionalLight> dirLight{ nullptr };
 	};
 }

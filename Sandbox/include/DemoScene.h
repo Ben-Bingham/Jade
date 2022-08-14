@@ -10,7 +10,7 @@ public:
 	Jade::PointLight pointLight{};
 
 	void Begin() override {
-		Jade::Model backpack{ "assets\\models\\backpack\\backpack.obj", false };
+		Jade::Model backpack{ "assets\\models\\backpack\\backpack.obj", true };
 
 		Jade::Gameobject backpackObject{};
 		backpackObject.addComponent(Jade::PhongRenderingComponent{ backpack });

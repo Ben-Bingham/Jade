@@ -8,7 +8,7 @@ namespace Jade {
 		shader->bind();
 		glCheckError();
 
-		shader->bindAdditionals();
+		shader->uploadUniforms();
 		glCheckError();
 
 		calculateModelMatrix();
@@ -24,7 +24,7 @@ namespace Jade {
 		glCheckError();
 
 		for (std::shared_ptr<RenderableObject> renderable : renderables) {
-			renderable->render(*shader);
+			renderable->render(shader);
 		}
 		glCheckError();
 

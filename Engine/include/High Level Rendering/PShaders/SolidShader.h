@@ -5,8 +5,8 @@
 namespace Jade {
 	class SolidShader : public PShader {
 	public:
-		SolidShader() : PShader(SOLID_COLOUR) {}
+		SolidShader() : PShader("..\\Engine\\assets\\shaders\\SolidRuleSet.vert", "..\\Engine\\assets\\shaders\\SolidRuleSet.frag") {}
 
-		void bindAdditionals() override{}
+		void uploadUniforms() override{}
 	};
 }

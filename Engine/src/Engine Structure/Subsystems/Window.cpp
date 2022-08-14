@@ -8,7 +8,7 @@
 
 namespace Jade {
 	Window::Window()
-		: m_Width(640), m_Height(480), m_Name("Jade Engine"), m_ProjectionMatrix(1.0) {
+		: m_Width(640 * 2), m_Height(480 * 2), m_Name("Jade Engine"), m_ProjectionMatrix(1.0) {
 		bool fullscreen = false;
 
 		if (!glfwInit()) {

@@ -30,7 +30,7 @@ namespace Jade {
 			init();
 		}
 
-		void render(const PShader& shader);
+		void render(std::shared_ptr<PShader> shader);
 
 		// Should bind anything that is specific to the renderable object, like materials
 		virtual void additionalRendering(const PShader& ruleSet) const = 0;
@@ -38,9 +38,9 @@ namespace Jade {
 		// Should cleanup anything bounded that is specific to the renderable object, like materials
 		virtual void additionalRenderingCleanup(const PShader& ruleSet) const {};
 
-		bool followsRuleSet(const PShader& ruleSet) {
+		/*bool followsRuleSet(const PShader& ruleSet) {
 			return ruleSet.ruleSet == m_RuleSet;
-		}
+		}*/
 
 		VertexAttributeObject getVAO() { return m_VAO; }
 
