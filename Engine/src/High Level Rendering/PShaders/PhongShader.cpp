@@ -5,9 +5,6 @@ namespace Jade {
 	void PhongShader::uploadUniforms() {
 		bind();
 #ifdef JADE_DEBUG
-		/*if (pointLights.size() == 0 && directionalLights.size() == 0) {
-			LOG("No lights are active, scene will be dark.", WARNING);
-		}*/
 		if (m_Lights.size() < 0) {
 			LOG("No lights are active, scene will be dark.", WARNING);
 		}
@@ -20,20 +17,19 @@ namespace Jade {
 			PointLight* pointLight = dynamic_cast<PointLight*>(&*light);
 			if (dirLight != nullptr) {
 				dirLights.push_back(*dirLight);
+			}
+			if (pointLight != nullptr) {
 				pointLights.push_back(*pointLight);
 			}
 		}
-
-		Texture::activateUnit(0);
-		m_Material->diffuse.bind();
-		Texture::activateUnit(1);
-		m_Material->specular.bind();
-		ruleSet.getProgram().setMaterial("material", *m_Material);
 
 		getProgram().setDirectionalLights("directionalLights", dirLights);
 		getProgram().setPointLights("pointLights", pointLights);
 
 		getProgram().setVector3f("cameraPosition", gCamera.getComponent<Transform>()->position);
+
+		getProgram().setMatrix4f("view", gCamera.getViewMatrix());
+		getProgram().setMatrix4f("projection", gWindow.getProjectionMatrix());
 
 		if (dirLights.size() != 0) {
 			getProgram().setInt("shadowMap", 2);

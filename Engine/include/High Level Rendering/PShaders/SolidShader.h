@@ -7,6 +7,6 @@ namespace Jade {
 	public:
 		SolidShader() : PShader("..\\Engine\\assets\\shaders\\SolidRuleSet.vert", "..\\Engine\\assets\\shaders\\SolidRuleSet.frag") {}
 
-		void uploadUniforms() override{}
+		void uploadUniforms() override;
 	};
 }

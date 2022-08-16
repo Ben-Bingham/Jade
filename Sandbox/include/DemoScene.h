@@ -6,7 +6,6 @@
 
 class DemoScene : public Jade::Scene {
 public:
-	Jade::Gameobject lightBox{};
 	Jade::PointLight pointLight{};
 
 	void Begin() override {
@@ -77,12 +76,8 @@ public:
 
 		Jade::Gameobject cube6{};
 		cube6.addComponent(Jade::PhongRenderingComponent{ Jade::CUBE, Jade::MaterialCreator::SpecifiedMaterial(Jade::Colour(61, 52, 191)) });
-		cube6.getComponent<Jade::Transform>()->Translate(0, -4.0f + 0.2f, 0).Scale(5, 0 ,5);
+		cube6.getComponent<Jade::Transform>()->Translate(0, -4.0f + 0.2f, 0).Scale(5, 0, 5);
 		addGameobject(cube6);
-
-		lightBox.addComponent(Jade::SolidRenderingComponent{ Jade::CUBE, Jade::Colour(255, 255, 255) });
-		lightBox.getComponent<Jade::Transform>()->Translate(pointLight.getComponent<Jade::Transform>()->position);
-		addGameobject(lightBox);
 	}
 
 	void Update() override {
@@ -94,32 +89,26 @@ public:
 
 		if (Jade::gKeyboard.KEY_UP) {
 			pointLight.getComponent<Jade::Transform>()->position -= glm::vec3{ 0, 0, 1 } *velocity;
-			lightBox.getComponent<Jade::Transform>()->position -= glm::vec3{ 0, 0, 1 } * velocity;
 		}
 
 		if (Jade::gKeyboard.KEY_LEFT) {
 			pointLight.getComponent<Jade::Transform>()->position -= glm::vec3{ 1, 0, 0 } * velocity;
-			lightBox.getComponent<Jade::Transform>()->position -= glm::vec3{ 1, 0, 0 } * velocity;
 		}
 
 		if (Jade::gKeyboard.KEY_DOWN) {
 			pointLight.getComponent<Jade::Transform>()->position += glm::vec3{ 0, 0, 1 } * velocity;
-			lightBox.getComponent<Jade::Transform>()->position += glm::vec3{ 0, 0, 1 } * velocity;
 		}
 
 		if (Jade::gKeyboard.KEY_RIGHT) {
 			pointLight.getComponent<Jade::Transform>()->position += glm::vec3{ 1, 0, 0 } * velocity;
-			lightBox.getComponent<Jade::Transform>()->position += glm::vec3{ 1, 0, 0 } * velocity;
 		}
 
 		if (Jade::gKeyboard.KEY_O) {
 			pointLight.getComponent<Jade::Transform>()->position += glm::vec3{ 0, 1, 0 } * velocity;
-			lightBox.getComponent<Jade::Transform>()->position += glm::vec3{ 0, 1, 0 } * velocity;
 		}
 
 		if (Jade::gKeyboard.KEY_L) {
 			pointLight.getComponent<Jade::Transform>()->position -= glm::vec3{ 0, 1, 0 } * velocity;
-			lightBox.getComponent<Jade::Transform>()->position -= glm::vec3{ 0, 1, 0 } * velocity;
 		}
 	}
 };

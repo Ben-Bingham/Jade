@@ -19,8 +19,6 @@ namespace Jade {
 
 		virtual void BeginRenderComponent() {}
 
-		void render(std::shared_ptr<PShader> shader);
-
 		std::vector<std::shared_ptr<RenderableObject>> renderables;
 
 	private:

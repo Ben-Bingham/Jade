@@ -32,19 +32,20 @@ namespace Jade {
 
 		void render(std::shared_ptr<PShader> shader);
 
-		// Should bind anything that is specific to the renderable object, like materials
-		virtual void additionalRendering(const PShader& ruleSet) const = 0;
-
-		// Should cleanup anything bounded that is specific to the renderable object, like materials
-		virtual void additionalRenderingCleanup(const PShader& ruleSet) const {};
-
-		/*bool followsRuleSet(const PShader& ruleSet) {
-			return ruleSet.ruleSet == m_RuleSet;
-		}*/
+		virtual void uploadUniforms(std::shared_ptr<PShader> shader) {}
 
 		VertexAttributeObject getVAO() { return m_VAO; }
 
+		void recalculateModelMatrix() { //TODO remove
+			m_ModelMatrix = glm::mat4(1.0f);
+			m_ModelMatrix = glm::mat4_cast(transform->rotation);
+			m_ModelMatrix = glm::translate(m_ModelMatrix, transform->position);
+			m_ModelMatrix = glm::scale(m_ModelMatrix, transform->scale);
+		}
+
 		void dispose() { m_VAO.dispose(); }
+		glm::mat4 m_ModelMatrix{ 1.0f };
+		std::shared_ptr<Transform> transform{ nullptr };
 
 	private:
 		Shape m_Shape;
@@ -54,7 +55,6 @@ namespace Jade {
 		ElementBufferObject m_EBO;
 		ShaderType m_RuleSet;
 		int m_NumberOfIndicies;
-		glm::mat4 m_ModelMatrix{ 1.0f };
 
 		void init() {
 			VertexAttributePointer positionData(3, GL_FLOAT, POSITION);

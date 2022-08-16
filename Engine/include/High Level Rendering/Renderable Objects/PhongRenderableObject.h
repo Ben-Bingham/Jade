@@ -11,14 +11,7 @@ namespace Jade {
 		PhongRenderable(std::shared_ptr<Material> material, Mesh mesh)
 			: RenderableObject(PHONG, mesh), m_Material(material) {}
 
-		void additionalRendering(const PShader& ruleSet) const override {
-			Texture::activateUnit(0);
-			m_Material->diffuse.bind();
-			Texture::activateUnit(1);
-			m_Material->specular.bind();
-			ruleSet.getProgram().setMaterial("material", *m_Material);
-			glCheckError();
-		}
+		void uploadUniforms(std::shared_ptr<PShader> shader) override;
 
 	private:
 		std::shared_ptr<Material> m_Material;

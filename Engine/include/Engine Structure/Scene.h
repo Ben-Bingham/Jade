@@ -15,7 +15,7 @@ namespace Jade {
 
 	class Scene {
 	public:
-		Scene() : skybox(initSkybox()) {}
+		Scene() {}
 
 		Scene(const Scene&) = default;
 		Scene(Scene&&) = default;
@@ -33,12 +33,7 @@ namespace Jade {
 		std::vector<std::shared_ptr<Light>> getLights() { return m_Lights; }
 
 		void begin();
-		//void applyAllLights(Gameobject& gb);
 		void update();
-		//void renderScene();
-		//void renderSkybox();
-		//void renderShadowMap(DirectionalLight& dirLight);
-		//void renderShadowMap(PointLight& pointLight);
 		std::vector<std::shared_ptr<RenderableObject>> getRenderableObjects(const Gameobject& gameobject);
 		void cleanup();
 
@@ -46,16 +41,11 @@ namespace Jade {
 		virtual void Update() {}
 		virtual void Cleanup() {}
 
-		// This function will automatically render the object with whatever shader is giving
-		//void renderRenderComponent(const std::shared_ptr<Gameobject> gb, std::shared_ptr<PShader> shader);
-		// This function will automatically choose which shader to use for the givin object
-		//void renderRenderComponent(const std::shared_ptr<Gameobject> gb);
-
 		void stop() { isRunning = false; }
 		bool isRunning{ true };
 
 	private:
-		SkyboxRenderableObject initSkybox() {
+		/*SkyboxRenderableObject initSkybox() {
 			std::vector<std::string> imagePaths{
 				"assets\\textures\\Sky skybox\\right.jpg",
 				"assets\\textures\\Sky skybox\\left.jpg",
@@ -74,15 +64,9 @@ namespace Jade {
 			return SkyboxRenderableObject{ images };
 		}
 
-		SkyboxRenderableObject skybox;
+		SkyboxRenderableObject skybox;*/
 
 		std::vector<std::shared_ptr<Gameobject>> m_Gameobjects;
 		std::vector<std::shared_ptr<Light>> m_Lights;
-
-		std::shared_ptr<PShader> directionalShadowShader{ nullptr }; //TODO make these global or static
-		std::shared_ptr<PShader> pointShadowShader{ nullptr };
-		std::shared_ptr<PShader> standardShader{ nullptr };
-		std::shared_ptr<PShader> solidShader{ nullptr };
-		std::shared_ptr<PShader> skyboxShader{ nullptr };
 	};
 }

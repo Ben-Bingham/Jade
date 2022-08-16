@@ -11,6 +11,7 @@
 #include "High Level Rendering/PShaders/PointShadowMapShader.h"
 #include "High Level Rendering/PShaders/PShader.h"
 #include "High Level Rendering/PShaders/PhongShader.h"
+#include "High Level Rendering/PShaders/SolidShader.h"
 
 namespace Jade {
 	class Engine;
@@ -23,8 +24,6 @@ namespace Jade {
 			directionalShadowShader = std::make_shared<DirectionalShadowMapShader>();
 			pointShadowShader = std::make_shared<PointShadowMapShader>();
 			phongShader = std::make_shared<PhongShader>();
-			//solidShader = std::make_shared<SolidShader>();
-			//skyboxShader = std::make_shared<SkyboxShader>();
 		}
 
 		void ShutDown() override {}
@@ -35,9 +34,6 @@ namespace Jade {
 		}
 
 		void render(std::vector<std::shared_ptr<RenderableObject>> renderables, std::vector<std::shared_ptr<Light>> lights) {
-			/*phongShader->clearLights();
-			phongShader->setLights(lights);*/
-
 			PhongShader* phong = dynamic_cast<PhongShader*>(&*phongShader);
 			phong->clearLights();
 			phong->setLights(lights);
@@ -45,22 +41,21 @@ namespace Jade {
 			renderShadowMaps(renderables, lights);
 
 			renderNormally(renderables, lights);
-
-			//renderSkybox(skybox); TODO
 		}
 
 	private:
-		void renderObject(std::shared_ptr<RenderableObject> renderable, std::shared_ptr<PShader> shader) { //TODO remove
-			renderable->render(shader); //TODo remove from function
+		void renderObject(std::shared_ptr<RenderableObject> renderable, std::shared_ptr<PShader> shader) {
+			shader->bind();
+			shader->uploadUniforms();
+			renderable->uploadUniforms(shader);
+			renderable->render(shader);
 		}
 
-		void renderShadowMap(std::vector<std::shared_ptr<RenderableObject>> renderables, const DirectionalLight& dirLight) {
+		void renderShadowMap(std::vector<std::shared_ptr<RenderableObject>> renderables, const DirectionalLight& dirLight) { //TODO remove overload
 			glViewport(0, 0, (int)dirLight.shadowMapSize.x, (int)dirLight.shadowMapSize.y);
 			dirLight.depthFBO.bind();
 
 			glClear(GL_DEPTH_BUFFER_BIT);
-
-			//dirLight.makeLightSpaceMatrix();
 
 			DirectionalShadowMapShader* dirLightShader = dynamic_cast<DirectionalShadowMapShader*>(&*directionalShadowShader);
 			dirLightShader->setLight(dirLight);
@@ -68,19 +63,6 @@ namespace Jade {
 			for (std::shared_ptr<RenderableObject> renderable : renderables) {
 				renderObject(renderable, pointShadowShader);
 			}
-
-			//directionalShadowShader->bind();
-			//directionalShadowShader->getProgram().setMatrix4f("lightSpaceMatrix", dirLight.lightSpaceMatrix);
-
-			
-
-			/*for (std::shared_ptr<Gameobject> gameobject : m_Gameobjects) {
-				renderRenderComponent(gameobject, directionalShadowShader);
-
-				for (std::shared_ptr<Gameobject> gb : gameobject->getChildren()) {
-					renderRenderComponent(gb, directionalShadowShader);
-				}
-			}*/
 		}
 
 		void renderShadowMap(std::vector<std::shared_ptr<RenderableObject>> renderables, const PointLight& pointLight) {
@@ -95,19 +77,6 @@ namespace Jade {
 			for (std::shared_ptr<RenderableObject> renderable : renderables) {
 				renderObject(renderable, pointShadowShader);
 			}
-
-			/*pointLight->makeLightSpaceMatricies();
-
-			pointShadowShader->bind();
-			pointShadowShader->getProgram().setMatrix4fs("shadowMatrices", pointLight.lightSpaceMatricies);
-
-			for (std::shared_ptr<Gameobject> gameobject : m_Gameobjects) {
-				renderRenderComponent(gameobject, pointShadowShader);
-
-				for (std::shared_ptr<Gameobject> gb : gameobject->getChildren()) {
-					renderRenderComponent(gb, pointShadowShader);
-				}
-			}*/
 		}
 
 		void renderShadowMaps(std::vector<std::shared_ptr<RenderableObject>> renderables, std::vector<std::shared_ptr<Light>> lights) {
@@ -117,13 +86,9 @@ namespace Jade {
 				PointLight* pointLight = dynamic_cast<PointLight*>(&*light);
 				if (dirLight != nullptr) {
 					renderShadowMap(renderables, *dirLight);
-					glCheckError();
-
 				}
 				else if (pointLight != nullptr) {
 					renderShadowMap(renderables, *pointLight);
-					glCheckError();
-
 				}
 			}
 			glCullFace(GL_BACK);
@@ -131,20 +96,14 @@ namespace Jade {
 			FrameBufferObject::unbind();
 		}
 
-		void renderNormally(std::vector<std::shared_ptr<RenderableObject>> renderables, std::vector<std::shared_ptr<Light>> lights) {
-			for (std::shared_ptr<RenderableObject> renderable : renderables) {
-				renderObject(renderable, phongShader);
-			}
-		}
+		void renderNormally(std::vector<std::shared_ptr<RenderableObject>> renderables, std::vector<std::shared_ptr<Light>> lights);
 
-		void renderSkybox(Cubemap skybox) {
+		void renderSkybox(Cubemap skybox) { //TODO
 
 		}
 
 		std::shared_ptr<PShader> directionalShadowShader{ nullptr }; //TODO make these global or static
 		std::shared_ptr<PShader> pointShadowShader{ nullptr };
 		std::shared_ptr<PShader> phongShader{ nullptr };
-		/*std::shared_ptr<PShader> solidShader{ nullptr };
-		std::shared_ptr<PShader> skyboxShader{ nullptr };*/
 	};
 }

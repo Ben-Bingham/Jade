@@ -13,6 +13,13 @@ namespace Jade {
 		PhongRenderingComponent(Model& model);
 		PhongRenderingComponent(Shape shape, const Material& material);
 
+		void BeginRenderComponent() override {
+			Transform transform = *getGameobject().getComponent<Transform>();
+			for (std::shared_ptr<RenderableObject> renderable : renderables) {
+				renderable->transform = std::make_shared<Transform>(transform);
+			}
+		}
+
 	private:
 		std::vector<std::shared_ptr<Material>> m_Materials;
 	};
