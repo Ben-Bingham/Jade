@@ -61,7 +61,7 @@ namespace Jade {
 			dirLightShader->setLight(dirLight);
 
 			for (std::shared_ptr<RenderableObject> renderable : renderables) {
-				renderObject(renderable, pointShadowShader);
+				renderObject(renderable, directionalShadowShader);
 			}
 		}
 

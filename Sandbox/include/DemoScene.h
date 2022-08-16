@@ -88,7 +88,7 @@ public:
 		float velocity = 10.0f * (float)Jade::gTime.deltaTime;
 
 		if (Jade::gKeyboard.KEY_UP) {
-			pointLight.getComponent<Jade::Transform>()->position -= glm::vec3{ 0, 0, 1 } *velocity;
+			pointLight.getComponent<Jade::Transform>()->position -= glm::vec3{ 0, 0, 1 } * velocity;
 		}
 
 		if (Jade::gKeyboard.KEY_LEFT) {

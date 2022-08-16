@@ -32,8 +32,8 @@ namespace Jade {
 		getProgram().setMatrix4f("projection", gWindow.getProjectionMatrix());
 
 		if (dirLights.size() != 0) {
-			getProgram().setInt("shadowMap", 2);
-			Texture::activateUnit(2);
+			getProgram().setInt("shadowMap", 3);
+			Texture::activateUnit(3);
 			dirLights[0].shadowMap.bind();
 
 			dirLights[0].makeLightSpaceMatrix();
@@ -41,8 +41,8 @@ namespace Jade {
 		}
 
 		if (pointLights.size() != 0) {
-			getProgram().setInt("pointShadowMap", 3);
-			Texture::activateUnit(3);
+			getProgram().setInt("pointShadowMap", 4);
+			Texture::activateUnit(4);
 			pointLights[0].shadowMap.bind();
 
 			getProgram().setFloat("farPlane", pointLights[0].farPlane);
