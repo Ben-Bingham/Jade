@@ -45,27 +45,6 @@ namespace Jade {
 		bool isRunning{ true };
 
 	private:
-		/*SkyboxRenderableObject initSkybox() {
-			std::vector<std::string> imagePaths{
-				"assets\\textures\\Sky skybox\\right.jpg",
-				"assets\\textures\\Sky skybox\\left.jpg",
-				"assets\\textures\\Sky skybox\\top.jpg",
-				"assets\\textures\\Sky skybox\\bottom.jpg",
-				"assets\\textures\\Sky skybox\\front.jpg",
-				"assets\\textures\\Sky skybox\\back.jpg"
-			};
-
-			std::vector<Image> images;
-
-			for (std::string imagePath : imagePaths) {
-				images.push_back(Image(imagePath, false));
-			}
-
-			return SkyboxRenderableObject{ images };
-		}
-
-		SkyboxRenderableObject skybox;*/
-
 		std::vector<std::shared_ptr<Gameobject>> m_Gameobjects;
 		std::vector<std::shared_ptr<Light>> m_Lights;
 	};
